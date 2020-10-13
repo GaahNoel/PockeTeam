@@ -20,7 +20,7 @@ export default createGlobalStyle`
     font: 400 1rem 'Roboto', sans-serif;
   }
 
-  button {
+  button,a {
     cursor: pointer;
   }
   
