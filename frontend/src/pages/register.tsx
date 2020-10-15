@@ -15,19 +15,8 @@ import {
   Mobile,
 } from '../styles/pages/Register';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      '& .MuiTextField-root': {
-        margin: theme.spacing(1),
-      },
-    },
-  }),
-);
-
 export default function Register() {
   const { register, handleSubmit, errors } = useForm();
-  const classes = useStyles();
 
   const onSubmit = (data: any, e: any) => {
     const { login, username, email, password } = data;
@@ -47,16 +36,16 @@ export default function Register() {
 
   return (
     <>
+      <Helmet>
+        <title>Pokemania - Registro</title>
+      </Helmet>
+
       <Header />
       <Wrapper>
-        <Helmet>
-          <title>Pokemania - Registro</title>
-        </Helmet>
-
         <Container>
           <Mobile>CADASTRO</Mobile>
           <Form>
-            <form onSubmit={handleSubmit(onSubmit)} className={classes.root}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <TextField
                 error={errors.login}
                 label="Login"

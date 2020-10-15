@@ -27,5 +27,11 @@ export default createGlobalStyle`
   img{
     display:block;
   }
+  body{
+    @media (min-width:850px){
+      background-color: lightgrey;
+    }
+    background-color: white;
+  }
 
 `;

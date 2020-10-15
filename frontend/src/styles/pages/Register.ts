@@ -5,15 +5,15 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  background-color: #ffffff;
 `;
 export const Container = styled.div`
   width: 100%;
   display: flex;
+  background-color: #ffffff;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  background-color: white;
+
   height: 100%;
   @media (min-width: 850px) {
     width: 80%;
@@ -89,8 +89,13 @@ export const Form = styled.div`
 export const Desktop = styled.div`
   display: none;
   h4 {
-    @media (min-width: 850px) {
+    @media (min-width: 1050px) {
       font-size: 30px;
+    }
+    @media (min-width: 850px) {
+      display: block;
+      text-align: center;
+      font-size: 20px;
     }
   }
   h3 {
