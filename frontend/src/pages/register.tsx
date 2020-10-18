@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { Helmet } from 'react-helmet';
 import Link from 'next/link';
 import axios from 'axios';
@@ -15,10 +15,17 @@ import {
   Mobile,
 } from '../styles/pages/Register';
 
+interface LoginTypes {
+  login: string;
+  username: string;
+  email: string;
+  password: string;
+}
+
 export default function Register() {
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = (data: any, e: any) => {
+  const onSubmit = (data: LoginTypes, e: FormEvent) => {
     const { login, username, email, password } = data;
     console.log(data);
     e.preventDefault();

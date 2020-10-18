@@ -39,7 +39,7 @@ export const Item = styled.div`
   width: 60%;
   margin-top: 4rem;
 `;
-export const Pokemon = styled.div`
+export const PokemonSelect = styled.div`
   display: flex;
   justify-content: space-between;
   width: 60%;
@@ -47,3 +47,4 @@ export const Pokemon = styled.div`
   margin-bottom: 5rem;
   align-items: center;
 `;
+export const MoveDetails = styled.div``;
