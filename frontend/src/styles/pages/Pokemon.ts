@@ -30,10 +30,6 @@ export const Form = styled.form`
     width: 60%;
     flex-wrap: wrap;
   }
-
-  .formMoves .move {
-    width: 20rem;
-  }
 `;
 export const Item = styled.div`
   width: 60%;
@@ -48,3 +44,6 @@ export const PokemonSelect = styled.div`
   align-items: center;
 `;
 export const MoveDetails = styled.div``;
+export const Move = styled.div`
+  width: 20rem;
+`;

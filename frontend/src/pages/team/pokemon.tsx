@@ -17,6 +17,7 @@ import {
   Item,
   PokemonSelect,
   MoveDetails,
+  Move,
 } from '../../styles/pages/Pokemon';
 
 interface moveTypes {
@@ -223,7 +224,7 @@ const Pokemon: React.FC = () => {
               )}
             </PokemonSelect>
             <div className="formMoves">
-              <div className="move">
+              <Move>
                 <h3>MOVE 1</h3>
                 <Select
                   options={movesArray}
@@ -258,8 +259,8 @@ const Pokemon: React.FC = () => {
                     {move1Details && <span>{move1Details.effect_name}</span>}
                   </p>
                 </MoveDetails>
-              </div>
-              <div className="move">
+              </Move>
+              <Move>
                 <h3>MOVE 2</h3>
                 <Select
                   options={movesArray}
@@ -294,8 +295,8 @@ const Pokemon: React.FC = () => {
                     {move2Details && <span>{move2Details.effect_name}</span>}
                   </p>
                 </MoveDetails>
-              </div>
-              <div className="move">
+              </Move>
+              <Move>
                 <h3>MOVE 3</h3>
                 <Select
                   options={movesArray}
@@ -330,8 +331,8 @@ const Pokemon: React.FC = () => {
                     {move3Details && <span>{move3Details.effect_name}</span>}
                   </p>
                 </MoveDetails>
-              </div>
-              <div className="move">
+              </Move>
+              <Move>
                 <h3>MOVE 4</h3>
                 <Select
                   options={movesArray}
@@ -366,7 +367,7 @@ const Pokemon: React.FC = () => {
                     {move4Details && <span>{move4Details.effect_name}</span>}
                   </p>
                 </MoveDetails>
-              </div>
+              </Move>
             </div>
 
             <Item>

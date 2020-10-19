@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Helmet } from 'react-helmet';
 import Link from 'next/link';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import axios from 'axios';
 import Header from '../components/header';
 import {
   Wrapper,
@@ -15,11 +16,28 @@ import {
   Input,
 } from '../styles/pages/Login';
 
+interface LoginTypes {
+  login: string;
+  password: string;
+}
+
 export default function Login() {
-  const [login, setLogin] = useState('');
-  const [username, setUsername] = useState('');
   const { register, handleSubmit, errors } = useForm();
 
+  const onSubmit = (data: LoginTypes, e: FormEvent) => {
+    const { login, password } = data;
+
+    e.preventDefault();
+    axios
+      .post('http://localhost:3333/users/login', {
+        login,
+        password,
+      })
+      .then((response) => {
+        if (response.data) console.log(response.data);
+        else console.log('oi');
+      });
+  };
   return (
     <>
       <Helmet>
@@ -30,7 +48,7 @@ export default function Login() {
         <Container>
           <Mobile>LOGIN</Mobile>
           <Form>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Input
                 error={errors.login}
                 label="Login"
@@ -47,7 +65,7 @@ export default function Login() {
                 type="password"
                 variant="outlined"
                 inputRef={register({ required: true })}
-                name="login"
+                name="password"
                 className="input"
                 helperText={errors.login && '* Campo Obrigatório !'}
               />

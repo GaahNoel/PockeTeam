@@ -15,7 +15,7 @@ import {
   Mobile,
 } from '../styles/pages/Register';
 
-interface LoginTypes {
+interface RegisterTypes {
   login: string;
   username: string;
   email: string;
@@ -25,7 +25,7 @@ interface LoginTypes {
 export default function Register() {
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = (data: LoginTypes, e: FormEvent) => {
+  const onSubmit = (data: RegisterTypes, e: FormEvent) => {
     const { login, username, email, password } = data;
     console.log(data);
     e.preventDefault();

@@ -29,10 +29,10 @@ export class UserService {
 
   async login(loginUser: LoginUserDto): Promise<User> {
     const { login, password } = loginUser;
-    const selectedUser = this.UserModel.where('login', login)
-      .where('password', password)
-      .select('username');
-
+    const selectedUser = this.UserModel.findOne({
+      login,
+      password,
+    }).select('username');
     return selectedUser;
   }
 }

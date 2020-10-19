@@ -21,6 +21,7 @@ export class UserController {
   @Post('login')
   login(@Body() loginUser: LoginUserDto): Promise<User> {
     const selectedUser = this.userService.login(loginUser);
+    console.log(selectedUser);
     return selectedUser;
   }
 }
