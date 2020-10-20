@@ -22,7 +22,7 @@ export class UserService {
     return selectedUser;
   }
 
-  async index() {
+  async index(): Promise<User[]> {
     const selectedUser = this.UserModel.find();
     return selectedUser;
   }

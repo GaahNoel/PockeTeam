@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { PokemonModule } from 'src/pokemon/pokemon.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ExampleModule } from '../example/example.module';
@@ -10,6 +11,7 @@ import { UserModule } from '../user/user.module';
       'mongodb+srv://PockeTeam:pocketeam@cluster0.z8nqp.mongodb.net/PockeTeam?retryWrites=true&w=majority',
     ),
     UserModule,
+    PokemonModule,
     ExampleModule,
   ],
   controllers: [AppController],
