@@ -1,11 +1,13 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Helmet } from 'react-helmet';
 import Link from 'next/link';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import Header from '../components/header';
+
 import {
   Wrapper,
   Container,
@@ -23,7 +25,12 @@ interface LoginTypes {
 
 export default function Login() {
   const { register, handleSubmit, errors } = useForm();
-
+  const [username, setUsername] = useState('');
+  // const teamName = localStorage.getItem('teamName');
+  const router = useRouter();
+  useEffect(() => {
+    setUsername(localStorage.getItem('username'));
+  }, []);
   const onSubmit = (data: LoginTypes, e: FormEvent) => {
     const { login, password } = data;
 
@@ -34,9 +41,16 @@ export default function Login() {
         password,
       })
       .then((response) => {
-        if (response.data) console.log(response.data);
-        else console.log('oi');
+        if (response.data) {
+          localStorage.setItem('username', response.data.username);
+          alert('Logado com Sucesso!');
+          router.push('/');
+        } else alert('Usuário Inválido');
       });
+  };
+  const load = () => {
+    setUsername(localStorage.getItem('username'));
+    console.log(localStorage.getItem('username'));
   };
   return (
     <>
@@ -47,37 +61,39 @@ export default function Login() {
       <Wrapper>
         <Container>
           <Mobile>LOGIN</Mobile>
-          <Form>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Input
-                error={errors.login}
-                label="Login"
-                variant="outlined"
-                type="text"
-                inputRef={register({ required: true })}
-                name="login"
-                className="input"
-                helperText={errors.login && '* Campo Obrigatório !'}
-              />
-              <Input
-                error={errors.login}
-                label="Password"
-                type="password"
-                variant="outlined"
-                inputRef={register({ required: true })}
-                name="password"
-                className="input"
-                helperText={errors.login && '* Campo Obrigatório !'}
-              />
+          {!username && (
+            <Form>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Input
+                  error={errors.login}
+                  label="Login"
+                  variant="outlined"
+                  type="text"
+                  inputRef={register({ required: true })}
+                  name="login"
+                  className="input"
+                  helperText={errors.login && '* Campo Obrigatório !'}
+                />
+                <Input
+                  error={errors.login}
+                  label="Password"
+                  type="password"
+                  variant="outlined"
+                  inputRef={register({ required: true })}
+                  name="password"
+                  className="input"
+                  helperText={errors.login && '* Campo Obrigatório !'}
+                />
 
-              <div>
-                <button type="submit">ENTRAR</button>
-                <Link href="/">
-                  <Button>VOLTAR</Button>
-                </Link>
-              </div>
-            </form>
-          </Form>
+                <div>
+                  <button type="submit">ENTRAR</button>
+                  <Link href="/">
+                    <Button>VOLTAR</Button>
+                  </Link>
+                </div>
+              </form>
+            </Form>
+          )}
 
           <Desktop>
             <h3>LOGIN</h3>

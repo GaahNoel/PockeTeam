@@ -34,6 +34,10 @@ export const Container = styled.header`
     color: white;
     margin-top: 2px;
   }
+  #FiPower {
+    color: white;
+    margin-top: 2px;
+  }
 
   #FiUser {
     color: white;
@@ -112,4 +116,9 @@ export const RightHeader = styled.div`
   display: flex;
   justify-content: space-around;
   padding: 8px;
+`;
+export const Icon = styled.a`
+  &:hover {
+    opacity: 0.8;
+  }
 `;

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { FiUser, FiStar, FiHome } from 'react-icons/fi';
+import { FiUser, FiStar, FiHome, FiPower } from 'react-icons/fi';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import {
   Wrapper,
   Container,
@@ -9,10 +10,20 @@ import {
   DownHeader,
   LeftHeader,
   RightHeader,
+  Icon,
 } from '../styles/components/Header';
 
 export default function Header() {
   const [pesquisa, setPesquisa] = useState('');
+  const router = useRouter();
+  const [username, setUsername] = useState('');
+  useEffect(() => {
+    setUsername(localStorage.getItem('username'));
+  }, []);
+  const logout = () => {
+    localStorage.clear();
+    router.push('/');
+  };
 
   return (
     <Wrapper>
@@ -21,7 +32,9 @@ export default function Header() {
         <DownHeader>
           <LeftHeader>
             <Link href="/">
-              <FiHome id="FiHome" size="1.3rem" />
+              <Icon>
+                <FiHome id="FiHome" size="1.3rem" />
+              </Icon>
             </Link>
             <form>
               <input
@@ -36,10 +49,20 @@ export default function Header() {
 
           <RightHeader>
             <Link href="/">
-              <FiStar id="FiStar" size="1.3rem" />
+              <Icon>
+                <FiStar id="FiStar" size="1.3rem" />
+              </Icon>
             </Link>
+            {username && (
+              <Icon onClick={logout}>
+                <FiPower id="FiPower" size="1.3rem" />
+              </Icon>
+            )}
+
             <Link href="/">
-              <FiUser id="FiUser" size="1.3rem" />
+              <Icon>
+                <FiUser id="FiUser" size="1.3rem" />
+              </Icon>
             </Link>
           </RightHeader>
         </DownHeader>
