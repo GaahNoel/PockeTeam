@@ -15,9 +15,9 @@ export const Container = styled.div`
   align-items: center;
   background-color: #ffffff;
   img {
-    width: 15rem;
+    width: 300px;
   }
-  h2{
+  h2 {
     margin-top: 2rem;
     font-size: 38px;
   }
@@ -32,8 +32,8 @@ export const Form = styled.form`
     display: flex;
     justify-content: space-between;
     width: 90%;
+    max-width: 959px;
     flex-wrap: wrap;
-    
   }
 `;
 export const Item = styled.div`
@@ -44,8 +44,8 @@ export const Item = styled.div`
 `;
 export const ItemDetails = styled.div`
   width: 70%;
-  p{
-    margin-top:0.8rem;
+  p {
+    margin-top: 0.8rem;
   }
 `;
 
@@ -53,7 +53,7 @@ export const ItemImage = styled.div`
   display: flex;
   justify-content: center;
   width: 30%;
-  img{
+  img {
     width: 150px;
   }
 `;
@@ -61,47 +61,45 @@ export const ItemImage = styled.div`
 export const PokemonSelect = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 60%;
+  width: 90%;
   margin-top: 2rem;
   margin-bottom: 5rem;
   align-items: center;
 
-  .pokemonSelect{
-    div{
-    //  width: 12rem;
+  .pokemonSelect {
+    div {
+      //  width: 12rem;
     }
   }
-
 `;
 export const MoveDetails = styled.div`
-  p{
-    margin-top:0.8rem;
+  p {
+    margin-top: 0.8rem;
   }
 `;
 export const Move = styled.div`
   width: 20rem;
-  margin-bottom:5rem;
+  margin-bottom: 5rem;
 `;
 
 export const Buttons = styled.div`
-    width: 30%;
-    display:flex;
-    justify-content: space-between;
-    margin-top: 100px;
-    button{
-      
-      margin-bottom: 35px;
-      padding: 0px 5px;
-      height: 60px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: bold;
-      font-size: medium;
-      color: #ffffff;
-      background-color: #000000;
-      border-radius: 5px;
-    }
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 100px;
+  button {
+    margin-bottom: 35px;
+    padding: 0px 5px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: medium;
+    color: #ffffff;
+    background-color: #000000;
+    border-radius: 5px;
+  }
 `;
 export const Voltar = styled.a`
   color: #000000;

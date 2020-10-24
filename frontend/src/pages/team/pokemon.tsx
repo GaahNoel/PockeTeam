@@ -81,13 +81,50 @@ interface MoveDetails {
 const Pokemon: React.FC = () => {
   const [pokemon, setPokemon] = useState<PokemonTypes>();
   const [pokemonName, setPokemonName] = useState('');
-  const [data, setData] = useState([]);
+  const [options, setOptions] = useState([]);
+  const [data, setData] = useState([
+    {
+      subject: 'hp',
+      A: 0,
+      fullMark: 150,
+    },
+    {
+      subject: 'attack',
+      A: 0,
+      fullMark: 400,
+    },
+    {
+      subject: 'defense',
+      A: 0,
+      fullMark: 1000,
+    },
+    {
+      subject: 'special-attack',
+      A: 0,
+      fullMark: 1000,
+    },
+    {
+      subject: 'special-defense',
+      A: 0,
+      fullMark: 1000,
+    },
+    {
+      subject: 'speed',
+      A: 0,
+      fullMark: 1000,
+    },
+  ]);
 
-  const options = [
-    { value: 'charmander', label: 'Charmander' },
-    { value: 'charmeleon', label: 'Charmeleon' },
-    { value: 'eevee', label: 'Eevee' },
-  ];
+  useEffect(() => {
+    axios.get('http://localhost:3333/pokemon/all-pokemons').then((response) => {
+      response.data.list.forEach((pokemons) => {
+        setOptions((oldPokemons: any) => [
+          ...oldPokemons,
+          { value: pokemons, label: pokemons },
+        ]);
+      });
+    });
+  }, []);
 
   const [movesArray, setMovesArray] = useState([]);
   const [itemsArray, setItemsArray] = useState([]);
@@ -104,10 +141,44 @@ const Pokemon: React.FC = () => {
   const [move4Details, setMove4Details] = useState<MoveDetails>();
 
   const [itemDetails, setItemDetails] = useState<itemTypes>();
-
-  const [statsGraph, setStatsGraph] = useState([]);
+  const [stateMove1, setStateMove1] = useState({
+    selection: 0,
+  });
+  const [stateMove2, setStateMove2] = useState({
+    selection: 0,
+  });
+  const [stateMove3, setStateMove3] = useState({
+    selection: 0,
+  });
+  const [stateMove4, setStateMove4] = useState({
+    selection: 0,
+  });
 
   const formRef = useRef<HTMLFormElement>();
+  const reset = () => {
+    setStateMove1({
+      selection: 0,
+    });
+    setStateMove2({
+      selection: 0,
+    });
+    setStateMove3({
+      selection: 0,
+    });
+    setStateMove4({
+      selection: 0,
+    });
+
+    setMove1(null);
+    setMove2(null);
+    setMove3(null);
+    setMove4(null);
+
+    setMove1Details(null);
+    setMove2Details(null);
+    setMove3Details(null);
+    setMove4Details(null);
+  };
 
   const changePokemon = (e: Select) => {
     if (e) {
@@ -119,17 +190,13 @@ const Pokemon: React.FC = () => {
           const form = formRef.current;
           form.reset();
 
-          setMove1('');
-          setMove2('');
-          setMove3('');
-          setMove4('');
-
           setPokemon({
             types,
             moves,
             stats,
             sprites,
           });
+          reset();
 
           setPokemonName(e.value);
           setMovesArray([]);
@@ -139,37 +206,32 @@ const Pokemon: React.FC = () => {
               { value: move.move.url, label: move.move.name },
             ]);
           });
+          setData([]);
           setData((oldStats: any) => [
             ...oldStats,
             {
               subject: stats[0].stat.name,
               A: stats[0].base_stat,
-              fullMark: 1000,
             },
             {
               subject: stats[1].stat.name,
               A: stats[1].base_stat,
-              fullMark: 1000,
             },
             {
               subject: stats[2].stat.name,
               A: stats[2].base_stat,
-              fullMark: 1000,
             },
             {
               subject: stats[3].stat.name,
               A: stats[3].base_stat,
-              fullMark: 1000,
             },
             {
               subject: stats[4].stat.name,
               A: stats[4].base_stat,
-              fullMark: 1000,
             },
             {
               subject: stats[5].stat.name,
               A: stats[5].base_stat,
-              fullMark: 1000,
             },
           ]);
         });
@@ -266,25 +328,25 @@ const Pokemon: React.FC = () => {
     }
   };
   const widthChange = {
-    container: (provide: any, state: any) => ({
+    container: (provide: any) => ({
       ...provide,
       width: 200,
     }),
 
-    input: (provide: any, state: any) => ({
+    input: (provide: any) => ({
       paddingRight: 15,
     }),
   };
 
   const widthChangePokeBox = {
-    container: (provide: any, state: any) => ({
+    container: (provide: any) => ({
       ...provide,
       width: 100,
     }),
   };
 
   const widthChangeItemBox = {
-    container: (provide: any, state: any) => ({
+    container: (provide: any) => ({
       ...provide,
       width: 300,
     }),
@@ -303,50 +365,56 @@ const Pokemon: React.FC = () => {
             <PokemonSelect>
               <div>
                 <h3>Pokémon</h3>
-                <Select
-                  options={options}
-                  onChange={changePokemon}
-                  name="pokemon"
-                  className="pokemonSelect"
-                  styles={widthChange}
-                />
+                {options.length > 1000 && (
+                  <Select
+                    options={options}
+                    onChange={changePokemon}
+                    name="pokemon"
+                    className="pokemonSelect"
+                    styles={widthChange}
+                  />
+                )}
               </div>
 
-              {data.length !== 0 ? (
+              {pokemonName ? (
                 <>
                   <img src={pokemon.sprites.front_default} alt="" />
-                  <RadarChart
-                    cx={300}
-                    cy={250}
-                    outerRadius={150}
-                    width={500}
-                    height={500}
-                    data={data}
-                    name="Mike"
-                  >
-                    <PolarGrid />
-                    <PolarAngleAxis dataKey="subject" />
-                    <PolarRadiusAxis />
-                    <Radar
-                      dataKey="A"
-                      stroke="#000000"
-                      fill="#000000"
-                      fillOpacity={0.6}
-                    />
-                  </RadarChart>
                 </>
               ) : (
                 <img src={imageInterrogation} alt="" />
               )}
+              <div>
+                <RadarChart
+                  name={pokemonName}
+                  cx={300}
+                  cy={250}
+                  outerRadius={150}
+                  width={500}
+                  height={500}
+                  data={data}
+                >
+                  <PolarGrid />
+                  <PolarAngleAxis dataKey="subject" />
+                  <PolarRadiusAxis domain={[0, 255]} />
+                  <Radar
+                    dataKey="A"
+                    stroke="#000000"
+                    fill="#000000"
+                    fillOpacity={0.6}
+                  />
+                </RadarChart>
+              </div>
             </PokemonSelect>
             <div className="formMoves">
               <Move>
                 <h3>MOVE 1</h3>
                 <Select
+                  value={stateMove1.selection}
                   options={movesArray}
                   name="move1"
                   styles={widthChange}
                   onChange={(e: Select) => {
+                    setStateMove1(e.value);
                     requireMoveDetails(e, 1);
                     setMove1(e.label);
                   }}
@@ -379,10 +447,12 @@ const Pokemon: React.FC = () => {
               <Move>
                 <h3>MOVE 2</h3>
                 <Select
+                  value={stateMove2.selection}
                   options={movesArray}
                   name="move2"
                   styles={widthChange}
                   onChange={(e: Select) => {
+                    setStateMove2(e.value);
                     requireMoveDetails(e, 2);
                     setMove2(e.label);
                   }}
@@ -415,10 +485,12 @@ const Pokemon: React.FC = () => {
               <Move>
                 <h3>MOVE 3</h3>
                 <Select
+                  value={stateMove3.selection}
                   options={movesArray}
                   name="move3"
                   styles={widthChange}
                   onChange={(e: Select) => {
+                    setStateMove3(e.value);
                     requireMoveDetails(e, 3);
                     setMove3(e.label);
                   }}
@@ -451,10 +523,12 @@ const Pokemon: React.FC = () => {
               <Move>
                 <h3>MOVE 4</h3>
                 <Select
+                  value={stateMove4.selection}
                   options={movesArray}
                   name="move4"
                   styles={widthChange}
                   onChange={(e: Select) => {
+                    setStateMove4(e.value);
                     requireMoveDetails(e, 4);
                     setMove4(e.label);
                   }}
