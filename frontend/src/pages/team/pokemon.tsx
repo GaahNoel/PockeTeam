@@ -1,12 +1,25 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, {
+  useState,
+  useEffect,
+  FormEvent,
+  useRef,
+  PureComponent,
+} from 'react';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import Select from 'react-select';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { SportsCricketSharp } from '@material-ui/icons';
 import { string } from 'yup';
+import {
+  Radar,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+} from 'recharts';
 import Header from '../../components/header';
 
 import imageInterrogation from '../../assets/interrogation.png';
@@ -18,7 +31,17 @@ import {
   PokemonSelect,
   MoveDetails,
   Move,
+  ItemDetails,
+  ItemImage,
+  Buttons,
+  Voltar,
 } from '../../styles/pages/Pokemon';
+
+interface itemTypes {
+  name: string;
+  effect: string;
+  sprite: string;
+}
 
 interface moveTypes {
   name: string;
@@ -58,6 +81,7 @@ interface MoveDetails {
 const Pokemon: React.FC = () => {
   const [pokemon, setPokemon] = useState<PokemonTypes>();
   const [pokemonName, setPokemonName] = useState('');
+  const [data, setData] = useState([]);
 
   const options = [
     { value: 'charmander', label: 'Charmander' },
@@ -79,12 +103,21 @@ const Pokemon: React.FC = () => {
   const [move3Details, setMove3Details] = useState<MoveDetails>();
   const [move4Details, setMove4Details] = useState<MoveDetails>();
 
+  const [itemDetails, setItemDetails] = useState<itemTypes>();
+
+  const [statsGraph, setStatsGraph] = useState([]);
+
+  const formRef = useRef<HTMLFormElement>();
+
   const changePokemon = (e: Select) => {
     if (e) {
       axios
         .get(`https://pokeapi.co/api/v2/pokemon/${e.value}`)
         .then((response) => {
           const { types, moves, stats, sprites } = response.data;
+
+          const form = formRef.current;
+          form.reset();
 
           setMove1('');
           setMove2('');
@@ -106,6 +139,39 @@ const Pokemon: React.FC = () => {
               { value: move.move.url, label: move.move.name },
             ]);
           });
+          setData((oldStats: any) => [
+            ...oldStats,
+            {
+              subject: stats[0].stat.name,
+              A: stats[0].base_stat,
+              fullMark: 1000,
+            },
+            {
+              subject: stats[1].stat.name,
+              A: stats[1].base_stat,
+              fullMark: 1000,
+            },
+            {
+              subject: stats[2].stat.name,
+              A: stats[2].base_stat,
+              fullMark: 1000,
+            },
+            {
+              subject: stats[3].stat.name,
+              A: stats[3].base_stat,
+              fullMark: 1000,
+            },
+            {
+              subject: stats[4].stat.name,
+              A: stats[4].base_stat,
+              fullMark: 1000,
+            },
+            {
+              subject: stats[5].stat.name,
+              A: stats[5].base_stat,
+              fullMark: 1000,
+            },
+          ]);
         });
 
       axios
@@ -116,7 +182,7 @@ const Pokemon: React.FC = () => {
           items.forEach((item: any) => {
             setItemsArray((oldItems: any) => [
               ...oldItems,
-              { value: item.name, label: item.name },
+              { value: item.url, label: item.name },
             ]);
           });
         });
@@ -186,14 +252,41 @@ const Pokemon: React.FC = () => {
     }
   };
 
+  const requireItemDetails = (e: Select) => {
+    if (e) {
+      axios.get(e.value).then((response) => {
+        const {
+          effect_entries,
+          category: { name },
+          sprites: { default: sprite },
+        } = response.data;
+        const { effect } = effect_entries[0];
+        setItemDetails({ effect, name, sprite });
+      });
+    }
+  };
   const widthChange = {
     container: (provide: any, state: any) => ({
       ...provide,
-      width: 170,
+      width: 200,
     }),
 
     input: (provide: any, state: any) => ({
-      paddingRight: 25,
+      paddingRight: 15,
+    }),
+  };
+
+  const widthChangePokeBox = {
+    container: (provide: any, state: any) => ({
+      ...provide,
+      width: 100,
+    }),
+  };
+
+  const widthChangeItemBox = {
+    container: (provide: any, state: any) => ({
+      ...provide,
+      width: 300,
     }),
   };
 
@@ -206,7 +299,7 @@ const Pokemon: React.FC = () => {
       <Wrapper>
         <Container>
           <h2>SELEÇÃO DE POKÉMON</h2>
-          <Form>
+          <Form ref={formRef}>
             <PokemonSelect>
               <div>
                 <h3>Pokémon</h3>
@@ -215,10 +308,33 @@ const Pokemon: React.FC = () => {
                   onChange={changePokemon}
                   name="pokemon"
                   className="pokemonSelect"
+                  styles={widthChange}
                 />
               </div>
-              {pokemonName ? (
-                <img src={pokemon.sprites.front_default} alt="" />
+
+              {data.length !== 0 ? (
+                <>
+                  <img src={pokemon.sprites.front_default} alt="" />
+                  <RadarChart
+                    cx={300}
+                    cy={250}
+                    outerRadius={150}
+                    width={500}
+                    height={500}
+                    data={data}
+                    name="Mike"
+                  >
+                    <PolarGrid />
+                    <PolarAngleAxis dataKey="subject" />
+                    <PolarRadiusAxis />
+                    <Radar
+                      dataKey="A"
+                      stroke="#000000"
+                      fill="#000000"
+                      fillOpacity={0.6}
+                    />
+                  </RadarChart>
+                </>
               ) : (
                 <img src={imageInterrogation} alt="" />
               )}
@@ -371,13 +487,35 @@ const Pokemon: React.FC = () => {
             </div>
 
             <Item>
-              <h3>Item</h3>
-              <Select
-                options={itemsArray}
-                name="item"
-                isDisabled={!pokemonName}
-              />
+              <ItemDetails>
+                <h3>Item</h3>
+                <Select
+                  options={itemsArray}
+                  name="item"
+                  isDisabled={!pokemonName}
+                  styles={widthChangeItemBox}
+                  onChange={(e: Select) => {
+                    requireItemDetails(e);
+                  }}
+                />
+                <p>
+                  Descrição: {itemDetails && <span>{itemDetails.effect}</span>}
+                </p>
+                <p>
+                  Classificação:{' '}
+                  {itemDetails && <span>{itemDetails.name}</span>}
+                </p>
+              </ItemDetails>
+              <ItemImage>
+                {itemDetails && <img src={itemDetails.sprite} alt="" />}
+              </ItemImage>
             </Item>
+            <Buttons>
+              <button type="submit">SELECIONAR</button>
+              <Link href="/">
+                <Voltar>VOLTAR</Voltar>
+              </Link>
+            </Buttons>
           </Form>
         </Container>
       </Wrapper>

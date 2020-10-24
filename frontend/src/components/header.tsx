@@ -8,6 +8,7 @@ import {
   TopHeader,
   DownHeader,
   LeftHeader,
+  RightHeader,
 } from '../styles/components/Header';
 
 export default function Header() {
@@ -33,14 +34,14 @@ export default function Header() {
             </form>
           </LeftHeader>
 
-          <div id="header_right">
+          <RightHeader>
             <Link href="/">
               <FiStar id="FiStar" size="1.3rem" />
             </Link>
             <Link href="/">
               <FiUser id="FiUser" size="1.3rem" />
             </Link>
-          </div>
+          </RightHeader>
         </DownHeader>
       </Container>
     </Wrapper>
