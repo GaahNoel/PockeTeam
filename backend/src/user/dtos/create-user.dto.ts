@@ -7,9 +7,9 @@ export class CreateUserDto {
 
   password: string;
 
-  info: string;
+  info?: string;
 
-  idFavoritePokemon: string;
+  idFavoritePokemon?: string;
 
-  idPrincipalTeam: string;
+  idPrincipalTeam?: string;
 }

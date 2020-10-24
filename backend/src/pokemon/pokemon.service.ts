@@ -1,28 +1,49 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Pokemon } from './schema/pokemon.schema';
+import { Pokemon } from './schemas/pokemon.schema';
+import { PokemonList } from './schemas/list-pokemon.schema';
 import { CreatePokemonDto } from './dtos/create-pokemon.dto';
+import { UpdatePokemonListDto } from './dtos/update-pokemon-list.dto';
 
 @Injectable()
 export class PokemonService {
   constructor(
     @InjectModel(Pokemon.name)
-    private UserModel: Model<Pokemon>,
+    private PokemonModel: Model<Pokemon>,
+
+    @InjectModel(PokemonList.name)
+    private PokemonListModel: Model<PokemonList>,
   ) {}
 
   async create(createPokemonDto: CreatePokemonDto): Promise<Pokemon> {
-    const createdUser = new this.UserModel(createPokemonDto);
+    const createdUser = new this.PokemonModel(createPokemonDto);
     return createdUser.save();
   }
 
+  async updateList(
+    updatePokemonListDto: UpdatePokemonListDto,
+  ): Promise<PokemonList> {
+    const updatedList = new this.PokemonListModel({
+      list: updatePokemonListDto,
+    });
+    return updatedList.save();
+  }
+
   async findByID(id: number): Promise<Pokemon> {
-    const selectedUser = this.UserModel.findById(id);
+    const selectedUser = this.PokemonModel.findById(id);
     return selectedUser;
   }
 
+  async allPokemons(): Promise<PokemonList> {
+    const allPokemons = this.PokemonListModel.find()
+      .select('list')
+      .findOne();
+    return allPokemons;
+  }
+
   async index(): Promise<Pokemon[]> {
-    const selectedUser = this.UserModel.find();
+    const selectedUser = this.PokemonModel.find();
     return selectedUser;
   }
 }
