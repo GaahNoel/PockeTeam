@@ -91,17 +91,22 @@ export const Mobile = styled.h3`
 export const Button = styled.a`
   color: #000000;
   margin-top: 15px;
-  padding: 10.5px 55px;
+  
+  width: 100%;
+  height: 2.5rem;
 
   border: 1px solid #000000;
   text-decoration: none;
 
+  display: flex;
   align-items: center;
+  justify-content: center;
+
   font-weight: bold;
   font-size: medium;
   border-radius: 5px;
   @media (min-width: 850px) {
-    padding: 10.5px 116px;
-    padding: 10.5px 116px;
+    //padding: 10.5px 116px;
+    //padding: 10.5px 116px;
   }
 `;

@@ -88,7 +88,7 @@ export default function Login() {
                 <div>
                   <button type="submit">ENTRAR</button>
                   <Link href="/">
-                    <Button>VOLTART</Button>
+                    <Button>VOLTAR</Button>
                   </Link>
                 </div>
               </form>

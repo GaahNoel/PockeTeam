@@ -386,11 +386,11 @@ const Pokemon: React.FC = () => {
               <div>
                 <RadarChart
                   name={pokemonName}
-                  cx={300}
-                  cy={250}
-                  outerRadius={150}
-                  width={500}
-                  height={500}
+                  cx={150}
+                  cy={150}
+                  outerRadius={100}
+                  width={300}
+                  height={300}
                   data={data}
                 >
                   <PolarGrid />
