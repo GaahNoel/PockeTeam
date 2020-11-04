@@ -78,10 +78,42 @@ interface MoveDetails {
   pp: number;
 }
 
+
 const Pokemon: React.FC = () => {
+  const {register, handleSubmit, errors} = useForm();
   const [pokemon, setPokemon] = useState<PokemonTypes>();
   const [pokemonName, setPokemonName] = useState('');
   const [options, setOptions] = useState([]);
+  const [movesArray, setMovesArray] = useState([]);
+  const [itemsArray, setItemsArray] = useState([]);
+
+  /* Seleções de moves */
+  const [move1, setMove1] = useState('');
+  const [move2, setMove2] = useState('');
+  const [move3, setMove3] = useState('');
+  const [move4, setMove4] = useState('');
+
+  const [move1Details, setMove1Details] = useState<MoveDetails>();
+  const [move2Details, setMove2Details] = useState<MoveDetails>();
+  const [move3Details, setMove3Details] = useState<MoveDetails>();
+  const [move4Details, setMove4Details] = useState<MoveDetails>();
+
+  const [item, setItem] = useState('');
+  const [itemDetails, setItemDetails] = useState<itemTypes>();
+  const [stateMove1, setStateMove1] = useState({
+    selection: 0,
+  });
+  const [stateMove2, setStateMove2] = useState({
+    selection: 0,
+  });
+  const [stateMove3, setStateMove3] = useState({
+    selection: 0,
+  });
+  const [stateMove4, setStateMove4] = useState({
+    selection: 0,
+  });
+
+  const formRef = useRef<HTMLFormElement>();
   const [data, setData] = useState([
     {
       subject: 'hp',
@@ -99,12 +131,12 @@ const Pokemon: React.FC = () => {
       fullMark: 1000,
     },
     {
-      subject: 'special-attack',
+      subject: 'sp.atk',
       A: 0,
       fullMark: 1000,
     },
     {
-      subject: 'special-defense',
+      subject: 'sp.def',
       A: 0,
       fullMark: 1000,
     },
@@ -114,7 +146,8 @@ const Pokemon: React.FC = () => {
       fullMark: 1000,
     },
   ]);
-
+  
+  
   useEffect(() => {
     axios.get('http://localhost:3333/pokemon/all-pokemons').then((response) => {
       response.data.list.forEach((pokemons) => {
@@ -126,35 +159,26 @@ const Pokemon: React.FC = () => {
     });
   }, []);
 
-  const [movesArray, setMovesArray] = useState([]);
-  const [itemsArray, setItemsArray] = useState([]);
+  const onSubmit = (data, e) => {
+    e.preventDefault();
+    axios.post('http://localhost:3333/pokemon/create/', {
+      name:pokemonName,
+      image:pokemon.sprites.front_default,
+      moves:[move1,move2,move3,move4],
+      stats:{
+        hp:pokemon.stats[0].base_stat,
+        atk:pokemon.stats[1].base_stat,
+        def:pokemon.stats[2].base_stat,
+        spAtk:pokemon.stats[3].base_stat,
+        spDef:pokemon.stats[4].base_stat,
+        speed:pokemon.stats[5].base_stat
+      },
+      item,
+    }).then((response) => {
+      console.log(response.data);
+    });
+  }
 
-  /* Seleções de moves */
-  const [move1, setMove1] = useState('');
-  const [move2, setMove2] = useState('');
-  const [move3, setMove3] = useState('');
-  const [move4, setMove4] = useState('');
-
-  const [move1Details, setMove1Details] = useState<MoveDetails>();
-  const [move2Details, setMove2Details] = useState<MoveDetails>();
-  const [move3Details, setMove3Details] = useState<MoveDetails>();
-  const [move4Details, setMove4Details] = useState<MoveDetails>();
-
-  const [itemDetails, setItemDetails] = useState<itemTypes>();
-  const [stateMove1, setStateMove1] = useState({
-    selection: 0,
-  });
-  const [stateMove2, setStateMove2] = useState({
-    selection: 0,
-  });
-  const [stateMove3, setStateMove3] = useState({
-    selection: 0,
-  });
-  const [stateMove4, setStateMove4] = useState({
-    selection: 0,
-  });
-
-  const formRef = useRef<HTMLFormElement>();
   const reset = () => {
     setStateMove1({
       selection: 0,
@@ -222,11 +246,11 @@ const Pokemon: React.FC = () => {
               A: stats[2].base_stat,
             },
             {
-              subject: stats[3].stat.name,
+              subject: 'sp.atk',
               A: stats[3].base_stat,
             },
             {
-              subject: stats[4].stat.name,
+              subject: 'sp.def',
               A: stats[4].base_stat,
             },
             {
@@ -361,7 +385,7 @@ const Pokemon: React.FC = () => {
       <Wrapper>
         <Container>
           <h2>SELEÇÃO DE POKÉMON</h2>
-          <Form ref={formRef}>
+          <Form onSubmit={handleSubmit(onSubmit)} ref={formRef}>
             <PokemonSelect>
               <div>
                 <h3>Pokémon</h3>
@@ -372,6 +396,8 @@ const Pokemon: React.FC = () => {
                     name="pokemon"
                     className="pokemonSelect"
                     styles={widthChange}
+                    inputRef={register({required:true})}
+                    required
                   />
                 )}
               </div>
@@ -419,6 +445,7 @@ const Pokemon: React.FC = () => {
                     setMove1(e.label);
                   }}
                   isDisabled={!pokemonName}
+                  inputRef={register({required:true})}
                   required
                 />
                 <MoveDetails>
@@ -458,6 +485,7 @@ const Pokemon: React.FC = () => {
                   }}
                   isDisabled={!pokemonName}
                   required
+                  inputRef={register({required:true})}
                 />
                 <MoveDetails>
                   <p>
@@ -496,6 +524,7 @@ const Pokemon: React.FC = () => {
                   }}
                   isDisabled={!pokemonName}
                   required
+                  inputRef={register({required:true})}
                 />
                 <MoveDetails>
                   <p>
@@ -534,6 +563,7 @@ const Pokemon: React.FC = () => {
                   }}
                   isDisabled={!pokemonName}
                   required
+                  inputRef={register({required:true})}
                 />
                 <MoveDetails>
                   <p>
@@ -569,8 +599,11 @@ const Pokemon: React.FC = () => {
                   isDisabled={!pokemonName}
                   styles={widthChangeItemBox}
                   onChange={(e: Select) => {
+                    setItem(e.label);
                     requireItemDetails(e);
                   }}
+                  inputRef={register({required:true})}
+
                 />
                 <p>
                   Descrição: {itemDetails && <span>{itemDetails.effect}</span>}

@@ -18,6 +18,10 @@ export const Container = styled.div`
   
 `;
 
+export const Form = styled.button`
+  
+`;
+
 export const TeamName = styled.div`
   width: 80%;
   display: flex;
@@ -39,8 +43,10 @@ export const TeamSelect = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   row-gap: 0;
-
+  
 `;
+
+
 
 export const Button = styled.a`
   height: 60px;
@@ -60,5 +66,43 @@ export const Button = styled.a`
   @media (min-width: 850px) {
     padding: 10.5px 116px;
   }
+  &:hover{
+    background-color: #969391;
+    //opacity: 0.8;
+  }
 `;
+
+export const Buttons = styled.div`
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 100px;
+  button {
+    margin-bottom: 35px;
+    padding: 0px 5px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: medium;
+    color: #ffffff;
+    background-color: #000000;
+    border-radius: 5px;
+  }
+`;
+export const Voltar = styled.a`
+  color: #000000;
+  padding: 20px 5px;
+  height: 60px;
+  width: 105.09px;
+  border: 1px solid #000000;
+  text-decoration: none;
+  text-align: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: medium;
+  border-radius: 5px;
+`;
+
 

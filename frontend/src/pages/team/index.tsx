@@ -13,6 +13,9 @@ import React, {
     FieldName,
     TeamSelect,
     Button,
+    Buttons,
+    Voltar,
+    Form,
   } from '../../styles/pages/Team';
 
 import Link from 'next/link';
@@ -21,9 +24,18 @@ import { Helmet } from 'react-helmet';
 import Header from '../../components/header';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
+import Router from 'next/router';
 
 const Team:React.FC = ()=> {
     const { register, handleSubmit, errors } = useForm();
+
+    const onSubmit = (data, e) => {
+      e.preventDefault();
+    }
+
+    const handleClick = () =>{
+      Router.push('/team/pokemon');
+    }
 
     return (
     <>
@@ -34,6 +46,7 @@ const Team:React.FC = ()=> {
     
       <Wrapper>
         <Container>
+         <Form onSubmit={handleSubmit(onSubmit)}>
             <TeamName>
                 <p>Nome do time</p>
                 <FieldName
@@ -49,32 +62,40 @@ const Team:React.FC = ()=> {
             </TeamName>
             <TeamSelect>
                 <Link href="/">
-                    <Button>+</Button>
+                    <Button onClick={handleClick}>+</Button>
                 </Link>
 
                 <Link href="/">
-                    <Button>+</Button>
+                    <Button onClick={handleClick}>+</Button>
                 </Link>
 
                 <Link href="/">
-                    <Button>+</Button>
+                    <Button onClick={handleClick}>+</Button>
                 </Link>
 
                 <Link href="/">
-                    <Button>+</Button>
+                    <Button onClick={handleClick}>+</Button>
                 </Link>
 
                 <Link href="/">
-                    <Button>+</Button>
+                    <Button onClick={handleClick}>+</Button>
                 </Link>
 
                 <Link href="/">
-                    <Button>+</Button>
+                    <Button onClick={handleClick}>+</Button>
                 </Link>
             </TeamSelect>
+            <Buttons>
+              <button type="submit">CONFIRMAR</button>
+              <Link href="/">
+                <Voltar>VOLTAR</Voltar>
+              </Link>
+            </Buttons>
+          </Form>
         </Container>
       </Wrapper> 
     </>
   );
 }
+
 export default Team;
