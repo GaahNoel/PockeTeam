@@ -15,7 +15,7 @@ export const Container = styled.div`
   align-items: center;
   background-color: #ffffff;
   img {
-    width: 300px;
+    width: 200px;
   }
   h2 {
     margin-top: 2rem;
