@@ -7,19 +7,22 @@ export class Pokemon extends Document {
   name: string;
 
   @Prop()
+  image: string;
+
+  @Prop()
   moves: Array<string>;
 
   @Prop()
   type: string;
 
   @Prop()
-  status: {
+  stats: {
     hp: number;
-    speed: number;
     atk: number;
     def: number;
     spAtk: number;
     spDef: number;
+    speed: number;
   };
 
   @Prop()
