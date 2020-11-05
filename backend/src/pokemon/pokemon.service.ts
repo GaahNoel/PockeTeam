@@ -43,7 +43,12 @@ export class PokemonService {
   }
 
   async index(): Promise<Pokemon[]> {
-    const selectedUser = this.PokemonModel.find();
-    return selectedUser;
+    const selectedPokemon = this.PokemonModel.find();
+    return selectedPokemon;
+  }
+
+  async delete(id: string): Promise<Pokemon> {
+    const selectedPokemon = this.PokemonModel.deleteById(id);
+    return selectedPokemon;
   }
 }

@@ -797,21 +797,6 @@
     "@types/bson" "*"
     "@types/node" "*"
 
-"@types/mongoose-delete@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@types/mongoose-delete/-/mongoose-delete-0.5.2.tgz#3e678c2997b7cbf6dc2f10d097375319598a20f8"
-  integrity sha512-R7J3cGnK+4n6niIAixvFUacRdhR1GG7lqLDoigPDubtLPnVcQvS2Cr6cC5PP4DAMv9V2u/74OSV6fKLSRQe6Gg==
-  dependencies:
-    "@types/mongoose" "*"
-
-"@types/mongoose@*":
-  version "5.7.37"
-  resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.7.37.tgz#8aa6960a52e551ee49edbb6b0dce587bbb66762b"
-  integrity sha512-PRAZiDZvo3D1Dzs1xtFQBT8YTZIXI9MexkTWyTwIy6C/6jAEGQen2ayg4NjHhjM+5eE4isHq0vbUjzzVWu2qJQ==
-  dependencies:
-    "@types/mongodb" "*"
-    "@types/node" "*"
-
 "@types/mongoose@^5.7.36":
   version "5.7.36"
   resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.7.36.tgz#2dae28c63041c6afba8a83ea02969f463b3f1021"
