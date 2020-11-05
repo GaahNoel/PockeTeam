@@ -32,7 +32,7 @@ export class PokemonController {
     return this.pokemonService.updateList(updatePokemonListDto);
   }
 
-  @Delete(':/id')
+  @Delete('/:id')
   delete(@Param('id') id: string): Promise<Pokemon> {
     return this.pokemonService.delete(id);
   }
