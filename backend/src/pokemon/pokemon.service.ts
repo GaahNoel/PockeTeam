@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { SoftDeleteModel } from 'mongoose-delete';
+import { Model } from 'mongoose';
 import { Pokemon } from './schemas/pokemon.schema';
 import { PokemonList } from './schemas/list-pokemon.schema';
 import { CreatePokemonDto } from './dtos/create-pokemon.dto';
@@ -10,7 +11,7 @@ import { UpdatePokemonListDto } from './dtos/update-pokemon-list.dto';
 export class PokemonService {
   constructor(
     @InjectModel(Pokemon.name)
-    private PokemonModel: SoftDeleteModel<Pokemon>,
+    private PokemonModel: Model<Pokemon>,
 
     @InjectModel(PokemonList.name)
     private PokemonListModel: SoftDeleteModel<PokemonList>,
@@ -48,7 +49,7 @@ export class PokemonService {
   }
 
   async delete(id: string): Promise<Pokemon> {
-    const selectedPokemon = this.PokemonModel.deleteById(id);
+    const selectedPokemon = this.PokemonModel.findByIdAndDelete(id);
     return selectedPokemon;
   }
 }

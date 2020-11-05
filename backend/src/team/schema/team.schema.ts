@@ -10,6 +10,9 @@ export class Team extends Document {
 
   @Prop()
   pokemons: Array<Pokemon>;
+
+  @Prop()
+  private: boolean;
 }
 
 export const TeamSchema = SchemaFactory.createForClass(Team).plugin(
