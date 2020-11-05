@@ -31,7 +31,7 @@ export class PokemonService {
     return updatedList.save();
   }
 
-  async findByID(id: number): Promise<Pokemon> {
+  async findByID(id: string): Promise<Pokemon> {
     const selectedUser = this.PokemonModel.findById(id);
     return selectedUser;
   }

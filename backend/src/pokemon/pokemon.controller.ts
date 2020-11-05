@@ -20,6 +20,11 @@ export class PokemonController {
     return this.pokemonService.allPokemons();
   }
 
+  @Get('/:id')
+  findById(@Param('id') id: string): Promise<Pokemon> {
+    return this.pokemonService.findByID(id);
+  }
+
   @Post('create')
   create(@Body() createPokemonDto: CreatePokemonDto): Promise<Pokemon> {
     return this.pokemonService.create(createPokemonDto);
