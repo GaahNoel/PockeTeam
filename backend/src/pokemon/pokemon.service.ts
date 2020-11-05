@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { SoftDeleteModel } from 'mongoose-delete';
 import { Pokemon } from './schemas/pokemon.schema';
 import { PokemonList } from './schemas/list-pokemon.schema';
 import { CreatePokemonDto } from './dtos/create-pokemon.dto';
@@ -10,10 +10,10 @@ import { UpdatePokemonListDto } from './dtos/update-pokemon-list.dto';
 export class PokemonService {
   constructor(
     @InjectModel(Pokemon.name)
-    private PokemonModel: Model<Pokemon>,
+    private PokemonModel: SoftDeleteModel<Pokemon>,
 
     @InjectModel(PokemonList.name)
-    private PokemonListModel: Model<PokemonList>,
+    private PokemonListModel: SoftDeleteModel<PokemonList>,
   ) {}
 
   async create(createPokemonDto: CreatePokemonDto): Promise<Pokemon> {

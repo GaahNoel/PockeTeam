@@ -1,28 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Pokemon } from 'src/pokemon/schemas/pokemon.schema';
+import * as mongooseDelete from 'mongoose-delete';
 
 @Schema()
-export class User extends Document {
+export class Team extends Document {
   @Prop()
-  pokemon: string;
+  name: string;
 
   @Prop()
-  username: string;
-
-  @Prop()
-  email: string;
-
-  @Prop()
-  password: string;
-
-  @Prop()
-  info: string;
-
-  @Prop()
-  idFavoritePokemon: string;
-
-  @Prop()
-  idPrincipalTeam: string;
+  pokemons: Array<Pokemon>;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const TeamSchema = SchemaFactory.createForClass(Team).plugin(
+  mongooseDelete,
+);

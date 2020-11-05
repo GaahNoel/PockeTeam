@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import * as mongooseDelete from 'mongoose-delete';
 
 @Schema()
 export class Pokemon extends Document {
@@ -29,4 +30,6 @@ export class Pokemon extends Document {
   item: string;
 }
 
-export const PokemonSchema = SchemaFactory.createForClass(Pokemon);
+export const PokemonSchema = SchemaFactory.createForClass(Pokemon).plugin(
+  mongooseDelete,
+);

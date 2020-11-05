@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import * as mongooseDelete from 'mongoose-delete';
 import { Document } from 'mongoose';
 
 @Schema()
@@ -25,4 +26,6 @@ export class User extends Document {
   idPrincipalTeam: string;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const UserSchema = SchemaFactory.createForClass(User).plugin(
+  mongooseDelete,
+);
