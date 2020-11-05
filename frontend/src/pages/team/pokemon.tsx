@@ -11,8 +11,9 @@ import Link from 'next/link';
 import Select from 'react-select';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import { SportsCricketSharp } from '@material-ui/icons';
+
 import { string } from 'yup';
+import Router from 'next/router';
 import {
   Radar,
   RadarChart,
@@ -175,7 +176,13 @@ const Pokemon: React.FC = () => {
       },
       item,
     }).then((response) => {
-      console.log(response.data);
+      const dataTeam = JSON.parse(localStorage.getItem('team'));
+      dataTeam.push({
+        id:response.data._id,
+        image:response.data.image
+      });
+      localStorage.setItem('team', JSON.stringify(dataTeam)); 
+      Router.push('/team')
     });
   }
 
