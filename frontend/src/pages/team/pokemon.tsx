@@ -186,6 +186,7 @@ const Pokemon: React.FC = () => {
     });
   }
 
+
   const reset = () => {
     setStateMove1({
       selection: 0,
@@ -626,7 +627,7 @@ const Pokemon: React.FC = () => {
             </Item>
             <Buttons>
               <button type="submit">SELECIONAR</button>
-              <Link href="/">
+              <Link href="/team">
                 <Voltar>VOLTAR</Voltar>
               </Link>
             </Buttons>
