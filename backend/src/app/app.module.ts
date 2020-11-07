@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ExampleModule } from '../example/example.module';
 import { UserModule } from '../user/user.module';
+import { TeamModule } from '../team/team.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
@@ -13,6 +14,7 @@ import { UserModule } from '../user/user.module';
     UserModule,
     PokemonModule,
     ExampleModule,
+    TeamModule,
   ],
   controllers: [AppController],
   providers: [AppService],
