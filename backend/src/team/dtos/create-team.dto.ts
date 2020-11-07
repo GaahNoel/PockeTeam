@@ -1,9 +1,9 @@
-import { Pokemon } from 'src/pokemon/schemas/pokemon.schema';
+import { Schema as SchemaTypes } from 'mongoose';
 
 export class CreateTeamDto {
   name: string;
 
-  pokemons: Array<Pokemon>;
+  pokemons: Array<SchemaTypes.Types.ObjectId>;
 
   private: boolean;
 }
