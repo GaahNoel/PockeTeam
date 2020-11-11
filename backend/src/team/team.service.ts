@@ -35,8 +35,10 @@ export class TeamService {
     return selectedUser;
   }
 
-  async getByUser(id: string): Promise<Team[]> {
-    const selectedTeams = this.TeamModel.find({ user: id });
+  async getByUser(username: string): Promise<Team[]> {
+    const userId = this.UserModel.findOne({ username }).select('id');
+
+    const selectedTeams = this.TeamModel.find({ user: userId });
     return selectedTeams;
   }
 }

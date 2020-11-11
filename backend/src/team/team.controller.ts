@@ -11,9 +11,9 @@ export class TeamController {
     return this.teamService.index();
   }
 
-  @Get('/:id')
-  getByUser(@Param('id') id: string): Promise<Team[]> {
-    return this.teamService.getByUser(id);
+  @Get('/:username')
+  getByUser(@Param('username') username: string): Promise<Team[]> {
+    return this.teamService.getByUser(username);
   }
 
   @Post('create')
