@@ -11,7 +11,10 @@ export class Team extends Document {
   pokemons: Array<SchemaTypes.Types.ObjectId>;
 
   @Prop()
-  private: boolean;
+  isPrivate: boolean;
+
+  @Prop({ ref: 'User' })
+  user: SchemaTypes.Types.ObjectId;
 }
 
 export const TeamSchema = SchemaFactory.createForClass(Team).plugin(

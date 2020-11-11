@@ -5,9 +5,11 @@ import { TeamController } from './team.controller';
 import { TeamService } from './team.service';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Team.name, schema: TeamSchema }])],
+  imports: [
+    MongooseModule.forFeature([{ name: Team.name, schema: TeamSchema }]),
+  ],
 
   controllers: [TeamController],
-  providers: [TeamService]
+  providers: [TeamService],
 })
 export class TeamModule {}

@@ -13,6 +13,8 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
+    const findUser = this.UserModel.find({ username: createUserDto.username });
+    if (findUser) return null;
     const createdUser = new this.UserModel(createUserDto);
     return createdUser.save();
   }

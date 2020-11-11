@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Team } from './schema/team.schema';
 import { TeamService } from './team.service';
 import { CreateTeamDto } from './dtos/create-team.dto';
@@ -9,6 +9,11 @@ export class TeamController {
   @Get('list')
   index(): Promise<Team[]> {
     return this.teamService.index();
+  }
+
+  @Get('/:id')
+  getByUser(@Param('id') id: string): Promise<Team[]> {
+    return this.teamService.getByUser(id);
   }
 
   @Post('create')

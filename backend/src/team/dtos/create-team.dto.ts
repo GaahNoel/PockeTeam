@@ -5,5 +5,7 @@ export class CreateTeamDto {
 
   pokemons: Array<SchemaTypes.Types.ObjectId>;
 
-  private: boolean;
+  isPrivate: boolean;
+
+  user: SchemaTypes.Types.ObjectId;
 }
