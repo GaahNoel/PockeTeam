@@ -12,6 +12,8 @@ import Select from 'react-select';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 
+import Loader from 'react-loader-spinner';
+
 import { string } from 'yup';
 import Router from 'next/router';
 import {
@@ -182,7 +184,7 @@ const Pokemon: React.FC = () => {
         image:response.data.image
       });
       localStorage.setItem('team', JSON.stringify(dataTeam)); 
-      Router.push('/team')
+      Router.push('/team/create')
     });
   }
 
@@ -397,7 +399,7 @@ const Pokemon: React.FC = () => {
             <PokemonSelect>
               <div>
                 <h3>Pokémon</h3>
-                {options.length > 1000 && (
+                {options.length > 1000? (
                   <Select
                     options={options}
                     onChange={changePokemon}
@@ -407,9 +409,12 @@ const Pokemon: React.FC = () => {
                     inputRef={register({required:true})}
                     required
                   />
-                )}
+                ):
+                  <img src="https://media0.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"></img>
+                }
               </div>
-
+              
+              
               {pokemonName ? (
                 <>
                   <img src={pokemon.sprites.front_default} alt="" />
@@ -627,7 +632,7 @@ const Pokemon: React.FC = () => {
             </Item>
             <Buttons>
               <button type="submit">SELECIONAR</button>
-              <Link href="/team">
+              <Link href="/team/create">
                 <Voltar>VOLTAR</Voltar>
               </Link>
             </Buttons>

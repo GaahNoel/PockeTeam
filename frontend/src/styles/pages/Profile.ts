@@ -32,14 +32,5 @@ export const Container = styled.div`
   }
 `;
 
-export const User = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-  background-color: #ffffff;
-
-  @media (min-width: 850px) {
-    background-color: lightgrey;
-  }
-`;
+export const Title = styled.h1`
+`
