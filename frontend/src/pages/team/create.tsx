@@ -40,6 +40,7 @@ import { SentimentSatisfied } from '@material-ui/icons';
 
 const Team:React.FC = ()=> {
     const { register, handleSubmit, errors } = useForm();
+    const [ userName, setUserName ] = useState('');
     const [ teamName, setTeamName ] = useState('');
     const [ value, setValue ] = useState('');
     const [team, setTeam] = useState([]);
@@ -77,27 +78,40 @@ const Team:React.FC = ()=> {
     ]);
   
     useEffect(() => {
+
+      setUserName(localStorage.getItem('username'));
+
       if(localStorage.getItem('team')){
         //console.log(localStorage.getItem('team'));
         setTeam(JSON.parse(localStorage.getItem('team')));
       }
       else{
         localStorage.setItem('team', JSON.stringify(team));
-        
       }
     },[])
 
     useEffect(() => {
       const arrayAux = [0, 0, 0, 0, 0, 0];
   
-      const nameAux = localStorage.getItem('teamName').replaceAll(`"`,"");
-      const privateAux = localStorage.getItem('private').replaceAll(`"`,"");
 
-      setTeamName(nameAux);
+      if(localStorage.getItem('teamName')){
+        //console.log(localStorage.getItem('team'));
+        const nameAux = localStorage.getItem('teamName').replaceAll(`"`,"");
+        setTeamName(nameAux);
+      }
+      
+      if(localStorage.getItem('private')){
+        //console.log(localStorage.getItem('team'));
+        const privateAux = localStorage.getItem('private').replaceAll(`"`,"");
+        {privateAux? setValue(privateAux): setValue('public')}
+      }
+      
+     
 
-      {privateAux? setValue(privateAux): setValue('public')}
+      
+
+     
       //setValue(privateAux);
-      console.log('AUX: '+ value);
       //setValue("public");
 
       if(team.length !== 0){
@@ -171,15 +185,18 @@ const Team:React.FC = ()=> {
       console.log(data);
       console.log(value);
       console.log(teamDef);
-
+      console.log(userName);
       axios.post(`http://localhost:3333/team/create`,{
+        user: userName,
         name: data.TeamName,
         pokemons: teamDef,
-        private: value==='private'?true:false,
+        isPrivate: value==='private'?true:false,
       }).then(response => {
         alert("Time cadastrado com sucesso!");
         localStorage.setItem('team',JSON.stringify([]));
-        Router.push("/");
+        localStorage.setItem('private','public');
+        localStorage.setItem('teamName','');
+        Router.push("/team");
       })
     }
 
@@ -201,7 +218,7 @@ const Team:React.FC = ()=> {
 
     const onClickVoltar = () => {
       localStorage.setItem('teamName',JSON.stringify(''));
-      localStorage.setItem('private',JSON.stringify(''));
+      localStorage.setItem('private',JSON.stringify('public'));
       team.forEach(async e => {
         await axios.delete(`http://localhost:3333/pokemon/${e.id}`)
       })

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Console } from 'console';
 import { SoftDeleteModel } from 'mongoose-delete';
 import { User } from 'src/user/schema/user.schema';
 import { CreateTeamDto } from './dtos/create-team.dto';
@@ -18,6 +19,8 @@ export class TeamService {
     const userId = await this.UserModel.findOne({ username: user }).select(
       'id',
     );
+    console.log(userId);
+    console.log(createTeamDto);
     const createdTeam = new this.TeamModel({
       name,
       pokemons,

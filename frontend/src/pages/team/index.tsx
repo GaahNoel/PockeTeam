@@ -9,12 +9,30 @@ import {
     Wrapper,
     Container,
     TitlePage,
-    
+    Teams,
+    Names,
+    Pokemon,
   } from '../../styles/pages/Team';
 
-export default function Teams() {
+  
+
+export default function Team() {
     const router = useRouter();
-    
+    const [ myTeams, setMyTeams ] = useState([]);
+    const [ userName, setUserName ] = useState('');
+
+    useEffect(() => {
+
+      
+      const userNameAux = localStorage.getItem('username');
+      setUserName(userNameAux);
+
+      axios.get(`http://localhost:3333/team/user/${userNameAux}`).then((response) => {
+        setMyTeams(response.data);
+        console.log(response.data);
+      });
+    }, []);
+
     return (
       <>
         <Helmet>
@@ -24,8 +42,30 @@ export default function Teams() {
         <Wrapper>
           <Container>
             <TitlePage>
-            <p></p>
+            <p id="title">Meus times</p>
+            <p id="text">Classificado por: mais recentes</p>
             </TitlePage>
+
+            <Teams>
+              {myTeams.map(team => (
+                <>
+                  <Names>
+                      <p>Nome do Time: {team.name}</p>
+                      <p>Tipo de Visualização: {team.isPrivate?'Privado':'Público'}</p>
+                  </Names>
+
+                  <Pokemon>
+                    {team.pokemons.map(pokemon => (
+                     <div>
+                        <img src={pokemon.image}/>
+                        <img src={pokemon.item}/>
+                     </div>
+                    ))}
+                    </Pokemon>
+                </>
+              ))}
+              
+            </Teams>
           </Container>
         </Wrapper>
       </>
