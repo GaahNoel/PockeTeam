@@ -27,9 +27,9 @@ export class TeamService {
     return createdTeam.save();
   }
 
-  async findByID(id: number): Promise<Team> {
-    const selectedUser = await this.TeamModel.findById(id);
-    return selectedUser;
+  async findByID(id: string): Promise<Team> {
+    const selectedTeam = await this.TeamModel.findById(id).populate('user');
+    return selectedTeam;
   }
 
   async index(): Promise<Team[]> {
@@ -38,10 +38,12 @@ export class TeamService {
   }
 
   async getByUser(username: string): Promise<Team[]> {
-    const id = await this.UserModel.findOne({
+    const { _id: id } = await this.UserModel.findOne({
       username,
     }).select('id');
+    console.log(id);
     const selectedTeams = await this.TeamModel.find({ user: id });
+    console.log(selectedTeams);
     // const selectedTeams = this.TeamModel.find({ user: userId });
     return selectedTeams;
   }

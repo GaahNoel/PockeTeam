@@ -11,7 +11,12 @@ export class TeamController {
     return this.teamService.index();
   }
 
-  @Get('/:username')
+  @Get('/:id')
+  findByID(@Param('id') id: string): Promise<Team> {
+    return this.teamService.findByID(id);
+  }
+
+  @Get('/user/:username')
   getByUser(@Param('username') username: string): Promise<Team[]> {
     return this.teamService.getByUser(username);
   }
