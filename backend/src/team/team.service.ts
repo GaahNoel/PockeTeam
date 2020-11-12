@@ -15,7 +15,9 @@ export class TeamService {
 
   async create(createTeamDto: CreateTeamDto): Promise<Team> {
     const { name, pokemons, isPrivate, user } = createTeamDto;
-    const userId = this.UserModel.findOne({ username: user }).select('id');
+    const userId = await this.UserModel.findOne({ username: user }).select(
+      'id',
+    );
     const createdTeam = new this.TeamModel({
       name,
       pokemons,
@@ -26,19 +28,21 @@ export class TeamService {
   }
 
   async findByID(id: number): Promise<Team> {
-    const selectedUser = this.TeamModel.findById(id);
+    const selectedUser = await this.TeamModel.findById(id);
     return selectedUser;
   }
 
   async index(): Promise<Team[]> {
-    const selectedUser = this.TeamModel.find();
+    const selectedUser = await this.TeamModel.find();
     return selectedUser;
   }
 
   async getByUser(username: string): Promise<Team[]> {
-    const userId = this.UserModel.findOne({ username }).select('id');
-
-    const selectedTeams = this.TeamModel.find({ user: userId });
+    const id = await this.UserModel.findOne({
+      username,
+    }).select('id');
+    const selectedTeams = await this.TeamModel.find({ user: id });
+    // const selectedTeams = this.TeamModel.find({ user: userId });
     return selectedTeams;
   }
 }

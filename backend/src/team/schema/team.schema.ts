@@ -17,6 +17,6 @@ export class Team extends Document {
   user: SchemaTypes.Types.ObjectId;
 }
 
-export const TeamSchema = SchemaFactory.createForClass(Team).plugin(
-  mongooseDelete,
-);
+export const TeamSchema = SchemaFactory.createForClass(
+  Team,
+).plugin(mongooseDelete, { deletedAt: true, overrideMethods: true });
