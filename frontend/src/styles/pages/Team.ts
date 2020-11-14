@@ -15,7 +15,7 @@ export const Container = styled.div`
   width: 100%;
   display: flex;
   //justify-content: center;
-  
+
   flex-direction: column;
   align-items: flex-start;
   background-color: white;
@@ -39,13 +39,13 @@ export const TitlePage = styled.div`
   flex-direction: column;
   align-items: flex-start;
   height: 100vh;
-  #title{
+  #title {
     font-weight: bold;
     font-size: 38px;
     margin-top: 30px;
     margin-bottom: 20px;
   }
-  .text{
+  .text {
     font-size: 28px;
   }
 `;
@@ -56,21 +56,17 @@ export const Teams = styled.div`
   flex-direction: column;
   align-items: flex-start;
   height: 100vh;
-  #title{
+  #title {
     font-weight: bold;
     font-size: 38px;
     margin-top: 30px;
     margin-bottom: 20px;
   }
-  .text{
+  .text {
     font-size: 28px;
   }
 `;
 
-export const Names = styled.div`
-  
-`;
+export const Names = styled.div``;
 
-export const Pokemon = styled.div`
-  
-`;
+export const Pokemon = styled.div``;

@@ -15,7 +15,7 @@ import { useForm } from 'react-hook-form';
 import Loader from 'react-loader-spinner';
 
 import { string } from 'yup';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import {
   Radar,
   RadarChart,
@@ -81,9 +81,9 @@ interface MoveDetails {
   pp: number;
 }
 
-
 const Pokemon: React.FC = () => {
-  const {register, handleSubmit, errors} = useForm();
+  const router = useRouter();
+  const { register, handleSubmit, errors } = useForm();
   const [pokemon, setPokemon] = useState<PokemonTypes>();
   const [pokemonName, setPokemonName] = useState('');
   const [options, setOptions] = useState([]);
@@ -149,45 +149,53 @@ const Pokemon: React.FC = () => {
       fullMark: 1000,
     },
   ]);
-  
-  
+
   useEffect(() => {
-    axios.get('http://localhost:3333/pokemon/all-pokemons').then((response) => {
-      response.data.list.forEach((pokemons) => {
-        setOptions((oldPokemons: any) => [
-          ...oldPokemons,
-          { value: pokemons, label: pokemons },
-        ]);
-      });
-    });
+    if (!localStorage.getItem('username')) {
+      alert('Para acessar esta página é necessário estar logado');
+      router.push('/login');
+    } else {
+      axios
+        .get('http://localhost:3333/pokemon/all-pokemons')
+        .then((response) => {
+          response.data.list.forEach((pokemons) => {
+            setOptions((oldPokemons: any) => [
+              ...oldPokemons,
+              { value: pokemons, label: pokemons },
+            ]);
+          });
+        });
+    }
   }, []);
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    axios.post('http://localhost:3333/pokemon/create/', {
-      name:pokemonName,
-      image:pokemon.sprites.front_default,
-      moves:[move1,move2,move3,move4],
-      stats:{
-        hp:pokemon.stats[0].base_stat,
-        atk:pokemon.stats[1].base_stat,
-        def:pokemon.stats[2].base_stat,
-        spAtk:pokemon.stats[3].base_stat,
-        spDef:pokemon.stats[4].base_stat,
-        speed:pokemon.stats[5].base_stat
-      },
-      item,
-    }).then((response) => {
-      const dataTeam = JSON.parse(localStorage.getItem('team'));
-      dataTeam.push({
-        id:response.data._id,
-        image:response.data.image
+    axios
+      .post('http://localhost:3333/pokemon/create/', {
+        name: pokemonName,
+        image: pokemon.sprites.front_default,
+        moves: [move1, move2, move3, move4],
+        stats: {
+          hp: pokemon.stats[0].base_stat,
+          atk: pokemon.stats[1].base_stat,
+          def: pokemon.stats[2].base_stat,
+          spAtk: pokemon.stats[3].base_stat,
+          spDef: pokemon.stats[4].base_stat,
+          speed: pokemon.stats[5].base_stat,
+        },
+        item,
+      })
+      .then((response) => {
+        console.log(response.data);
+        const dataTeam = JSON.parse(localStorage.getItem('team'));
+        dataTeam.push({
+          id: response.data._id,
+          image: response.data.image,
+        });
+        localStorage.setItem('team', JSON.stringify(dataTeam));
+        Router.push('/team/create');
       });
-      localStorage.setItem('team', JSON.stringify(dataTeam)); 
-      Router.push('/team/create')
-    });
-  }
-
+  };
 
   const reset = () => {
     setStateMove1({
@@ -399,22 +407,21 @@ const Pokemon: React.FC = () => {
             <PokemonSelect>
               <div>
                 <h3>Pokémon</h3>
-                {options.length > 1000? (
+                {options.length > 1000 ? (
                   <Select
                     options={options}
                     onChange={changePokemon}
                     name="pokemon"
                     className="pokemonSelect"
                     styles={widthChange}
-                    inputRef={register({required:true})}
+                    inputRef={register({ required: true })}
                     required
                   />
-                ):
-                  <img src="https://media0.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"></img>
-                }
+                ) : (
+                  <img src="https://media0.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" />
+                )}
               </div>
-              
-              
+
               {pokemonName ? (
                 <>
                   <img src={pokemon.sprites.front_default} alt="" />
@@ -458,7 +465,7 @@ const Pokemon: React.FC = () => {
                     setMove1(e.label);
                   }}
                   isDisabled={!pokemonName}
-                  inputRef={register({required:true})}
+                  inputRef={register({ required: true })}
                   required
                 />
                 <MoveDetails>
@@ -498,7 +505,7 @@ const Pokemon: React.FC = () => {
                   }}
                   isDisabled={!pokemonName}
                   required
-                  inputRef={register({required:true})}
+                  inputRef={register({ required: true })}
                 />
                 <MoveDetails>
                   <p>
@@ -537,7 +544,7 @@ const Pokemon: React.FC = () => {
                   }}
                   isDisabled={!pokemonName}
                   required
-                  inputRef={register({required:true})}
+                  inputRef={register({ required: true })}
                 />
                 <MoveDetails>
                   <p>
@@ -576,7 +583,7 @@ const Pokemon: React.FC = () => {
                   }}
                   isDisabled={!pokemonName}
                   required
-                  inputRef={register({required:true})}
+                  inputRef={register({ required: true })}
                 />
                 <MoveDetails>
                   <p>
@@ -615,8 +622,7 @@ const Pokemon: React.FC = () => {
                     setItem(e.label);
                     requireItemDetails(e);
                   }}
-                  inputRef={register({required:true})}
-
+                  inputRef={register({ required: true })}
                 />
                 <p>
                   Descrição: {itemDetails && <span>{itemDetails.effect}</span>}

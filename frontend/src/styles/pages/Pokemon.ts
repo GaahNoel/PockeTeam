@@ -67,14 +67,14 @@ export const PokemonSelect = styled.div`
   align-items: center;
 
   div {
-      //  width: 12rem;
-      img{
-        display: block;
-        max-width: 100px;
-        padding: 0px;
-        margin: 0px;
-      }
+    //  width: 12rem;
+    img {
+      display: block;
+      max-width: 100px;
+      padding: 0px;
+      margin: 0px;
     }
+  }
 `;
 export const MoveDetails = styled.div`
   p {

@@ -6,69 +6,75 @@ import { useRouter } from 'next/router';
 import Header from '../../components/header';
 
 import {
-    Wrapper,
-    Container,
-    TitlePage,
-    Teams,
-    Names,
-    Pokemon,
-  } from '../../styles/pages/Team';
-
-  
+  Wrapper,
+  Container,
+  TitlePage,
+  Teams,
+  Names,
+  Pokemon,
+} from '../../styles/pages/Team';
 
 export default function Team() {
-    const router = useRouter();
-    const [ myTeams, setMyTeams ] = useState([]);
-    const [ userName, setUserName ] = useState('');
+  const router = useRouter();
+  const [myTeams, setMyTeams] = useState([]);
+  const [userName, setUserName] = useState('');
 
-    useEffect(() => {
+  useEffect(() => {
+    if (!localStorage.getItem('username')) {
+      alert('Para acessar esta página é necessário estar logado');
 
-      
+      router.push('/login');
+    } else {
+      setUserName(localStorage.getItem('username'));
       const userNameAux = localStorage.getItem('username');
       setUserName(userNameAux);
 
-      axios.get(`http://localhost:3333/team/user/${userNameAux}`).then((response) => {
-        setMyTeams(response.data);
-        console.log(response.data);
-      });
-    }, []);
+      axios
+        .get(`http://localhost:3333/team/user/${userNameAux}`)
+        .then((response) => {
+          setMyTeams(response.data);
+          console.log(response.data);
+        });
+    }
+  }, []);
 
-    return (
-      <>
-        <Helmet>
-          <title>Pokemania - My Teams</title>
-        </Helmet>
-        <Header />
-        <Wrapper>
-          <Container>
-            <TitlePage>
+  return (
+    <>
+      <Helmet>
+        <title>Pokemania - My Teams</title>
+      </Helmet>
+      <Header />
+      <Wrapper>
+        <Container>
+          <TitlePage>
             <p id="title">Meus times</p>
             <p id="text">Classificado por: mais recentes</p>
-            </TitlePage>
+          </TitlePage>
 
-            <Teams>
-              {myTeams.map(team => (
-                <>
-                  <Names>
-                      <p>Nome do Time: {team.name}</p>
-                      <p>Tipo de Visualização: {team.isPrivate?'Privado':'Público'}</p>
-                  </Names>
+          <Teams>
+            {myTeams.map((team) => (
+              <>
+                <Names>
+                  <p>Nome do Time: {team.name}</p>
+                  <p>
+                    Tipo de Visualização:{' '}
+                    {team.isPrivate ? 'Privado' : 'Público'}
+                  </p>
+                </Names>
 
-                  <Pokemon>
-                    {team.pokemons.map(pokemon => (
-                     <div>
-                        <img src={pokemon.image}/>
-                        <img src={pokemon.item}/>
-                     </div>
-                    ))}
-                    </Pokemon>
-                </>
-              ))}
-              
-            </Teams>
-          </Container>
-        </Wrapper>
-      </>
-    );
-  }
-  
+                <Pokemon>
+                  {team.pokemon.map((pokemon) => (
+                    <div>
+                      <img src={pokemon.image} />
+                      <img src={pokemon.item} />
+                    </div>
+                  ))}
+                </Pokemon>
+              </>
+            ))}
+          </Teams>
+        </Container>
+      </Wrapper>
+    </>
+  );
+}

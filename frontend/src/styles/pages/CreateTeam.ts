@@ -16,7 +16,6 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: #ffffff;
-  
 `;
 
 export const Form = styled.form`
@@ -26,8 +25,8 @@ export const Form = styled.form`
 `;
 
 export const TeamName = styled.div`
-  p{
-      margin-bottom: 15px;
+  p {
+    margin-bottom: 15px;
   }
   width: 100%;
   display: flex;
@@ -37,13 +36,9 @@ export const TeamName = styled.div`
   //align-items: center;
   background-color: #ffffff;
   margin: 35px 0px;
-  
 `;
 
-
-export const FieldName = styled(TextField)`
-  
-`;
+export const FieldName = styled(TextField)``;
 
 export const TeamSelect = styled.div`
   /*display: grid;
@@ -52,7 +47,6 @@ export const TeamSelect = styled.div`
   row-gap: 0;*/
   display: flex;
   justify-content: space-between;
-  
 `;
 
 export const PokemonSelect = styled.div`
@@ -71,7 +65,7 @@ export const Button = styled.a`
   width: 20px;
   margin: 0px;
   color: #000000;
-  background-color: #AFACAB;
+  background-color: #afacab;
 
   border: 1px solid #000000;
   text-decoration: none;
@@ -85,26 +79,25 @@ export const Button = styled.a`
   @media (min-width: 850px) {
     padding: 10.5px 116px;
   }
-  &:hover{
+  &:hover {
     background-color: #969391;
     //opacity: 0.8;
   }
 
-  img{
+  img {
     width: 250px;
   }
-
 `;
 
 export const RadioDiv = styled.div`
   margin-top: 40px;
-`
+`;
 
 export const Buttons = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  
+
   margin-top: 50px;
   button {
     margin: 0px 60px;
@@ -137,5 +130,3 @@ export const Voltar = styled.a`
   font-size: medium;
   border-radius: 5px;
 `;
-
-

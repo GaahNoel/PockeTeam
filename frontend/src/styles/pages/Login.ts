@@ -91,7 +91,7 @@ export const Mobile = styled.h3`
 export const Button = styled.a`
   color: #000000;
   margin-top: 15px;
-  
+
   width: 100%;
   height: 2.5rem;
 
