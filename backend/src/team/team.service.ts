@@ -46,7 +46,7 @@ export class TeamService {
     }).select('id');
     console.log(id);
     const selectedTeams = await this.TeamModel.find({ user: id }).populate(
-      'Pokemon',
+      'pokemons',
     );
     console.log(selectedTeams);
     // const selectedTeams = this.TeamModel.find({ user: userId });
