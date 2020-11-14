@@ -13,25 +13,27 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const findUser = this.UserModel.find({ username: createUserDto.username });
+    const findUser = await this.UserModel.find({
+      username: createUserDto.username,
+    });
     if (findUser) return null;
     const createdUser = new this.UserModel(createUserDto);
     return createdUser.save();
   }
 
   async findByID(id: number): Promise<User> {
-    const selectedUser = this.UserModel.findById(id);
+    const selectedUser = await this.UserModel.findById(id);
     return selectedUser;
   }
 
   async index(): Promise<User[]> {
-    const selectedUser = this.UserModel.find();
+    const selectedUser = await this.UserModel.find();
     return selectedUser;
   }
 
   async login(loginUser: LoginUserDto): Promise<User> {
     const { login, password } = loginUser;
-    const selectedUser = this.UserModel.findOne({
+    const selectedUser = await this.UserModel.findOne({
       login,
       password,
     }).select('username');

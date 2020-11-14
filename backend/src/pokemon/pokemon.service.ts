@@ -32,24 +32,24 @@ export class PokemonService {
   }
 
   async findByID(id: string): Promise<Pokemon> {
-    const selectedUser = this.PokemonModel.findById(id);
+    const selectedUser = await this.PokemonModel.findById(id);
     return selectedUser;
   }
 
   async allPokemons(): Promise<PokemonList> {
-    const allPokemons = this.PokemonListModel.find()
+    const allPokemons = await this.PokemonListModel.find()
       .select('list')
       .findOne();
     return allPokemons;
   }
 
   async index(): Promise<Pokemon[]> {
-    const selectedPokemon = this.PokemonModel.find();
+    const selectedPokemon = await this.PokemonModel.find();
     return selectedPokemon;
   }
 
   async delete(id: string): Promise<Pokemon> {
-    const selectedPokemon = this.PokemonModel.findByIdAndDelete(id);
+    const selectedPokemon = await this.PokemonModel.findByIdAndDelete(id);
     return selectedPokemon;
   }
 }

@@ -8,7 +8,7 @@ export class Team extends Document {
   name: string;
 
   @Prop({ ref: 'Pokemon' })
-  pokemons: Array<SchemaTypes.Types.ObjectId>;
+  pokemon: Array<SchemaTypes.Types.ObjectId>;
 
   @Prop()
   isPrivate: boolean;
