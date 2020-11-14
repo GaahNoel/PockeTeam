@@ -18,7 +18,7 @@ export class PokemonService {
   ) {}
 
   async create(createPokemonDto: CreatePokemonDto): Promise<Pokemon> {
-    const createdUser = new this.PokemonModel(createPokemonDto);
+    const createdUser = await new this.PokemonModel(createPokemonDto);
     return createdUser.save();
   }
 
