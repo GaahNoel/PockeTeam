@@ -47,5 +47,10 @@ export const Teams = styled.div`
 `;
 export const Grid = styled.div`
   max-width: 100%;
-  width: 90%;
+  width: 100%;
+  margin-left: 50px;
+
+  button{
+    margin-right: 140px;
+  }
 `;

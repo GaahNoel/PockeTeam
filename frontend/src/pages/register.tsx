@@ -1,9 +1,10 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import Link from 'next/link';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Select from 'react-select';
 import TextField from '@material-ui/core/TextField';
 import Header from '../components/header';
 import {
@@ -24,6 +25,29 @@ interface RegisterTypes {
 
 export default function Register() {
   const { register, handleSubmit, errors } = useForm();
+  const [ starter, setStarter ] = useState('');
+  const options = [
+   {label:"bulbasaur", value:"bulbasaur"},
+   {label:"charmander", value:"charmander"},
+   {label:"squirtle", value: "squirtle"},
+   {label: "chikorita", value: "chikorita"},
+   {label:"cyndaquil", value:"cyndaquil"}, 
+   {label:"totodile", value:"totodile"},
+   {label:"treecko", value:"treecko"},
+   {label:"torchic", value: "torchic"},
+   {label: "mudkip", value: "mudkip"},
+   {label: "turtwig", value: "turtwig"},
+   {label: "chimchar", value: "chimchar"},
+   {label: "piplup", value: "piplup"},
+   {label: "snivy", value: "snivy"},
+   {label: "tepig", value: "tepig"},
+   {label: "oshawott", value: "oshawott"},
+   {label: "chespin", value: "chespin"},
+   {label: "fennekin", value: "fennekin"},
+   {label: "froakie", value: "froakie"},
+   {label: "rowlet", value: "rowlet"}, 
+   {label: "litten", value: "litten"},
+   {label: "popplio", value: "popplio"}]
 
   const onSubmit = (data: RegisterTypes, e: FormEvent) => {
     const { login, username, email, password } = data;
@@ -39,6 +63,21 @@ export default function Register() {
       .then(() => {
         alert('Enviado com sucesso');
       });
+  };
+
+  const changePokemon = (e: Select) => {
+    setStarter(e);
+  };
+
+  const widthChange = {
+    container: (provide: any) => ({
+      ...provide,
+      width: 200,
+    }),
+
+    input: (provide: any) => ({
+      paddingRight: 15,
+    }),
   };
 
   return (
@@ -100,7 +139,15 @@ export default function Register() {
                 className="input"
                 helperText={errors.confirmPassword && '* Campo Obrigatório !'}
               />
-
+              <Select
+                    options={options}
+                    onChange={changePokemon}
+                    name="pokemon"
+                    className="pokemonSelect"
+                    styles={widthChange}
+                    inputRef={register({ required: true })}
+                    required
+                  />
               <div>
                 <button type="submit">CRIAR</button>
                 <Link href="/">

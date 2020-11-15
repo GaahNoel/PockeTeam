@@ -31,6 +31,7 @@ export default function Team() {
       axios
         .get(`http://localhost:3333/team/user/${userNameAux}`)
         .then((response) => {
+          response.data.reverse();
           setMyTeams(response.data);
           console.log(response.data);
         });
