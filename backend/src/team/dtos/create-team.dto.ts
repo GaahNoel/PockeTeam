@@ -8,4 +8,13 @@ export class CreateTeamDto {
   isPrivate: boolean;
 
   user: SchemaTypes.Types.ObjectId;
+
+  stats?: {
+    hp: number;
+    atk: number;
+    def: number;
+    spAtk: number;
+    spDef: number;
+    speed: number;
+  };
 }

@@ -48,7 +48,8 @@ const Team: React.FC = () => {
   const [teamName, setTeamName] = useState('');
   const [value, setValue] = useState('');
   const [team, setTeam] = useState([]);
-  const [data, setData] = useState([
+  const [teamStats, setTeamStats] = useState({});
+  const [radarData, setRadarData] = useState([
     {
       subject: 'hp',
       A: 0,
@@ -132,8 +133,8 @@ const Team: React.FC = () => {
         arrayAux.forEach((info, index) => {
           arrayAux[index] = info / team.length;
         });
-        setData([]);
-        setData((oldData: any) => [
+        setRadarData([]);
+        setRadarData((oldData: any) => [
           ...oldData,
           {
             subject: 'hp',
@@ -160,6 +161,14 @@ const Team: React.FC = () => {
             A: arrayAux[5],
           },
         ]);
+        setTeamStats({
+          hp: arrayAux[0],
+          atk: arrayAux[1],
+          def: arrayAux[2],
+          spAtk: arrayAux[3],
+          spDef: arrayAux[4],
+          speed: arrayAux[5],
+        });
       });
     }
   }, [team]);
@@ -170,17 +179,16 @@ const Team: React.FC = () => {
       return e.id;
     });
 
-    console.log(teamDef);
-
     axios
       .post(`http://localhost:3333/team/create`, {
         user: userName,
         name: data.TeamName,
         pokemon: teamDef,
         isPrivate: value === 'private',
+        stats: teamStats,
       })
       .then((response) => {
-        alert('Time cadastrado com sucesso!');
+        alert(`Time cadastrado com sucesso!${teamStats}`);
         localStorage.setItem('team', JSON.stringify([]));
         localStorage.setItem('private', 'public');
         localStorage.setItem('teamName', '');
@@ -315,7 +323,7 @@ const Team: React.FC = () => {
                   outerRadius={100}
                   width={300}
                   height={300}
-                  data={data}
+                  data={radarData}
                 >
                   <PolarGrid />
                   <PolarAngleAxis dataKey="subject" />

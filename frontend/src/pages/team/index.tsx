@@ -4,14 +4,13 @@ import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Header from '../../components/header';
-
+import TeamComponent from '../components/teams';
 import {
   Wrapper,
   Container,
   TitlePage,
   Teams,
-  Names,
-  Pokemon,
+  Grid,
 } from '../../styles/pages/Team';
 
 export default function Team() {
@@ -41,38 +40,27 @@ export default function Team() {
   return (
     <>
       <Helmet>
-        <title>Pokemania - My Teams</title>
+        <title>PockeTeam - Meus Times</title>
       </Helmet>
       <Header />
       <Wrapper>
         <Container>
-          <TitlePage>
-            <p id="title">Meus times</p>
-            <p id="text">Classificado por: mais recentes</p>
-          </TitlePage>
-
-          <Teams>
-            {myTeams.map((team) => (
-              <>
-                <Names>
-                  <p>Nome do Time: {team.name}</p>
-                  <p>
-                    Tipo de Visualização:{' '}
-                    {team.isPrivate ? 'Privado' : 'Público'}
-                  </p>
-                </Names>
-
-                <Pokemon>
-                  {team.pokemon.map((pokemon) => (
-                    <div>
-                      <img src={pokemon.image} />
-                      <img src={pokemon.item} />
-                    </div>
-                  ))}
-                </Pokemon>
-              </>
-            ))}
-          </Teams>
+          <Grid>
+            <TitlePage>
+              <div>
+                <h2 id="title">Meus times</h2>
+                <p id="text">Classificado por: mais recentes</p>
+              </div>
+              <Link href="/team/create">
+                <button>Criar Um Time</button>
+              </Link>
+            </TitlePage>
+            <Teams>
+              {myTeams.map((team) => (
+                <TeamComponent team={team} />
+              ))}
+            </Teams>
+          </Grid>
         </Container>
       </Wrapper>
     </>

@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #ffffff;
 
   @media (min-width: 850px) {
@@ -12,61 +12,40 @@ export const Wrapper = styled.div`
   }
 `;
 export const Container = styled.div`
-  width: 100%;
-  display: flex;
-  //justify-content: center;
-
-  flex-direction: column;
-  align-items: flex-start;
-  background-color: white;
+  width: 80%;
   height: 100%;
-
-  @media (min-width: 850px) {
-    width: 80%;
-    background-color: white;
-    height: 100%;
-
-    display: flex;
-    flex-direction: row;
-    //justify-content: space-around;
-    align-items: flex-start;
-  }
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const TitlePage = styled.div`
+  margin-top: 5rem;
   display: flex;
-  margin: 10px 60px;
-  flex-direction: column;
-  align-items: flex-start;
-  height: 100vh;
-  #title {
-    font-weight: bold;
-    font-size: 38px;
-    margin-top: 30px;
-    margin-bottom: 20px;
+  justify-content: space-between;
+  width: 100%;
+  h2 {
+    font-size: 3rem;
   }
-  .text {
-    font-size: 28px;
+  button {
+    padding: 0 2rem;
+    border-radius: 1rem;
+    border: 1px solid black;
+    background-color: lightgrey;
+    &:hover {
+      background-color: #b7b7b7;
+    }
   }
 `;
-
 export const Teams = styled.div`
+  margin-top: 5rem;
   display: flex;
-  margin: 10px 60px;
+  justify-content: center;
   flex-direction: column;
-  align-items: flex-start;
-  height: 100vh;
-  #title {
-    font-weight: bold;
-    font-size: 38px;
-    margin-top: 30px;
-    margin-bottom: 20px;
-  }
-  .text {
-    font-size: 28px;
-  }
+  align-items: center;
 `;
-
-export const Names = styled.div``;
-
-export const Pokemon = styled.div``;
+export const Grid = styled.div`
+  max-width: 100%;
+  width: 90%;
+`;

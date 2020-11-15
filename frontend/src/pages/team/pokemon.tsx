@@ -183,7 +183,10 @@ const Pokemon: React.FC = () => {
           spDef: pokemon.stats[4].base_stat,
           speed: pokemon.stats[5].base_stat,
         },
-        item,
+        item: {
+          name: item || '',
+          image: itemDetails ? itemDetails.sprite : '',
+        },
       })
       .then((response) => {
         console.log(response.data);

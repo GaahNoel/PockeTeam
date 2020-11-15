@@ -16,5 +16,8 @@ export class CreatePokemonDto {
     speed: number;
   };
 
-  item?: string;
+  item?: {
+    name: string;
+    image: string;
+  };
 }

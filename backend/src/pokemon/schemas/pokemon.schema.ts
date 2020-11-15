@@ -27,7 +27,10 @@ export class Pokemon extends Document {
   };
 
   @Prop()
-  item: string;
+  item: {
+    name: string;
+    image: string;
+  };
 }
 
 export const PokemonSchema = SchemaFactory.createForClass(Pokemon).plugin(

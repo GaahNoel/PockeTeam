@@ -15,6 +15,16 @@ export class Team extends Document {
 
   @Prop({ ref: 'User' })
   user: SchemaTypes.Types.ObjectId;
+
+  @Prop()
+  stats: {
+    hp: number;
+    atk: number;
+    def: number;
+    spAtk: number;
+    spDef: number;
+    speed: number;
+  };
 }
 
 export const TeamSchema = SchemaFactory.createForClass(

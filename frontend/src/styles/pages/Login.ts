@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #ffffff;
 
   @media (min-width: 850px) {
@@ -55,6 +55,9 @@ export const Form = styled.div`
     color: #ffffff;
     background-color: #000000;
     border-radius: 5px;
+    &:hover {
+      background-color: #161616;
+    }
     @media (min-width: 850px) {
       display: flex;
       justify-content: center;
@@ -105,6 +108,9 @@ export const Button = styled.a`
   font-weight: bold;
   font-size: medium;
   border-radius: 5px;
+  &:hover {
+    background-color: lightgrey;
+  }
   @media (min-width: 850px) {
     //padding: 10.5px 116px;
     //padding: 10.5px 116px;

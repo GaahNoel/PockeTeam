@@ -103,6 +103,9 @@ export const Buttons = styled.div`
     color: #ffffff;
     background-color: #000000;
     border-radius: 5px;
+    &:hover {
+      background-color: #161616;
+    }
   }
 `;
 export const Voltar = styled.a`
@@ -117,4 +120,7 @@ export const Voltar = styled.a`
   font-weight: bold;
   font-size: medium;
   border-radius: 5px;
+  &:hover {
+    background-color: lightgrey;
+  }
 `;
