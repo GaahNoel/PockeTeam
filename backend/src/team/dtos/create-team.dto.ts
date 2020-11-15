@@ -17,4 +17,6 @@ export class CreateTeamDto {
     spDef: number;
     speed: number;
   };
+
+  favorite: boolean;
 }

@@ -9,7 +9,7 @@ export class CreateUserDto {
 
   info?: string;
 
-  idFavoritePokemon?: string;
+  favoritePokemon?: string;
 
-  idPrincipalTeam?: string;
+  favoriteTeam?: string;
 }

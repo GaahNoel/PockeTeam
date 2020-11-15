@@ -17,19 +17,24 @@ export class TeamService {
   ) {}
 
   async create(createTeamDto: CreateTeamDto): Promise<Team> {
-    const { name, pokemon, isPrivate, user, stats } = createTeamDto;
+    const { name, pokemon, isPrivate, user, stats, favorite } = createTeamDto;
+
     const userId = await this.UserModel.findOne({ username: user }).select(
       'id',
     );
-    console.log(userId);
-    console.log(createTeamDto);
     const createdTeam = new this.TeamModel({
       user: userId,
       name,
       pokemon,
       isPrivate,
       stats,
+      favorite,
     });
+    if (favorite)
+      await this.UserModel.findByIdAndUpdate(user, {
+        favoriteTeam: createdTeam,
+      });
+
     return createdTeam.save();
   }
 

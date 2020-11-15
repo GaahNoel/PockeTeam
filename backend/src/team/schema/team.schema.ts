@@ -25,6 +25,9 @@ export class Team extends Document {
     spDef: number;
     speed: number;
   };
+
+  @Prop()
+  favorite: boolean;
 }
 
 export const TeamSchema = SchemaFactory.createForClass(

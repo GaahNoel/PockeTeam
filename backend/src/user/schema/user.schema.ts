@@ -20,10 +20,10 @@ export class User extends Document {
   info: string;
 
   @Prop()
-  idFavoritePokemon: string;
+  favoritePokemon: string;
 
-  @Prop()
-  idPrincipalTeam: string;
+  @Prop({ ref: 'Team' })
+  favoriteTeam: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User).plugin(
