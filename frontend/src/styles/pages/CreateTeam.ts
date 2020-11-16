@@ -22,6 +22,13 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   width: 90%;
+
+  
+p{
+  input{
+    margin-top: 15px;  
+  }
+};
 `;
 
 export const TeamName = styled.div`
@@ -136,3 +143,4 @@ export const Voltar = styled.a`
     background-color: lightgrey;
   }
 `;
+

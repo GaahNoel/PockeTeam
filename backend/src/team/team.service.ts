@@ -31,9 +31,17 @@ export class TeamService {
       favorite,
     });
     if (favorite)
-      await this.UserModel.findByIdAndUpdate(user, {
-        favoriteTeam: createdTeam,
+    {
+      const oldFavorite = await this.UserModel.findById(userId).select('favoriteTeam');
+      console.log(oldFavorite);
+      await this.TeamModel.findByIdAndUpdate(oldFavorite.favoriteTeam, {favorite: false});
+      await this.UserModel.findByIdAndUpdate(userId, {
+        favoriteTeam: createdTeam.id,
+      },{
+        useFindAndModify: false,
       });
+    }
+      
 
     return createdTeam.save();
   }

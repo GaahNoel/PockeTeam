@@ -7,6 +7,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Select from 'react-select';
 import TextField from '@material-ui/core/TextField';
 import Header from '../components/header';
+import Router, { useRouter } from 'next/router';
 import {
   Button,
   Wrapper,
@@ -14,6 +15,8 @@ import {
   Form,
   Desktop,
   Mobile,
+  InputField,
+  InfoField,
 } from '../styles/pages/Register';
 
 interface RegisterTypes {
@@ -21,6 +24,7 @@ interface RegisterTypes {
   username: string;
   email: string;
   password: string;
+  info: string;
 }
 
 export default function Register() {
@@ -50,7 +54,7 @@ export default function Register() {
    {label: "popplio", value: "popplio"}]
 
   const onSubmit = (data: RegisterTypes, e: FormEvent) => {
-    const { login, username, email, password } = data;
+    const { login, username, email, password, info } = data;
     console.log(data);
     e.preventDefault();
     axios
@@ -59,20 +63,24 @@ export default function Register() {
         username,
         email,
         password,
+        info,
+        favoritePokemon: starter,
       })
       .then(() => {
         alert('Enviado com sucesso');
+        Router.push('/');
       });
   };
 
   const changePokemon = (e: Select) => {
-    setStarter(e);
+    setStarter(e.value);
   };
 
   const widthChange = {
     container: (provide: any) => ({
       ...provide,
-      width: 200,
+      width: 430,
+     
     }),
 
     input: (provide: any) => ({
@@ -92,7 +100,7 @@ export default function Register() {
           <Mobile>CADASTRO</Mobile>
           <Form>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <TextField
+              <InputField
                 error={errors.login}
                 label="Login"
                 variant="outlined"
@@ -101,7 +109,7 @@ export default function Register() {
                 className="input"
                 helperText={errors.login && '* Campo Obrigatório !'}
               />
-              <TextField
+              <InputField
                 error={errors.username}
                 label="Username"
                 variant="outlined"
@@ -110,7 +118,7 @@ export default function Register() {
                 className="input"
                 helperText={errors.username && '* Campo Obrigatório !'}
               />
-              <TextField
+              <InputField
                 error={errors.email}
                 label="Email"
                 variant="outlined"
@@ -119,7 +127,7 @@ export default function Register() {
                 className="input"
                 helperText={errors.email && '* Campo Obrigatório !'}
               />
-              <TextField
+              <InputField
                 error={errors.password}
                 label="Senha"
                 type="password"
@@ -129,7 +137,7 @@ export default function Register() {
                 className="input"
                 helperText={errors.password && '* Campo Obrigatório !'}
               />
-              <TextField
+              <InputField
                 error={errors.confirmPassword}
                 label="Confirmar Senha"
                 type="password"
@@ -139,14 +147,25 @@ export default function Register() {
                 className="input"
                 helperText={errors.confirmPassword && '* Campo Obrigatório !'}
               />
+              <InfoField
+                error={errors.info}
+                label="Informações"
+                variant="outlined"
+                inputRef={register({ required: true })}
+                name="info"
+                className="input"
+                helperText={errors.info && '* Campo Obrigatório !'}
+                multiline
+              />
               <Select
                     options={options}
                     onChange={changePokemon}
-                    name="pokemon"
+                    name="favoritePokemon"
                     className="pokemonSelect"
                     styles={widthChange}
                     inputRef={register({ required: true })}
                     required
+                    placeholder="Starter Favorito"
                   />
               <div>
                 <button type="submit">CRIAR</button>

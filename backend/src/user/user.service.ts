@@ -16,8 +16,10 @@ export class UserService {
     const findUser = await this.UserModel.find({
       username: createUserDto.username,
     });
-    if (findUser) return null;
+    //if (findUser) return null;
+    console.log('createdUser');
     const createdUser = new this.UserModel(createUserDto);
+    console.log(createdUser);
     return createdUser.save();
   }
 

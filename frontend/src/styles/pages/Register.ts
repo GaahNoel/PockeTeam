@@ -1,3 +1,4 @@
+import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -5,6 +6,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  height: 120vh;
 `;
 export const Container = styled.div`
   width: 100%;
@@ -59,14 +61,24 @@ export const Form = styled.div`
     label {
       font-size: 1.5em;
     }
+    fieldset{
+        margin-top: 10px;
+      }
     input {
-      width: 300px;
+      
+      width: 400px;
       @media (min-width: 850px) {
         display: flex;
-
         min-width: 20vw;
         height: 1rem;
+        
+        &:last-child{
+          height: 1000px;
+        } 
       }
+      &:last-child{
+        height: 1000px;
+      } 
     }
     button {
       margin-top: 25px;
@@ -125,4 +137,25 @@ export const Mobile = styled.div`
   @media (min-width: 850px) {
     display: none;
   }
+`;
+
+export const InputField = styled(TextField)`
+  
+`;
+
+export const InfoField = styled(TextField)`
+   width: 430px;
+   min-height: 200px;
+   
+
+    fieldset{
+      margin-bottom: 20px;
+    }
+
+   textarea{
+    min-height: 200px;
+   }
+    
+   
+   
 `;

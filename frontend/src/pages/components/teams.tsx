@@ -21,11 +21,15 @@ type PropTypes = {
     name: string;
     isPrivate: boolean;
     pokemon: any;
+    stats: any;
+    favorite: boolean;
   };
 };
 
+import {WiStars} from 'react-icons/wi';
+
 const TeamComponent: React.FC<PropTypes> = ({
-  team: { name, isPrivate, pokemon, stats },
+  team: { name, isPrivate, pokemon, stats, favorite },
 }) => {
   const [empty, setEmpty] = useState([]);
 
@@ -112,6 +116,7 @@ const TeamComponent: React.FC<PropTypes> = ({
             <strong>Tipo: </strong>
             {isPrivate ? 'Privado' : 'Público'}
           </p>
+          { favorite&&(<WiStars size='40px'/>)}
         </Names>
 
         <Pokemon>

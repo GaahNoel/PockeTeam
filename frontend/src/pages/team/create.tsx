@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import {
   FormControlLabel,
   FormLabel,
@@ -49,6 +49,8 @@ const Team: React.FC = () => {
   const [value, setValue] = useState('');
   const [team, setTeam] = useState([]);
   const [teamStats, setTeamStats] = useState({});
+  const [ favoriteTeam, setFavoriteTeam] = useState('false');
+  const router = useRouter();
   const [radarData, setRadarData] = useState([
     {
       subject: 'hp',
@@ -85,7 +87,7 @@ const Team: React.FC = () => {
   useEffect(() => {
     if (!localStorage.getItem('username')) {
       alert('Para acessar esta página é necessário estar logado');
-      Router.push('/login');
+      router.push('/login');
     } else {
       setUserName(localStorage.getItem('username'));
       if (localStorage.getItem('team')) {
@@ -186,15 +188,24 @@ const Team: React.FC = () => {
         pokemon: teamDef,
         isPrivate: value === 'private',
         stats: teamStats,
+        favorite: favoriteTeam==='false'?false:true,
       })
       .then((response) => {
-        alert(`Time cadastrado com sucesso!${teamStats}`);
+        alert(`Time cadastrado com sucesso!`);
         localStorage.setItem('team', JSON.stringify([]));
         localStorage.setItem('private', 'public');
         localStorage.setItem('teamName', '');
-        Router.push('/team');
+        router.push('/team');
       });
   };
+
+  const onChangeFavorite = () => {
+      if(favoriteTeam === 'false')
+        setFavoriteTeam('true');
+      else
+        setFavoriteTeam('false');
+    };
+
 
   const onClick = (pokemon) => {
     axios
@@ -205,13 +216,13 @@ const Team: React.FC = () => {
     team.splice(pokemon, 1);
     localStorage.setItem('team', JSON.stringify(team));
     onClickInfo();
-    Router.push('/team/pokemon');
+    router.push('/team/pokemon');
   };
 
   const onClickInfo = () => {
     localStorage.setItem('teamName', JSON.stringify(teamName));
     localStorage.setItem('private', JSON.stringify(value));
-    Router.push('/team/pokemon');
+    router.push('/team/pokemon');
   };
 
   const onClickVoltar = () => {
@@ -360,6 +371,7 @@ const Team: React.FC = () => {
               </RadioGroup>
             </RadioDiv>
 
+                <p><input type="checkbox" id="favoriteTeam" onChange={onChangeFavorite} value={favoriteTeam}/> Time Favorito</p>
             <Buttons>
               <button type="submit">CONFIRMAR</button>
               <Link href="/team">
