@@ -19,7 +19,7 @@ export class UserController {
     return this.userService.create(createUserDTO);
   }
 
-  @Post('/search')
+  @Post('search')
   search(@Body() findUserDto: FindUserDto): Promise<User> {
     return this.userService.search(findUserDto);
   }

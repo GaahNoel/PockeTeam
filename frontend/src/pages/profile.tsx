@@ -4,6 +4,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Header from '../components/header';
+import TeamComponent from './components/teams';
 
 import { 
   Wrapper, 
@@ -21,8 +22,12 @@ import {
 export default function Profile() {
   const router = useRouter();
   const [userName, setUserName] = useState('');
+  const [info, setInfo] = useState('');
+  const [starterPokemon, setStarterPokemon] = useState('');
+  const [favoriteTeam, setFavoriteTeam] = useState();
 
   useEffect(() => {
+    console.log('teste')
       if (!localStorage.getItem('username')) {
         alert('Para acessar esta página é necessário estar logado');
 
@@ -30,8 +35,19 @@ export default function Profile() {
       } else {
         const userNameAux = localStorage.getItem('username');
         setUserName(userNameAux);
+
+      axios
+      .post('http://localhost:3333/users/search', {
+        username: userNameAux,
+      })
+      .then(response => {
+        console.log(response.data);
+        setInfo(response.data.info);
+        setStarterPokemon(response.data.favoritePokemon);
+        setFavoriteTeam(response.data.favoriteTeam);
+      });
       } 
-    })
+    },[])
 
 
   return (
@@ -42,7 +58,7 @@ export default function Profile() {
       <Header />
       <Wrapper>
         <Container>
-          <Title>@{userName} -> Profile</Title>
+          <Title>@{userName} -&gt; Profile</Title>
           <TopSide>
             <Photo>
               <p>Photo</p>
@@ -53,16 +69,17 @@ export default function Profile() {
           </TopSide>
           <BotSide>
             <Infos>
-              <p>Infos: </p>
+              <p>Infos: {info}</p>
             </Infos>
 
             <PokeInfos>
               <FavoriteStarter>
-                <p>Inicial Favorito: </p>
+                <p>Inicial Favorito: {starterPokemon}</p>
               </FavoriteStarter>
 
               <FavoriteTeam>
                 <p>Time Favorito: </p>
+                {favoriteTeam &&<TeamComponent team={favoriteTeam} />}
               </FavoriteTeam>
             </PokeInfos>
 
