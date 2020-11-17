@@ -24,6 +24,9 @@ export class User extends Document {
 
   @Prop({ ref: 'Team' })
   favoriteTeam: string;
+
+  @Prop({ default: false })
+  verified: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User).plugin(

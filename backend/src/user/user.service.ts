@@ -29,17 +29,14 @@ export class UserService {
   }
 
   async search(FindUserDTO: FindUserDto): Promise<User> {
-    console.log('selectedUser');
-    const selectedUser = await this.UserModel.findOne(FindUserDTO).populate(
-      {
-        path:'favoriteTeam',
-        populate:{
-          path:'pokemon',
-          model:'Pokemon',
-        }
-      }
-    );
-    
+    const selectedUser = await this.UserModel.findOne(FindUserDTO).populate({
+      path: 'favoriteTeam',
+      populate: {
+        path: 'pokemon',
+        model: 'Pokemon',
+      },
+    });
+
     return selectedUser;
   }
 

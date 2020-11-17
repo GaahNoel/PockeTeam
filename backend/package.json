@@ -28,6 +28,7 @@
     "@nestjs/platform-express": "^7.0.0",
     "mongoose": "^5.10.5",
     "mongoose-delete": "^0.5.2",
+    "nodemailer": "^6.4.16",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4"

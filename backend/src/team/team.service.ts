@@ -30,18 +30,24 @@ export class TeamService {
       stats,
       favorite,
     });
-    if (favorite)
-    {
-      const oldFavorite = await this.UserModel.findById(userId).select('favoriteTeam');
+    if (favorite) {
+      const oldFavorite = await this.UserModel.findById(userId).select(
+        'favoriteTeam',
+      );
       console.log(oldFavorite);
-      await this.TeamModel.findByIdAndUpdate(oldFavorite.favoriteTeam, {favorite: false});
-      await this.UserModel.findByIdAndUpdate(userId, {
-        favoriteTeam: createdTeam.id,
-      },{
-        useFindAndModify: false,
+      await this.TeamModel.findByIdAndUpdate(oldFavorite.favoriteTeam, {
+        favorite: false,
       });
+      await this.UserModel.findByIdAndUpdate(
+        userId,
+        {
+          favoriteTeam: createdTeam.id,
+        },
+        {
+          useFindAndModify: false,
+        },
+      );
     }
-      
 
     return createdTeam.save();
   }
@@ -52,7 +58,9 @@ export class TeamService {
   }
 
   async index(): Promise<Team[]> {
-    const selectedUser = await this.TeamModel.find();
+    const selectedUser = await this.TeamModel.find()
+      .populate('user')
+      .populate({ path: 'pokemon', model: 'Pokemon' });
     return selectedUser;
   }
 
