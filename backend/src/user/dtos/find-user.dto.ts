@@ -1,3 +1,5 @@
-export class FindExampleDto {
-  title?: string;
+export class FindUserDto {
+  id?: string;
+
+  username?: string;
 }

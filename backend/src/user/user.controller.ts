@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Response } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
+import { FindUserDto } from './dtos/find-user.dto';
 import { LoginUserDto } from './dtos/login-user.dto';
 import { User } from './schema/user.schema';
 import { UserService } from './user.service';
@@ -18,10 +19,14 @@ export class UserController {
     return this.userService.create(createUserDTO);
   }
 
+  @Post('/search')
+  search(@Body() findUserDto: FindUserDto): Promise<User> {
+    return this.userService.search(findUserDto);
+  }
+
   @Post('login')
   login(@Body() loginUser: LoginUserDto): Promise<User> {
     const selectedUser = this.userService.login(loginUser);
-    console.log(selectedUser);
     return selectedUser;
   }
 }

@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { SoftDeleteModel } from 'mongoose-delete';
 import { User } from './schema/user.schema';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { LoginUserDto } from './dtos/login-user.dto';
+import { FindUserDto } from './dtos/find-user.dto';
 
 @Injectable()
 export class UserService {
@@ -16,15 +17,21 @@ export class UserService {
     const findUser = await this.UserModel.find({
       username: createUserDto.username,
     });
-    //if (findUser) return null;
-    console.log('createdUser');
+    if (findUser)
+      throw new InternalServerErrorException('Username já existente !');
     const createdUser = new this.UserModel(createUserDto);
-    console.log(createdUser);
     return createdUser.save();
   }
 
   async findByID(id: number): Promise<User> {
     const selectedUser = await this.UserModel.findById(id);
+    return selectedUser;
+  }
+
+  async search(FindUserDTO: FindUserDto): Promise<User> {
+    const selectedUser = await this.UserModel.findOne(FindUserDTO).populate(
+      'favoriteTeam',
+    );
     return selectedUser;
   }
 
