@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Header from '../components/header';
 import TeamComponent from './components/teams';
-
+import imageInterrogation from '../assets/interrogation.png';
 import { 
   Wrapper, 
   Container, 
@@ -24,6 +24,7 @@ export default function Profile() {
   const [userName, setUserName] = useState('');
   const [info, setInfo] = useState('');
   const [starterPokemon, setStarterPokemon] = useState('');
+  const [imgStarter, setImgStarter] = useState(imageInterrogation);
   const [favoriteTeam, setFavoriteTeam] = useState();
 
   useEffect(() => {
@@ -36,16 +37,23 @@ export default function Profile() {
         const userNameAux = localStorage.getItem('username');
         setUserName(userNameAux);
 
-      axios
-      .post('http://localhost:3333/users/search', {
-        username: userNameAux,
-      })
-      .then(response => {
-        console.log(response.data);
-        setInfo(response.data.info);
-        setStarterPokemon(response.data.favoritePokemon);
-        setFavoriteTeam(response.data.favoriteTeam);
-      });
+        axios
+        .post('http://localhost:3333/users/search', {
+          username: userNameAux,
+        })
+        .then(response => {
+          console.log(response.data);
+          setInfo(response.data.info);
+          setStarterPokemon(response.data.favoritePokemon);
+          setFavoriteTeam(response.data.favoriteTeam);
+
+          if(response.data.favoritePokemon)
+            axios.get(`https://pokeapi.co/api/v2/pokemon/${response.data.favoritePokemon}`).then( responseFavPoke =>{
+              setImgStarter(responseFavPoke.data.sprites.front_default);
+            })
+        });
+
+        
       } 
     },[])
 
@@ -61,7 +69,7 @@ export default function Profile() {
           <Title>@{userName} -&gt; Profile</Title>
           <TopSide>
             <Photo>
-              <p>Photo</p>
+              <img src={imgStarter}></img>
             </Photo>
             <Link href="/team/">
                   <button>Times</button>

@@ -1,16 +1,12 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  background-color: #ffffff;
 
-  @media (min-width: 850px) {
-    background-color: lightgrey;
-  }
 `;
 export const Container = styled.div`
   width: 100%;
@@ -60,10 +56,15 @@ export const TopSide = styled.div`
 
 export const Photo = styled.div`
   border: 5px solid red;
+
+  img{
+    padding: 10px;
+    width: 150px;
+  }
 `;
 
 export const BotSide = styled.div`
-  width: 80%;
+  width: 95%;
   margin-top: 55px;
   display: flex;
   justify-content: center;
@@ -73,7 +74,7 @@ export const BotSide = styled.div`
 
 export const Infos = styled.div`
   width: 100%;
-  height: 60px;
+  height: 140px;
   border: 2px solid black;
   p{
     margin-left: 15px;
@@ -82,10 +83,10 @@ export const Infos = styled.div`
   `;
 
 export const PokeInfos = styled.div`
-  margin-top: 30px;
+  margin: 30px 0px;
   //margin-left: 15px;
   width: 100%;
-  height: 140px;
+  height: 450px;
   border: 2px solid black;
 `;
 

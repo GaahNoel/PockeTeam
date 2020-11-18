@@ -5,15 +5,11 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  background-color: #ffffff;
-
-  @media (min-width: 850px) {
-    background-color: lightgrey;
-  }
 `;
 export const Container = styled.div`
   width: 80%;
   height: 100%;
+  min-height: 100vh;
   background-color: #ffffff;
   display: flex;
   flex-direction: column;

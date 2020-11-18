@@ -19,6 +19,7 @@ import {
 type PropTypes = {
   team: {
     name: string;
+    user: any;
     isPrivate: boolean;
     pokemon: any;
     stats: any;
@@ -27,12 +28,12 @@ type PropTypes = {
 };
 
 import {WiStars} from 'react-icons/wi';
+import Axios from 'axios';
 
 const TeamComponent: React.FC<PropTypes> = ({
-  team: { name, isPrivate, pokemon, stats, favorite },
+  team: { name, user, isPrivate, pokemon, stats, favorite },
 }) => {
   const [empty, setEmpty] = useState([]);
-
   const [radarData, setRadarData] = useState([
     {
       subject: 'hp',
@@ -108,6 +109,11 @@ const TeamComponent: React.FC<PropTypes> = ({
     <Team>
       <Info>
         <Names>
+          {user.username&&<span>
+            <strong>Username: </strong>
+            {user.username}
+          </span>}
+          
           <span>
             <strong>Nome: </strong>
             {name}

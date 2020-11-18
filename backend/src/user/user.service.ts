@@ -17,8 +17,8 @@ export class UserService {
     const findUser = await this.UserModel.find({
       username: createUserDto.username,
     });
-    if (findUser)
-      throw new InternalServerErrorException('Username já existente !');
+    //if (findUser)
+      //throw new InternalServerErrorException('Username já existente !');
     const createdUser = new this.UserModel(createUserDto);
     return createdUser.save();
   }

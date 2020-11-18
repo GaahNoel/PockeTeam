@@ -1,5 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
+import imageBackground from '../assets/backgroundHome.png';
+
 export default createGlobalStyle`
   :root {
     font-size: 100%;
@@ -11,6 +13,7 @@ export default createGlobalStyle`
     border: 0;
     outline: none;
     box-sizing: border-box;
+   
   }
 
   body,
@@ -29,7 +32,10 @@ export default createGlobalStyle`
   }
   body{
     @media (min-width:850px){
-      background-color: lightgrey;
+      background-color: lightgrey;   
+      background-image: url(${imageBackground});
+      background-size: cover;
+      background-repeat: no-repeat;
     }
     background-color: white;
   }

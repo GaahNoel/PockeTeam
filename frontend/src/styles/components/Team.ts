@@ -8,6 +8,10 @@ export const Team = styled.div`
 
 export const Names = styled.div`
   margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
 `;
 
 export const Graph = styled.div`
@@ -18,6 +22,7 @@ export const Info = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
+  flex-direction: column;
   border: 1px solid black;
   border-radius: 15px;
   padding: 2.5rem 1.5rem 0 1.5rem;
