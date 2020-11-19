@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
 `;
 export const Container = styled.div`
   width: 80%;
+  min-height: 100vh;
   height: 100%;
   background-color: #ffffff;
   display: flex;

@@ -71,7 +71,7 @@ export class TeamService {
     const selectedTeams = await this.TeamModel.find({ user: id }).populate({
       path: 'pokemon',
       model: 'Pokemon',
-    });
+    }).populate('user');
     // const selectedTeams = this.TeamModel.find({ user: userId });
     return selectedTeams;
   }

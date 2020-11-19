@@ -15,6 +15,10 @@ import {
   Item,
   Empty,
 } from '../../styles/components/Team';
+
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
 // import { Container } from './styles';
 type PropTypes = {
   team: {
@@ -33,7 +37,9 @@ import Axios from 'axios';
 const TeamComponent: React.FC<PropTypes> = ({
   team: { name, user, isPrivate, pokemon, stats, favorite },
 }) => {
+  const router = useRouter();
   const [empty, setEmpty] = useState([]);
+
   const [radarData, setRadarData] = useState([
     {
       subject: 'hp',
@@ -68,6 +74,9 @@ const TeamComponent: React.FC<PropTypes> = ({
   ]);
 
   useEffect(() => {
+
+    
+
     const initialQtd = pokemon.length;
     for (let i = 0; i < 6 - initialQtd; i++) {
       setEmpty((element) => [...element, i]);
@@ -111,7 +120,13 @@ const TeamComponent: React.FC<PropTypes> = ({
         <Names>
           {user.username&&<span>
             <strong>Username: </strong>
+            <Link href={{
+              pathname: '/profile',
+              query: {user: user.username},
+            }}>
             {user.username}
+            </Link>
+            
           </span>}
           
           <span>

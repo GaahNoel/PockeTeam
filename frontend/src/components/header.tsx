@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { FiUser, FiStar, FiHome, FiPower } from 'react-icons/fi';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Router from 'next/router';
 import {
   Wrapper,
   Container,
@@ -13,7 +14,12 @@ import {
   Icon,
 } from '../styles/components/Header';
 
-export default function Header() {
+interface PropTypes{
+  setSearchUserName?: (username: string) => void,
+  setInHome?: (inHome: boolean) => void,
+}
+
+export const Header:React.FC<PropTypes> = ({setSearchUserName, setInHome}) => {
   const [pesquisa, setPesquisa] = useState('');
   const router = useRouter();
   const [username, setUsername] = useState('');
@@ -25,6 +31,13 @@ export default function Header() {
     router.push('/');
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(pesquisa);
+    setInHome(false);
+    setSearchUserName(pesquisa);
+  }
+
   return (
     <Wrapper>
       <Container>
@@ -32,11 +45,11 @@ export default function Header() {
         <DownHeader>
           <LeftHeader>
             <Link href="/">
-              <Icon>
+              <Icon onClick={()=>setInHome(true)}>
                 <FiHome id="FiHome" size="1.3rem" />
               </Icon>
             </Link>
-            <form>
+            <form onSubmit={e => onSubmit(e)}>
               <input
                 type="text"
                 value={pesquisa}
@@ -70,3 +83,5 @@ export default function Header() {
     </Wrapper>
   );
 }
+
+export default Header;

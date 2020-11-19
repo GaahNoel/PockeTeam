@@ -11,6 +11,7 @@ import {
   Teams,
   Grid,
 } from '../styles/pages/Home';
+import { array } from 'yup';
 
 
 
@@ -18,23 +19,52 @@ export default function Home(){
 
   const router = useRouter();
   const [teams, setTeams] = useState([]);
+  const [ searchUserName , setSearchUserName ] = useState('');
+  const [ inHome, setInHome ] = useState(false);
 
   useEffect(() => {
+    setSearchUserName('');
+    setInHome(true);
+  }, []);
+
+  useEffect(() => {
+    setSearchUserName('');
+    if(inHome)
+    {
       axios.get(`http://localhost:3333/team/list`)
         .then((response) => {
           response.data.reverse();
-          setTeams(response.data);
-          console.log(response.data);
-        });
-    
-  }, []);
+          const teamFiltered = response.data.filter(team => {
+            if(!team.isPrivate)
+              return team;
+          })
+          setTeams(teamFiltered);
+        }); 
+    }   
+  }, [inHome]);
+
+  useEffect(() => {
+    console.log('Teste')
+    if(searchUserName)
+    {
+      axios.get(`http://localhost:3333/team/user/${searchUserName}`)
+        .then((response) => {
+          response.data.reverse();
+          const teamFiltered = response.data.filter(team => {
+            if(!team.isPrivate)
+              return team;
+          })
+          setTeams(teamFiltered);
+        }); 
+    }
+  }, [searchUserName]);
 
   return (
     <>
        <Helmet>
         <title>PockeTeam - Home</title>
       </Helmet>
-      <Header />
+      <Header setSearchUserName={setSearchUserName} setInHome={setInHome} />
       <Wrapper>
         <Container>
           <Grid>

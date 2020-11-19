@@ -22,19 +22,49 @@ import {
 export default function Profile() {
   const router = useRouter();
   const [userName, setUserName] = useState('');
+  const [ profileUserName, setProfileUserName ] = useState('');
   const [info, setInfo] = useState('');
   const [starterPokemon, setStarterPokemon] = useState('');
   const [imgStarter, setImgStarter] = useState(imageInterrogation);
   const [favoriteTeam, setFavoriteTeam] = useState();
+  const [ isUser, setIsUser ] = useState(true);
+
 
   useEffect(() => {
-    console.log('teste')
-      if (!localStorage.getItem('username')) {
-        alert('Para acessar esta página é necessário estar logado');
+      let userNameAux;
 
-        router.push('/login');
-      } else {
-        const userNameAux = localStorage.getItem('username');
+      
+      if(router.query.user)
+      {
+        if(localStorage.getItem('username'))
+        {
+          if(router.query.user !== localStorage.getItem('username'))
+         {
+            userNameAux = router.query.user;
+            setIsUser(false);
+          } 
+          else{
+            userNameAux = localStorage.getItem('username');
+            setIsUser(true);
+          }
+        }
+        else{
+          userNameAux = router.query.user;
+          setIsUser(false);
+        } 
+      }
+      else{
+        if(!localStorage.getItem('username'))
+        {
+          alert('Para acessar esta página é necessário estar logado');
+          router.push('/login')
+        }
+        userNameAux = localStorage.getItem('username');
+        setIsUser(true);
+      }
+      
+      setProfileUserName(userNameAux);
+      
         setUserName(userNameAux);
 
         axios
@@ -42,7 +72,6 @@ export default function Profile() {
           username: userNameAux,
         })
         .then(response => {
-          console.log(response.data);
           setInfo(response.data.info);
           setStarterPokemon(response.data.favoritePokemon);
           setFavoriteTeam(response.data.favoriteTeam);
@@ -51,10 +80,7 @@ export default function Profile() {
             axios.get(`https://pokeapi.co/api/v2/pokemon/${response.data.favoritePokemon}`).then( responseFavPoke =>{
               setImgStarter(responseFavPoke.data.sprites.front_default);
             })
-        });
-
-        
-      } 
+        }); 
     },[])
 
 
@@ -71,9 +97,17 @@ export default function Profile() {
             <Photo>
               <img src={imgStarter}></img>
             </Photo>
-            <Link href="/team/">
+            <Link href={{
+              pathname: '/team',
+              query:{user: profileUserName}
+            }}>
                   <button>Times</button>
             </Link>
+            {
+            isUser&&<Link href="/team/">
+                  <button>Editar Perfil</button>
+            </Link>
+            }
           </TopSide>
           <BotSide>
             <Infos>
@@ -87,7 +121,7 @@ export default function Profile() {
 
               <FavoriteTeam>
                 <p>Time Favorito: </p>
-                {favoriteTeam &&<TeamComponent team={favoriteTeam} />}
+                {favoriteTeam &&<TeamComponent team={favoriteTeam}/>}
               </FavoriteTeam>
             </PokeInfos>
 
