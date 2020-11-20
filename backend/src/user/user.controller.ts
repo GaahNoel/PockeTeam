@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  InternalServerErrorException,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { EmailService } from 'src/email/email.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { FindUserDto } from './dtos/find-user.dto';
 import { LoginUserDto } from './dtos/login-user.dto';
@@ -8,7 +17,10 @@ import { UserService } from './user.service';
 
 @Controller('users')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private emailService: EmailService,
+  ) {}
 
   @Get('list')
   index(): Promise<User[]> {
@@ -16,8 +28,17 @@ export class UserController {
   }
 
   @Post('create')
-  create(@Body() createUserDTO: CreateUserDto): Promise<User> {
-    return this.userService.create(createUserDTO);
+  async create(@Body() createUserDTO: CreateUserDto): Promise<User> {
+    try {
+      const createdUser = await this.userService.create(createUserDTO);
+      const { id } = await this.emailService.createEmailToken(
+        createUserDTO.email,
+      );
+      await this.emailService.sendEmailVerification(id);
+      return createdUser;
+    } catch (err) {
+      throw new InternalServerErrorException(err.response);
+    }
   }
 
   @Post('search')

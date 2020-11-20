@@ -34,7 +34,6 @@ export class TeamService {
       const oldFavorite = await this.UserModel.findById(userId).select(
         'favoriteTeam',
       );
-      console.log(oldFavorite);
       await this.TeamModel.findByIdAndUpdate(oldFavorite.favoriteTeam, {
         favorite: false,
       });
@@ -68,11 +67,12 @@ export class TeamService {
     const { _id: id } = await this.UserModel.findOne({
       username,
     }).select('id');
-    const selectedTeams = await this.TeamModel.find({ user: id }).populate({
-      path: 'pokemon',
-      model: 'Pokemon',
-    }).populate('user');
-    // const selectedTeams = this.TeamModel.find({ user: userId });
+    const selectedTeams = await this.TeamModel.find({ user: id })
+      .populate({
+        path: 'pokemon',
+        model: 'Pokemon',
+      })
+      .populate('user');
     return selectedTeams;
   }
 }

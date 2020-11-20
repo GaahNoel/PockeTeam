@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { SoftDeleteModel } from 'mongoose-delete';
 import { User } from './schema/user.schema';
@@ -15,11 +19,18 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const findUser = await this.UserModel.find({
-      username: createUserDto.username,
+    const { username, email } = createUserDto;
+    const findUsername = await this.UserModel.find({
+      username,
     });
-    if (findUser.length !== 0)
-      throw new InternalServerErrorException('Username já existente !');
+    const findEmail = await this.UserModel.find({
+      email,
+    });
+    if (findUsername.length !== 0)
+      throw new BadRequestException('Username já existente !');
+    if (findEmail.length !== 0)
+      throw new BadRequestException('Email já existe !');
+
     const createdUser = new this.UserModel(createUserDto);
     return createdUser.save();
   }

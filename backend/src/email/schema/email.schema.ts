@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongooseDelete from 'mongoose-delete';
-import { Document } from 'mongoose';
+import { Document, Schema as SchemaTypes } from 'mongoose';
 
 @Schema()
 export class Email extends Document {
@@ -8,7 +8,7 @@ export class Email extends Document {
   token: string;
 
   @Prop({ ref: 'User' })
-  user: string;
+  user: SchemaTypes.Types.ObjectId;
 }
 
 export const EmailSchema = SchemaFactory.createForClass(Email).plugin(
