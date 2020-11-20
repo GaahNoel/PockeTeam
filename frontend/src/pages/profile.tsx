@@ -104,7 +104,7 @@ export default function Profile() {
                   <button>Times</button>
             </Link>
             {
-            isUser&&<Link href="/team/">
+            isUser&&<Link href="/profileEdit">
                   <button>Editar Perfil</button>
             </Link>
             }

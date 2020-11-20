@@ -72,7 +72,7 @@ export const Header:React.FC<PropTypes> = ({setSearchUserName, setInHome}) => {
               </Icon>
             )}
 
-            <Link href="/">
+            <Link href="/profile">
               <Icon>
                 <FiUser id="FiUser" size="1.3rem" />
               </Icon>

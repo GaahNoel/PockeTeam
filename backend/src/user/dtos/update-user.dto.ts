@@ -1,15 +1,7 @@
 export class UpdateUserDto {
-  login?: string;
+  password: string;
 
-  username?: string;
+  info: string;
 
-  email?: string;
-
-  password?: string;
-
-  info?: string;
-
-  favoritePokemon?: string;
-
-  favoriteTeam?: string;
+  favoritePokemon: string;
 }

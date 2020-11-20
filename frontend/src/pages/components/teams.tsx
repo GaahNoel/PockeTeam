@@ -75,8 +75,6 @@ const TeamComponent: React.FC<PropTypes> = ({
 
   useEffect(() => {
 
-    
-
     const initialQtd = pokemon.length;
     for (let i = 0; i < 6 - initialQtd; i++) {
       setEmpty((element) => [...element, i]);
