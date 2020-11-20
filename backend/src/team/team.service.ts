@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { SoftDeleteModel } from 'mongoose-delete';
 import { Pokemon } from 'src/pokemon/schemas/pokemon.schema';
@@ -54,6 +54,15 @@ export class TeamService {
   async findByID(id: string): Promise<Team> {
     const selectedTeam = await this.TeamModel.findById(id).populate('user');
     return selectedTeam;
+  }
+
+  async delete(idTeam: string, idUser: string): Promise<Team> {
+    const selectedTeam = await this.TeamModel.findById(idTeam).populate('user');
+    if (selectedTeam.user === idUser)
+      throw new BadRequestException('Usuário inválido');
+    const delectedTeam = await this.TeamModel.deleteById(idTeam);
+
+    return delectedTeam;
   }
 
   async index(): Promise<Team[]> {

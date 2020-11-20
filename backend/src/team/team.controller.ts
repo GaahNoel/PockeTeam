@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Headers,
+} from '@nestjs/common';
 import { Team } from './schema/team.schema';
 import { TeamService } from './team.service';
 import { CreateTeamDto } from './dtos/create-team.dto';
@@ -14,6 +22,14 @@ export class TeamController {
   @Get('/:id')
   findByID(@Param('id') id: string): Promise<Team> {
     return this.teamService.findByID(id);
+  }
+
+  @Delete('/:idTeam')
+  delete(
+    @Param('idTeam') idTeam: string,
+    @Headers('idUser') idUser: string,
+  ): Promise<Team> {
+    return this.teamService.delete(idTeam, idUser);
   }
 
   @Get('/user/:username')
