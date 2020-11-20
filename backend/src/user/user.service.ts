@@ -5,6 +5,7 @@ import { User } from './schema/user.schema';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { LoginUserDto } from './dtos/login-user.dto';
 import { FindUserDto } from './dtos/find-user.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -17,10 +18,17 @@ export class UserService {
     const findUser = await this.UserModel.find({
       username: createUserDto.username,
     });
-    //if (findUser)
-      //throw new InternalServerErrorException('Username já existente !');
+    if (findUser.length !== 0)
+      throw new InternalServerErrorException('Username já existente !');
     const createdUser = new this.UserModel(createUserDto);
     return createdUser.save();
+  }
+
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+    const updatedUser = this.UserModel.findByIdAndUpdate(id, updateUserDto);
+    if (!updatedUser)
+      throw new InternalServerErrorException('Usuário não encontrado');
+    return this.UserModel.findById(id);
   }
 
   async findByID(id: number): Promise<User> {
