@@ -49,7 +49,7 @@ const Team: React.FC = () => {
   const [value, setValue] = useState('');
   const [team, setTeam] = useState([]);
   const [teamStats, setTeamStats] = useState({});
-  const [ favoriteTeam, setFavoriteTeam] = useState('false');
+  const [favoriteTeam, setFavoriteTeam] = useState('false');
   const router = useRouter();
   const [radarData, setRadarData] = useState([
     {
@@ -188,7 +188,7 @@ const Team: React.FC = () => {
         pokemon: teamDef,
         isPrivate: value === 'private',
         stats: teamStats,
-        favorite: favoriteTeam==='false'?false:true,
+        favorite: favoriteTeam !== 'false',
       })
       .then((response) => {
         alert(`Time cadastrado com sucesso!`);
@@ -200,12 +200,9 @@ const Team: React.FC = () => {
   };
 
   const onChangeFavorite = () => {
-      if(favoriteTeam === 'false')
-        setFavoriteTeam('true');
-      else
-        setFavoriteTeam('false');
-    };
-
+    if (favoriteTeam === 'false') setFavoriteTeam('true');
+    else setFavoriteTeam('false');
+  };
 
   const onClick = (pokemon) => {
     axios
@@ -371,7 +368,15 @@ const Team: React.FC = () => {
               </RadioGroup>
             </RadioDiv>
 
-                <p><input type="checkbox" id="favoriteTeam" onChange={onChangeFavorite} value={favoriteTeam}/> Time Favorito</p>
+            <p>
+              <input
+                type="checkbox"
+                id="favoriteTeam"
+                onChange={onChangeFavorite}
+                value={favoriteTeam}
+              />{' '}
+              Time Favorito
+            </p>
             <Buttons>
               <button type="submit">CONFIRMAR</button>
               <Link href="/team">

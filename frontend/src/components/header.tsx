@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import { FiUser, FiStar, FiHome, FiPower } from 'react-icons/fi';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
+
 import {
   Wrapper,
   Container,
@@ -14,12 +14,15 @@ import {
   Icon,
 } from '../styles/components/Header';
 
-interface PropTypes{
-  setSearchUserName?: (username: string) => void,
-  setInHome?: (inHome: boolean) => void,
+interface PropTypes {
+  setSearchUserName?: (username: string) => void;
+  isInSearchPage?: boolean;
 }
 
-export const Header:React.FC<PropTypes> = ({setSearchUserName, setInHome}) => {
+export const Header: React.FC<PropTypes> = ({
+  setSearchUserName,
+  isInSearchPage,
+}) => {
   const [pesquisa, setPesquisa] = useState('');
   const router = useRouter();
   const [username, setUsername] = useState('');
@@ -33,10 +36,11 @@ export const Header:React.FC<PropTypes> = ({setSearchUserName, setInHome}) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(pesquisa);
-    setInHome(false);
-    setSearchUserName(pesquisa);
-  }
+    if (isInSearchPage) {
+      setSearchUserName(pesquisa);
+    }
+    router.push({ pathname: '/search', query: { user: pesquisa } });
+  };
 
   return (
     <Wrapper>
@@ -45,11 +49,11 @@ export const Header:React.FC<PropTypes> = ({setSearchUserName, setInHome}) => {
         <DownHeader>
           <LeftHeader>
             <Link href="/">
-              <Icon onClick={()=>setInHome(true)}>
+              <Icon>
                 <FiHome id="FiHome" size="1.3rem" />
               </Icon>
             </Link>
-            <form onSubmit={e => onSubmit(e)}>
+            <form onSubmit={(e) => onSubmit(e)}>
               <input
                 type="text"
                 value={pesquisa}
@@ -82,6 +86,6 @@ export const Header:React.FC<PropTypes> = ({setSearchUserName, setInHome}) => {
       </Container>
     </Wrapper>
   );
-}
+};
 
 export default Header;

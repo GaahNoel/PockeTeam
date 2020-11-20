@@ -1,9 +1,9 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import Header from '../components/header';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
-import TeamComponent from './components/teams';
 import { useRouter } from 'next/router';
+import { array } from 'yup';
+import TeamComponent from './components/teams';
 import {
   Wrapper,
   Container,
@@ -11,16 +11,13 @@ import {
   Teams,
   Grid,
 } from '../styles/pages/Home';
-import { array } from 'yup';
+import Header from '../components/header';
 
-
-
-export default function Home(){
-
+export default function Home() {
   const router = useRouter();
   const [teams, setTeams] = useState([]);
-  const [ searchUserName , setSearchUserName ] = useState('');
-  const [ inHome, setInHome ] = useState(false);
+  const [searchUserName, setSearchUserName] = useState('');
+  const [inHome, setInHome] = useState(false);
 
   useEffect(() => {
     setSearchUserName('');
@@ -29,42 +26,38 @@ export default function Home(){
 
   useEffect(() => {
     setSearchUserName('');
-    if(inHome)
-    {
-      axios.get(`http://localhost:3333/team/list`)
-        .then((response) => {
-          response.data.reverse();
-          const teamFiltered = response.data.filter(team => {
-            if(!team.isPrivate)
-              return team;
-          })
-          setTeams(teamFiltered);
-        }); 
-    }   
+    if (inHome) {
+      axios.get(`http://localhost:3333/team/list`).then((response) => {
+        response.data.reverse();
+        const teamFiltered = response.data.filter((team) => {
+          if (!team.isPrivate) return team;
+        });
+        setTeams(teamFiltered);
+      });
+    }
   }, [inHome]);
 
   useEffect(() => {
-    console.log('Teste')
-    if(searchUserName)
-    {
-      axios.get(`http://localhost:3333/team/user/${searchUserName}`)
+    console.log('Teste');
+    if (searchUserName) {
+      axios
+        .get(`http://localhost:3333/team/user/${searchUserName}`)
         .then((response) => {
           response.data.reverse();
-          const teamFiltered = response.data.filter(team => {
-            if(!team.isPrivate)
-              return team;
-          })
+          const teamFiltered = response.data.filter((team) => {
+            if (!team.isPrivate) return team;
+          });
           setTeams(teamFiltered);
-        }); 
+        });
     }
   }, [searchUserName]);
 
   return (
     <>
-       <Helmet>
+      <Helmet>
         <title>PockeTeam - Home</title>
       </Helmet>
-      <Header setSearchUserName={setSearchUserName} setInHome={setInHome} />
+      <Header setSearchUserName={setSearchUserName} />
       <Wrapper>
         <Container>
           <Grid>
@@ -84,6 +77,4 @@ export default function Home(){
       </Wrapper>
     </>
   );
-};
-
-
+}

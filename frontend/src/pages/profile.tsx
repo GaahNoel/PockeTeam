@@ -6,11 +6,11 @@ import { useRouter } from 'next/router';
 import Header from '../components/header';
 import TeamComponent from './components/teams';
 import imageInterrogation from '../assets/interrogation.png';
-import { 
-  Wrapper, 
-  Container, 
-  Title, 
-  Photo, 
+import {
+  Wrapper,
+  Container,
+  Title,
+  Photo,
   TopSide,
   BotSide,
   Infos,
@@ -22,67 +22,61 @@ import {
 export default function Profile() {
   const router = useRouter();
   const [userName, setUserName] = useState('');
-  const [ profileUserName, setProfileUserName ] = useState('');
+  const [profileUserName, setProfileUserName] = useState('');
   const [info, setInfo] = useState('');
   const [starterPokemon, setStarterPokemon] = useState('');
   const [imgStarter, setImgStarter] = useState(imageInterrogation);
   const [favoriteTeam, setFavoriteTeam] = useState();
-  const [ isUser, setIsUser ] = useState(true);
-
+  const [isUser, setIsUser] = useState(true);
 
   useEffect(() => {
-      let userNameAux;
+    let userNameAux;
 
-      
-      if(router.query.user)
-      {
-        if(localStorage.getItem('username'))
-        {
-          if(router.query.user !== localStorage.getItem('username'))
-         {
-            userNameAux = router.query.user;
-            setIsUser(false);
-          } 
-          else{
-            userNameAux = localStorage.getItem('username');
-            setIsUser(true);
-          }
-        }
-        else{
+    if (router.query.user) {
+      if (localStorage.getItem('username')) {
+        if (router.query.user !== localStorage.getItem('username')) {
           userNameAux = router.query.user;
           setIsUser(false);
-        } 
-      }
-      else{
-        if(!localStorage.getItem('username'))
-        {
-          alert('Para acessar esta página é necessário estar logado');
-          router.push('/login')
+        } else {
+          userNameAux = localStorage.getItem('username');
+          setIsUser(true);
         }
-        userNameAux = localStorage.getItem('username');
-        setIsUser(true);
+      } else {
+        userNameAux = router.query.user;
+        setIsUser(false);
       }
-      
-      setProfileUserName(userNameAux);
-      
-        setUserName(userNameAux);
+    } else {
+      if (!localStorage.getItem('username')) {
+        alert('Para acessar esta página é necessário estar logado');
+        router.push('/login');
+      }
+      userNameAux = localStorage.getItem('username');
+      setIsUser(true);
+    }
 
-        axios
-        .post('http://localhost:3333/users/search', {
-          username: userNameAux,
-        })
-        .then(response => {
-          setInfo(response.data.info);
-          setStarterPokemon(response.data.favoritePokemon);
-          setFavoriteTeam(response.data.favoriteTeam);
+    setProfileUserName(userNameAux);
 
-          if(response.data.favoritePokemon)
-            axios.get(`https://pokeapi.co/api/v2/pokemon/${response.data.favoritePokemon}`).then( responseFavPoke =>{
+    setUserName(userNameAux);
+
+    axios
+      .post('http://localhost:3333/users/search', {
+        username: userNameAux,
+      })
+      .then((response) => {
+        setInfo(response.data.info);
+        setStarterPokemon(response.data.favoritePokemon);
+        setFavoriteTeam(response.data.favoriteTeam);
+
+        if (response.data.favoritePokemon)
+          axios
+            .get(
+              `https://pokeapi.co/api/v2/pokemon/${response.data.favoritePokemon}`,
+            )
+            .then((responseFavPoke) => {
               setImgStarter(responseFavPoke.data.sprites.front_default);
-            })
-        }); 
-    },[])
-
+            });
+      });
+  }, []);
 
   return (
     <>
@@ -95,19 +89,21 @@ export default function Profile() {
           <Title>@{userName} -&gt; Profile</Title>
           <TopSide>
             <Photo>
-              <img src={imgStarter}></img>
+              <img src={imgStarter} />
             </Photo>
-            <Link href={{
-              pathname: '/team',
-              query:{user: profileUserName}
-            }}>
-                  <button>Times</button>
+            <Link
+              href={{
+                pathname: '/team',
+                query: { user: profileUserName },
+              }}
+            >
+              <button>Times</button>
             </Link>
-            {
-            isUser&&<Link href="/profileEdit">
-                  <button>Editar Perfil</button>
-            </Link>
-            }
+            {isUser && (
+              <Link href="/profileEdit">
+                <button>Editar Perfil</button>
+              </Link>
+            )}
           </TopSide>
           <BotSide>
             <Infos>
@@ -121,10 +117,9 @@ export default function Profile() {
 
               <FavoriteTeam>
                 <p>Time Favorito: </p>
-                {favoriteTeam &&<TeamComponent team={favoriteTeam}/>}
+                {favoriteTeam && <TeamComponent team={favoriteTeam} />}
               </FavoriteTeam>
             </PokeInfos>
-
           </BotSide>
         </Container>
       </Wrapper>

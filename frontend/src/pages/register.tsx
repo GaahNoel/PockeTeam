@@ -6,8 +6,8 @@ import { useForm } from 'react-hook-form';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Select from 'react-select';
 import TextField from '@material-ui/core/TextField';
-import Header from '../components/header';
 import Router, { useRouter } from 'next/router';
+import Header from '../components/header';
 import {
   Button,
   Wrapper,
@@ -24,52 +24,57 @@ interface RegisterTypes {
   username: string;
   email: string;
   password: string;
+  confirmPassword: string;
   info: string;
 }
 
 export default function Register() {
   const { register, handleSubmit, errors } = useForm();
-  const [ starter, setStarter ] = useState('');
+  const [starter, setStarter] = useState('');
   const options = [
-   {label:"bulbasaur", value:"bulbasaur"},
-   {label:"charmander", value:"charmander"},
-   {label:"squirtle", value: "squirtle"},
-   {label: "chikorita", value: "chikorita"},
-   {label:"cyndaquil", value:"cyndaquil"}, 
-   {label:"totodile", value:"totodile"},
-   {label:"treecko", value:"treecko"},
-   {label:"torchic", value: "torchic"},
-   {label: "mudkip", value: "mudkip"},
-   {label: "turtwig", value: "turtwig"},
-   {label: "chimchar", value: "chimchar"},
-   {label: "piplup", value: "piplup"},
-   {label: "snivy", value: "snivy"},
-   {label: "tepig", value: "tepig"},
-   {label: "oshawott", value: "oshawott"},
-   {label: "chespin", value: "chespin"},
-   {label: "fennekin", value: "fennekin"},
-   {label: "froakie", value: "froakie"},
-   {label: "rowlet", value: "rowlet"}, 
-   {label: "litten", value: "litten"},
-   {label: "popplio", value: "popplio"}]
+    { label: 'bulbasaur', value: 'bulbasaur' },
+    { label: 'charmander', value: 'charmander' },
+    { label: 'squirtle', value: 'squirtle' },
+    { label: 'chikorita', value: 'chikorita' },
+    { label: 'cyndaquil', value: 'cyndaquil' },
+    { label: 'totodile', value: 'totodile' },
+    { label: 'treecko', value: 'treecko' },
+    { label: 'torchic', value: 'torchic' },
+    { label: 'mudkip', value: 'mudkip' },
+    { label: 'turtwig', value: 'turtwig' },
+    { label: 'chimchar', value: 'chimchar' },
+    { label: 'piplup', value: 'piplup' },
+    { label: 'snivy', value: 'snivy' },
+    { label: 'tepig', value: 'tepig' },
+    { label: 'oshawott', value: 'oshawott' },
+    { label: 'chespin', value: 'chespin' },
+    { label: 'fennekin', value: 'fennekin' },
+    { label: 'froakie', value: 'froakie' },
+    { label: 'rowlet', value: 'rowlet' },
+    { label: 'litten', value: 'litten' },
+    { label: 'popplio', value: 'popplio' },
+  ];
 
   const onSubmit = (data: RegisterTypes, e: FormEvent) => {
-    const { login, username, email, password, info } = data;
-    console.log(data);
     e.preventDefault();
-    axios
-      .post('http://localhost:3333/users/create', {
-        login,
-        username,
-        email,
-        password,
-        info,
-        favoritePokemon: starter,
-      })
-      .then(() => {
-        alert('Enviado com sucesso');
-        Router.push('/');
-      });
+    const { login, username, email, password, confirmPassword, info } = data;
+    if (confirmPassword === password) {
+      axios
+        .post('http://localhost:3333/users/create', {
+          login,
+          username,
+          email,
+          password,
+          info,
+          favoritePokemon: starter,
+        })
+        .then(() => {
+          alert('Enviado com sucesso');
+          Router.push('/');
+        });
+    } else {
+      alert('Erro, informações não coerentes');
+    }
   };
 
   const changePokemon = (e: Select) => {
@@ -80,7 +85,6 @@ export default function Register() {
     container: (provide: any) => ({
       ...provide,
       width: 430,
-     
     }),
 
     input: (provide: any) => ({
@@ -158,15 +162,15 @@ export default function Register() {
                 multiline
               />
               <Select
-                    options={options}
-                    onChange={changePokemon}
-                    name="favoritePokemon"
-                    className="pokemonSelect"
-                    styles={widthChange}
-                    inputRef={register({ required: true })}
-                    required
-                    placeholder="Starter Favorito"
-                  />
+                options={options}
+                onChange={changePokemon}
+                name="favoritePokemon"
+                className="pokemonSelect"
+                styles={widthChange}
+                inputRef={register({ required: true })}
+                required
+                placeholder="Starter Favorito"
+              />
               <div>
                 <button type="submit">CRIAR</button>
                 <Link href="/">

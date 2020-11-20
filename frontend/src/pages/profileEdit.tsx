@@ -6,8 +6,8 @@ import { useForm } from 'react-hook-form';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Select from 'react-select';
 import TextField from '@material-ui/core/TextField';
-import Header from '../components/header';
 import Router, { useRouter } from 'next/router';
+import Header from '../components/header';
 import {
   Button,
   Wrapper,
@@ -32,59 +32,56 @@ export default function Register() {
   const router = useRouter();
   const { register, handleSubmit, errors } = useForm();
   const [userName, setUserName] = useState('');
-  const [ starter, setStarter ] = useState('');
+  const [starter, setStarter] = useState('');
   const [info, setInfo] = useState('');
   const [starterPokemon, setStarterPokemon] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [ id, setId ] = useState('');
+  const [id, setId] = useState('');
   const options = [
-   {label:"bulbasaur", value:"bulbasaur"},
-   {label:"charmander", value:"charmander"},
-   {label:"squirtle", value: "squirtle"},
-   {label: "chikorita", value: "chikorita"},
-   {label:"cyndaquil", value:"cyndaquil"}, 
-   {label:"totodile", value:"totodile"},
-   {label:"treecko", value:"treecko"},
-   {label:"torchic", value: "torchic"},
-   {label: "mudkip", value: "mudkip"},
-   {label: "turtwig", value: "turtwig"},
-   {label: "chimchar", value: "chimchar"},
-   {label: "piplup", value: "piplup"},
-   {label: "snivy", value: "snivy"},
-   {label: "tepig", value: "tepig"},
-   {label: "oshawott", value: "oshawott"},
-   {label: "chespin", value: "chespin"},
-   {label: "fennekin", value: "fennekin"},
-   {label: "froakie", value: "froakie"},
-   {label: "rowlet", value: "rowlet"}, 
-   {label: "litten", value: "litten"},
-   {label: "popplio", value: "popplio"}]
+    { label: 'bulbasaur', value: 'bulbasaur' },
+    { label: 'charmander', value: 'charmander' },
+    { label: 'squirtle', value: 'squirtle' },
+    { label: 'chikorita', value: 'chikorita' },
+    { label: 'cyndaquil', value: 'cyndaquil' },
+    { label: 'totodile', value: 'totodile' },
+    { label: 'treecko', value: 'treecko' },
+    { label: 'torchic', value: 'torchic' },
+    { label: 'mudkip', value: 'mudkip' },
+    { label: 'turtwig', value: 'turtwig' },
+    { label: 'chimchar', value: 'chimchar' },
+    { label: 'piplup', value: 'piplup' },
+    { label: 'snivy', value: 'snivy' },
+    { label: 'tepig', value: 'tepig' },
+    { label: 'oshawott', value: 'oshawott' },
+    { label: 'chespin', value: 'chespin' },
+    { label: 'fennekin', value: 'fennekin' },
+    { label: 'froakie', value: 'froakie' },
+    { label: 'rowlet', value: 'rowlet' },
+    { label: 'litten', value: 'litten' },
+    { label: 'popplio', value: 'popplio' },
+  ];
 
-
-   useEffect(() => {
-    let userNameAux;
-    
-    if(!localStorage.getItem('username'))
-    {
-        alert('Para acessar esta página é necessário estar logado');
-        router.push('/login')
+  useEffect(() => {
+    if (!localStorage.getItem('username')) {
+      alert('Para acessar esta página é necessário estar logado');
+      router.push('/login');
     }
-    userNameAux = localStorage.getItem('username');
+    const userNameAux = localStorage.getItem('username');
     setUserName(userNameAux);
 
     axios
-        .post('http://localhost:3333/users/search', {
-          username: userNameAux,
-        })
-        .then(response => {
-          setId(response.data._id);
-          setInfo(response.data.info);
-          setStarterPokemon(response.data.favoritePokemon);
-          setEmail(response.data.email);
-          setPassword(response.data.password);
-        }); 
-   }, [])
+      .post('http://localhost:3333/users/search', {
+        username: userNameAux,
+      })
+      .then((response) => {
+        setId(response.data._id);
+        setInfo(response.data.info);
+        setStarterPokemon(response.data.favoritePokemon);
+        setEmail(response.data.email);
+        setPassword(response.data.password);
+      });
+  }, []);
 
   const onSubmit = (data: RegisterTypes, e: FormEvent) => {
     const { login, username, email, password, info } = data;
@@ -102,15 +99,14 @@ export default function Register() {
       });
   };
 
-  const changePokemon = (e: Select) => {  
-      setStarterPokemon(e.value);
+  const changePokemon = (e: Select) => {
+    setStarterPokemon(e.value);
   };
 
   const widthChange = {
     container: (provide: any) => ({
       ...provide,
       width: 430,
-     
     }),
 
     input: (provide: any) => ({
@@ -130,15 +126,11 @@ export default function Register() {
           <Mobile>EDITAR PERFIL</Mobile>
 
           <Form>
-              <InfosNotChange>
-                <span>
-                    UserName: @{userName}
-                </span>
-                <span>
-                    Email: {email}
-                </span>
-              </InfosNotChange>
-            
+            <InfosNotChange>
+              <span>UserName: @{userName}</span>
+              <span>Email: {email}</span>
+            </InfosNotChange>
+
             <form onSubmit={handleSubmit(onSubmit)}>
               <InputField
                 error={errors.password}
@@ -150,10 +142,10 @@ export default function Register() {
                 className="input"
                 helperText={errors.password && '* Campo Obrigatório !'}
                 value={password}
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 InputLabelProps={{
-                    shrink: true,
-                  }}
+                  shrink: true,
+                }}
               />
 
               <InfoField
@@ -166,20 +158,25 @@ export default function Register() {
                 helperText={errors.info && '* Campo Obrigatório !'}
                 multiline
                 value={info}
-                onChange={e => setInfo(e.target.value)}
+                onChange={(e) => setInfo(e.target.value)}
               />
-              {starterPokemon&&<Select
-                    options={options}
-                    onChange={changePokemon}
-                    name="favoritePokemon"
-                    className="pokemonSelect"
-                    styles={widthChange}
-                    inputRef={register({ required: true })}
-                    required
-                    placeholder="Starter Favorito"
-                    defaultValue={{label:starterPokemon, value:starterPokemon}}
-                />}
-              
+              {starterPokemon && (
+                <Select
+                  options={options}
+                  onChange={changePokemon}
+                  name="favoritePokemon"
+                  className="pokemonSelect"
+                  styles={widthChange}
+                  inputRef={register({ required: true })}
+                  required
+                  placeholder="Starter Favorito"
+                  defaultValue={{
+                    label: starterPokemon,
+                    value: starterPokemon,
+                  }}
+                />
+              )}
+
               <div>
                 <button type="submit">ALTERAR</button>
                 <Link href="/profile">

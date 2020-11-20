@@ -50,7 +50,6 @@ export default function Login() {
   };
   const load = () => {
     setUsername(localStorage.getItem('username'));
-    console.log(localStorage.getItem('username'));
   };
   return (
     <>

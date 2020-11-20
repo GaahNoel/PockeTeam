@@ -6,6 +6,12 @@ import {
   PolarAngleAxis,
   PolarRadiusAxis,
 } from 'recharts';
+
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import { WiStars } from 'react-icons/wi';
+import Axios from 'axios';
 import {
   Team,
   Names,
@@ -15,9 +21,6 @@ import {
   Item,
   Empty,
 } from '../../styles/components/Team';
-
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 // import { Container } from './styles';
 type PropTypes = {
@@ -30,9 +33,6 @@ type PropTypes = {
     favorite: boolean;
   };
 };
-
-import {WiStars} from 'react-icons/wi';
-import Axios from 'axios';
 
 const TeamComponent: React.FC<PropTypes> = ({
   team: { name, user, isPrivate, pokemon, stats, favorite },
@@ -74,8 +74,8 @@ const TeamComponent: React.FC<PropTypes> = ({
   ]);
 
   useEffect(() => {
-
     const initialQtd = pokemon.length;
+    console.log(empty);
     for (let i = 0; i < 6 - initialQtd; i++) {
       setEmpty((element) => [...element, i]);
     }
@@ -110,23 +110,26 @@ const TeamComponent: React.FC<PropTypes> = ({
         },
       ]);
     }
-  }, []);
+  }, [pokemon]);
 
   return (
     <Team>
       <Info>
         <Names>
-          {user.username&&<span>
-            <strong>Username: </strong>
-            <Link href={{
-              pathname: '/profile',
-              query: {user: user.username},
-            }}>
-            {user.username}
-            </Link>
-            
-          </span>}
-          
+          {user.username && (
+            <span>
+              <strong>Username: </strong>
+              <Link
+                href={{
+                  pathname: '/profile',
+                  query: { user: user.username },
+                }}
+              >
+                {user.username}
+              </Link>
+            </span>
+          )}
+
           <span>
             <strong>Nome: </strong>
             {name}
@@ -135,7 +138,7 @@ const TeamComponent: React.FC<PropTypes> = ({
             <strong>Tipo: </strong>
             {isPrivate ? 'Privado' : 'Público'}
           </p>
-          { favorite&&(<WiStars size='40px'/>)}
+          {favorite && <WiStars size="40px" />}
         </Names>
 
         <Pokemon>

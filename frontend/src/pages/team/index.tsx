@@ -17,51 +17,47 @@ export default function Team() {
   const router = useRouter();
   const [myTeams, setMyTeams] = useState([]);
   const [userName, setUserName] = useState('');
-  const [ isUser, setIsUser ] = useState(true);
-  const [ teamUserName, setTeamUserName ] = useState('');
+  const [isUser, setIsUser] = useState(true);
+  const [teamUserName, setTeamUserName] = useState('');
 
   useEffect(() => {
-
     let userNameAux;
 
-      if (!localStorage.getItem('username')) {
-        alert('Para acessar esta página é necessário estar logado');
+    if (!localStorage.getItem('username')) {
+      alert('Para acessar esta página é necessário estar logado');
 
-        router.push('/login');
-      }
-      else {
-
-        if(router.query.user)
-        {
-          if(router.query.user !== localStorage.getItem('username'))
-          {
-            userNameAux = router.query.user;
-            setIsUser(false);
-          }
-          else{
-            userNameAux = localStorage.getItem('username');
-            setIsUser(true);
-          }
-        }
-        else{
+      router.push('/login');
+    } else {
+      if (router.query.user) {
+        if (router.query.user !== localStorage.getItem('username')) {
+          userNameAux = router.query.user;
+          setIsUser(false);
+        } else {
           userNameAux = localStorage.getItem('username');
           setIsUser(true);
         }
-
-        setUserName(localStorage.getItem('username'));
-        setTeamUserName(userNameAux);
-
-        axios
-          .get(`http://localhost:3333/team/user/${userNameAux}`)
-          .then((response) => {
-            response.data.reverse();
-            const teamFiltered = response.data.filter(team => {
-              if(!team.isPrivate || team.user.username === localStorage.getItem('username'))
-                return team;
-            })
-            setMyTeams(teamFiltered);
-          });
+      } else {
+        userNameAux = localStorage.getItem('username');
+        setIsUser(true);
       }
+
+      setUserName(localStorage.getItem('username'));
+      setTeamUserName(userNameAux);
+
+      axios
+        .get(`http://localhost:3333/team/user/${userNameAux}`)
+        .then((response) => {
+          response.data.reverse();
+          const teamFiltered = response.data.filter((team) => {
+            if (
+              !team.isPrivate ||
+              team.user.username === localStorage.getItem('username')
+            )
+              return team;
+          });
+          setMyTeams(teamFiltered);
+        });
+    }
   }, []);
 
   return (
