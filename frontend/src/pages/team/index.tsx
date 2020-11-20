@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Header from '../../components/header';
 import TeamComponent from '../components/teams';
+import { toast } from 'react-toastify';
 import {
   Wrapper,
   Container,
@@ -24,7 +25,7 @@ export default function Team() {
     let userNameAux;
 
     if (!localStorage.getItem('username')) {
-      alert('Para acessar esta página é necessário estar logado');
+      toast.warn('Para acessar esta página é necessário estar logado');
 
       router.push('/login');
     } else {
@@ -74,9 +75,12 @@ export default function Team() {
                 <h2 id="title">Meus times</h2>
                 <p id="text">Classificado por: mais recentes</p>
               </div>
-              <Link href="/team/create">
-                <button>Criar Um Time</button>
-              </Link>
+              {isUser&&
+                <Link href="/team/create">
+                  <button>Criar Um Time</button>
+                </Link>
+              }
+              
             </TitlePage>
             <Teams>
               {myTeams.map((team) => (

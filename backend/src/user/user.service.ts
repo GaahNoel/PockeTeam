@@ -19,17 +19,28 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const { username, email } = createUserDto;
+    const { login, username, email } = createUserDto;
+    const findLogin = await this.UserModel.find({
+      login,
+    });
     const findUsername = await this.UserModel.find({
       username,
     });
     const findEmail = await this.UserModel.find({
       email,
     });
+
+    console.log(findLogin);
+    console.log(findUsername);
+    console.log(findEmail);
+    
+
+    if (findLogin.length !== 0)
+      throw new BadRequestException('Login já existe!');     
     if (findUsername.length !== 0)
-      throw new BadRequestException('Username já existente !');
+      throw new BadRequestException('Username já existente!');
     if (findEmail.length !== 0)
-      throw new BadRequestException('Email já existe !');
+      throw new BadRequestException('Email já existe!'); 
 
     const createdUser = new this.UserModel(createUserDto);
     return createdUser.save();

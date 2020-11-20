@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -29,16 +30,12 @@ export class UserController {
 
   @Post('create')
   async create(@Body() createUserDTO: CreateUserDto): Promise<User> {
-    try {
-      const createdUser = await this.userService.create(createUserDTO);
-      const { id } = await this.emailService.createEmailToken(
-        createUserDTO.email,
-      );
-      await this.emailService.sendEmailVerification(id);
-      return createdUser;
-    } catch (err) {
-      throw new InternalServerErrorException(err.response);
-    }
+    const createdUser = await this.userService.create(createUserDTO);
+    const { id } = await this.emailService.createEmailToken(
+      createUserDTO.email,
+    );
+    await this.emailService.sendEmailVerification(id);
+    return createdUser; 
   }
 
   @Post('search')

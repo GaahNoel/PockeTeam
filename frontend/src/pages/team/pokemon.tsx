@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form';
 
 import Loader from 'react-loader-spinner';
 
-import { string } from 'yup';
+import { toast } from 'react-toastify';
 import Router, { useRouter } from 'next/router';
 import {
   Radar,
@@ -89,6 +89,7 @@ const Pokemon: React.FC = () => {
   const [options, setOptions] = useState([]);
   const [movesArray, setMovesArray] = useState([]);
   const [itemsArray, setItemsArray] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   /* Seleções de moves */
   const [move1, setMove1] = useState('');
@@ -152,7 +153,7 @@ const Pokemon: React.FC = () => {
 
   useEffect(() => {
     if (!localStorage.getItem('username')) {
-      alert('Para acessar esta página é necessário estar logado');
+      toast.warn('Para acessar esta página é necessário estar logado');      
       router.push('/login');
     } else {
       axios
@@ -163,6 +164,7 @@ const Pokemon: React.FC = () => {
               ...oldPokemons,
               { value: pokemons, label: pokemons },
             ]);
+            setIsLoaded(true);
           });
         });
     }
@@ -410,7 +412,7 @@ const Pokemon: React.FC = () => {
             <PokemonSelect>
               <div>
                 <h3>Pokémon</h3>
-                {options.length > 1000 ? (
+                {isLoaded ? (
                   <Select
                     options={options}
                     onChange={changePokemon}

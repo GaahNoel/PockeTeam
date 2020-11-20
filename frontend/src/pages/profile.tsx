@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import Header from '../components/header';
 import TeamComponent from './components/teams';
 import imageInterrogation from '../assets/interrogation.png';
+import { toast } from 'react-toastify';
 import {
   Wrapper,
   Container,
@@ -47,7 +48,7 @@ export default function Profile() {
       }
     } else {
       if (!localStorage.getItem('username')) {
-        alert('Para acessar esta página é necessário estar logado');
+        toast.warn('Para acessar esta página é necessário estar logado');
         router.push('/login');
       }
       userNameAux = localStorage.getItem('username');

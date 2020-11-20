@@ -9,7 +9,6 @@ import {
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-
 import { WiStars } from 'react-icons/wi';
 import Axios from 'axios';
 import {
@@ -39,7 +38,6 @@ const TeamComponent: React.FC<PropTypes> = ({
 }) => {
   const router = useRouter();
   const [empty, setEmpty] = useState([]);
-
   const [radarData, setRadarData] = useState([
     {
       subject: 'hp',
@@ -74,8 +72,10 @@ const TeamComponent: React.FC<PropTypes> = ({
   ]);
 
   useEffect(() => {
+    setEmpty([]);
     const initialQtd = pokemon.length;
     console.log(empty);
+    console.log(initialQtd);
     for (let i = 0; i < 6 - initialQtd; i++) {
       setEmpty((element) => [...element, i]);
     }
@@ -116,7 +116,7 @@ const TeamComponent: React.FC<PropTypes> = ({
     <Team>
       <Info>
         <Names>
-          {user.username && (
+          {user && (
             <span>
               <strong>Username: </strong>
               <Link
@@ -152,11 +152,13 @@ const TeamComponent: React.FC<PropTypes> = ({
               )}
             </div>
           ))}
+
           {empty.map((element) => (
             <Empty>
               <span>-</span>
             </Empty>
           ))}
+
         </Pokemon>
       </Info>
       <Graph>

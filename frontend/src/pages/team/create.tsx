@@ -12,6 +12,7 @@ import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 import {
   FormControlLabel,
   FormLabel,
@@ -86,7 +87,7 @@ const Team: React.FC = () => {
 
   useEffect(() => {
     if (!localStorage.getItem('username')) {
-      alert('Para acessar esta página é necessário estar logado');
+      toast.warn('Para acessar esta página é necessário estar logado');
       router.push('/login');
     } else {
       setUserName(localStorage.getItem('username'));
@@ -191,7 +192,7 @@ const Team: React.FC = () => {
         favorite: favoriteTeam !== 'false',
       })
       .then((response) => {
-        alert(`Time cadastrado com sucesso!`);
+        toast.success('Time cadastrado com sucesso!');
         localStorage.setItem('team', JSON.stringify([]));
         localStorage.setItem('private', 'public');
         localStorage.setItem('teamName', '');

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import { FiUser, FiStar, FiHome, FiPower } from 'react-icons/fi';
+import { FiUser, FiHome, FiPower } from 'react-icons/fi';
+import { GiBigGear } from 'react-icons/gi';
 import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 import {
   Wrapper,
@@ -30,8 +32,13 @@ export const Header: React.FC<PropTypes> = ({
     setUsername(localStorage.getItem('username'));
   }, []);
   const logout = () => {
+    if(localStorage.getItem('username'))
+    {
+      toast.dark('Logout Realizado Com Sucesso');
+      router.push('/');
+    }
+    setUsername('');
     localStorage.clear();
-    router.push('/');
   };
 
   const onSubmit = (e) => {
@@ -65,11 +72,22 @@ export const Header: React.FC<PropTypes> = ({
           </LeftHeader>
 
           <RightHeader>
-            <Link href="/">
-              <Icon>
-                <FiStar id="FiStar" size="1.3rem" />
-              </Icon>
-            </Link>
+          {username && (   
+            <>
+              <span>Olá, @{username}</span>     
+              <Link
+                  href={{
+                    pathname: '/team',
+                    query: { user: username },
+                  }}
+                >
+                  <Icon>
+                    <GiBigGear id="GiBigGear" size="1.3rem" />
+                  </Icon>
+                </Link>
+            </>
+             )}
+
             {username && (
               <Icon onClick={logout}>
                 <FiPower id="FiPower" size="1.3rem" />
@@ -81,6 +99,7 @@ export const Header: React.FC<PropTypes> = ({
                 <FiUser id="FiUser" size="1.3rem" />
               </Icon>
             </Link>
+            
           </RightHeader>
         </DownHeader>
       </Container>

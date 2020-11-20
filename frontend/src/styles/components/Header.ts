@@ -30,9 +30,16 @@ export const Container = styled.header`
     }
   }
 
-  #FiStar {
+  span{
+    color: white;
+    margin-top: 4px;
+    margin-right: 30px;
+  }
+
+  #GiBigGear {
     color: white;
     margin-top: 2px;
+    margin-right: 10px;
   }
   #FiPower {
     color: white;

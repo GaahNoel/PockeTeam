@@ -8,6 +8,7 @@ import Select from 'react-select';
 import TextField from '@material-ui/core/TextField';
 import Router, { useRouter } from 'next/router';
 import Header from '../components/header';
+import { toast } from 'react-toastify';
 import {
   Button,
   Wrapper,
@@ -64,7 +65,7 @@ export default function Register() {
 
   useEffect(() => {
     if (!localStorage.getItem('username')) {
-      alert('Para acessar esta página é necessário estar logado');
+      toast.warn('Para acessar esta página é necessário estar logado');
       router.push('/login');
     }
     const userNameAux = localStorage.getItem('username');
@@ -94,7 +95,7 @@ export default function Register() {
         favoritePokemon: starterPokemon,
       })
       .then(() => {
-        alert('Enviado com sucesso');
+        toast.success('Alterado com sucesso');
         Router.push('/profile');
       });
   };

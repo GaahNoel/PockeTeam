@@ -25,6 +25,7 @@
     "react-multi-carousel": "^2.5.5",
     "react-router-dom": "^5.2.0",
     "react-select": "^3.1.0",
+    "react-toastify": "^6.1.0",
     "recharts": "^1.8.5",
     "styled-components": "^5.2.0",
     "sweetalert2": "^10.2.0",

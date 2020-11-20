@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Header from '../components/header';
+import { toast } from 'react-toastify';
 
 import {
   Wrapper,
@@ -16,6 +17,7 @@ import {
   Mobile,
   Button,
   Input,
+  Register,
 } from '../styles/pages/Login';
 
 interface LoginTypes {
@@ -43,9 +45,9 @@ export default function Login() {
       .then((response) => {
         if (response.data) {
           localStorage.setItem('username', response.data.username);
-          alert('Logado com Sucesso!');
+          toast.success('Logado com sucesso!');
           router.push('/');
-        } else alert('Usuário Inválido');
+        }else toast.error('Usuário inválido!');
       });
   };
   const load = () => {
@@ -101,6 +103,12 @@ export default function Login() {
               <p>estratégias de outros jogadores</p>
               <p> e fãs de pokémon.</p>
             </h4>
+            <Register>
+              <h4>CASO NÃO TENHA CONTA, REGISTRE-SE AGORA</h4>
+              <Link href="/register">
+                <Button>REGISTRAR</Button>
+              </Link>
+            </Register>
           </Desktop>
         </Container>
       </Wrapper>

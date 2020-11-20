@@ -62,7 +62,10 @@ export const Form = styled.div`
   }
 `;
 export const Desktop = styled.div`
-  display: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
   h3 {
     @media (min-width: 850px) {
       font-size: 50px;
@@ -87,6 +90,16 @@ export const Mobile = styled.h3`
     display: none;
   }
 `;
+
+export const Register = styled.div`
+  //width: 70%;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
 export const Button = styled.a`
   color: #000000;
   margin-top: 15px;

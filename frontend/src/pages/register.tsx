@@ -8,6 +8,7 @@ import Select from 'react-select';
 import TextField from '@material-ui/core/TextField';
 import Router, { useRouter } from 'next/router';
 import Header from '../components/header';
+import { toast } from 'react-toastify';
 import {
   Button,
   Wrapper,
@@ -59,7 +60,7 @@ export default function Register() {
     e.preventDefault();
     const { login, username, email, password, confirmPassword, info } = data;
     if (confirmPassword === password) {
-      axios
+        axios
         .post('http://localhost:3333/users/create', {
           login,
           username,
@@ -69,11 +70,14 @@ export default function Register() {
           favoritePokemon: starter,
         })
         .then(() => {
-          alert('Enviado com sucesso');
+          toast.success('Email enviado com sucesso');
           Router.push('/');
+        }).catch(error => {
+          
+          toast.error(`Erro: ${error.response.data.message}`);
         });
     } else {
-      alert('Erro, informações não coerentes');
+      toast.error('Erro, informações não coerentes');
     }
   };
 
