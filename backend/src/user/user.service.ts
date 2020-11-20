@@ -25,7 +25,13 @@ export class UserService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
-    const updatedUser = this.UserModel.findByIdAndUpdate(id, updateUserDto);
+    const updatedUser = await this.UserModel.findByIdAndUpdate(
+      id,
+      updateUserDto,
+      {
+        useFindAndModify: false,
+      },
+    );
     if (!updatedUser)
       throw new InternalServerErrorException('Usuário não encontrado');
     return this.UserModel.findById(id);
