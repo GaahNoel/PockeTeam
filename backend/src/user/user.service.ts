@@ -30,17 +30,12 @@ export class UserService {
       email,
     });
 
-    console.log(findLogin);
-    console.log(findUsername);
-    console.log(findEmail);
-    
-
     if (findLogin.length !== 0)
-      throw new BadRequestException('Login já existe!');     
+      throw new BadRequestException('Login já existe!');
     if (findUsername.length !== 0)
       throw new BadRequestException('Username já existente!');
     if (findEmail.length !== 0)
-      throw new BadRequestException('Email já existe!'); 
+      throw new BadRequestException('Email já existe!');
 
     const createdUser = new this.UserModel(createUserDto);
     return createdUser.save();
@@ -86,7 +81,7 @@ export class UserService {
     const selectedUser = await this.UserModel.findOne({
       login,
       password,
-    }).select('username');
+    }).select('username verified');
     return selectedUser;
   }
 }
