@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import * as mongoose from 'mongoose';
 import { SoftDeleteModel } from 'mongoose-delete';
 import { Pokemon } from 'src/pokemon/schemas/pokemon.schema';
 import { User } from 'src/user/schema/user.schema';
@@ -75,10 +76,14 @@ export class TeamService {
   async getByUser(username: string): Promise<Team[]> {
     const userRegex = new RegExp(username, 'i');
 
-    const { _id: id } = await this.UserModel.findOne({
+    const findedUser = await this.UserModel.find({
       username: userRegex,
-    }).select('id');
-    const selectedTeams = await this.TeamModel.find({ user: id })
+    });
+    const usersId = findedUser.map(user => {
+      return mongoose.Types.ObjectId(user.id);
+    });
+    const selectedTeams = await this.TeamModel.where('user')
+      .in(usersId)
       .populate({
         path: 'pokemon',
         model: 'Pokemon',
