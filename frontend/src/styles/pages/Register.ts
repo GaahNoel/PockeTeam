@@ -61,24 +61,23 @@ export const Form = styled.div`
     label {
       font-size: 1.5em;
     }
-    fieldset{
-        margin-top: 10px;
-      }
+    fieldset {
+      margin-top: 10px;
+    }
     input {
-      
       width: 400px;
       @media (min-width: 850px) {
         display: flex;
         min-width: 20vw;
         height: 1rem;
-        
-        &:last-child{
+
+        &:last-child {
           height: 1000px;
-        } 
+        }
       }
-      &:last-child{
+      &:last-child {
         height: 1000px;
-      } 
+      }
     }
     button {
       margin-top: 25px;
@@ -140,13 +139,14 @@ export const Mobile = styled.div`
 `;
 
 export const InfoField = styled(TextField)`
-   width: 430px;
-   min-height: 200px;
-   textarea{
+  width: 430px;
+  min-height: 200px;
+  textarea {
     min-height: 200px;
-   }
+  }
 `;
 
 export const SelectDiv = styled.div`
   margin-top: 20px;
-`
+`;
+export const InputField = styled(TextField)``;

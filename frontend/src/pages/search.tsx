@@ -37,7 +37,7 @@ export default function Search() {
       localStorage.setItem('search', String(searchUserName));
 
       axios
-        .get(`http://localhost:3333/team/user/${searchUserName}`)
+        .get(`https://pocketeam.herokuapp.com/team/user/${searchUserName}`)
         .then((response) => {
           response.data.reverse();
           const teamFiltered = response.data.filter((team) => {

@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet';
 import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 import Header from '../../components/header';
 import TeamComponent from '../components/teams';
-import { toast } from 'react-toastify';
 import {
   Wrapper,
   Container,
@@ -46,7 +46,7 @@ export default function Team() {
       setTeamUserName(userNameAux);
 
       axios
-        .get(`http://localhost:3333/team/user/${userNameAux}`)
+        .get(`https://pocketeam.herokuapp.com/team/user/${userNameAux}`)
         .then((response) => {
           response.data.reverse();
           const teamFiltered = response.data.filter((team) => {
@@ -75,12 +75,11 @@ export default function Team() {
                 <h2 id="title">Meus times</h2>
                 <p id="text">Classificado por: mais recentes</p>
               </div>
-              {isUser&&
+              {isUser && (
                 <Link href="/team/create">
                   <button>Criar Um Time</button>
                 </Link>
-              }
-              
+              )}
             </TitlePage>
             <Teams>
               {myTeams.map((team) => (

@@ -122,7 +122,7 @@ const Team: React.FC = () => {
     if (team.length !== 0) {
       const test = team.map(async (pokemon) => {
         const response = await axios.get(
-          `http://localhost:3333/pokemon/${pokemon.id}`,
+          `https://pocketeam.herokuapp.com/pokemon/${pokemon.id}`,
         );
 
         arrayAux[0] += response.data.stats.hp;
@@ -176,9 +176,9 @@ const Team: React.FC = () => {
     }
   }, [team]);
 
-  const onClickTeamIsEmpty = () =>{
+  const onClickTeamIsEmpty = () => {
     toast.warning('Time vázio!');
-  }
+  };
 
   const onSubmit = (data, e) => {
     e.preventDefault();
@@ -187,7 +187,7 @@ const Team: React.FC = () => {
     });
 
     axios
-      .post(`http://localhost:3333/team/create`, {
+      .post(`https://pocketeam.herokuapp.com/team/create`, {
         user: userName,
         name: data.TeamName,
         pokemon: teamDef,
@@ -211,7 +211,7 @@ const Team: React.FC = () => {
 
   const onClick = (pokemon) => {
     axios
-      .delete(`http://localhost:3333/pokemon/${team[pokemon].id}`)
+      .delete(`https://pocketeam.herokuapp.com/pokemon/${team[pokemon].id}`)
       .then((response) => {
         console.log('Pokémon escolhido anteriormente retirado');
       });
@@ -231,7 +231,7 @@ const Team: React.FC = () => {
     localStorage.setItem('teamName', JSON.stringify(''));
     localStorage.setItem('private', JSON.stringify('public'));
     team.forEach(async (e) => {
-      await axios.delete(`http://localhost:3333/pokemon/${e.id}`);
+      await axios.delete(`https://pocketeam.herokuapp.com/pokemon/${e.id}`);
     });
     localStorage.setItem('team', JSON.stringify([]));
   };
@@ -383,10 +383,13 @@ const Team: React.FC = () => {
               Time Favorito
             </p>
             <Buttons>
-            {team.length !== 0
-                ?<button type="submit">CONFIRMAR</button>
-                :<button type="button" onClick={onClickTeamIsEmpty}>CONFIRMAR</button>
-              }
+              {team.length !== 0 ? (
+                <button type="submit">CONFIRMAR</button>
+              ) : (
+                <button type="button" onClick={onClickTeamIsEmpty}>
+                  CONFIRMAR
+                </button>
+              )}
               <Link href="/team">
                 <Voltar onClick={onClickVoltar}>VOLTAR</Voltar>
               </Link>

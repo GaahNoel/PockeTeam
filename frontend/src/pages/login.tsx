@@ -6,8 +6,8 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import Header from '../components/header';
 import { toast } from 'react-toastify';
+import Header from '../components/header';
 
 import {
   Wrapper,
@@ -38,22 +38,22 @@ export default function Login() {
 
     e.preventDefault();
     axios
-      .post('http://localhost:3333/users/login', {
+      .post('https://pocketeam.herokuapp.com/users/login', {
         login,
         password,
       })
       .then((response) => {
         if (response.data) {
           console.log(response.data.verified);
-          if(response.data.verified){
+          if (response.data.verified) {
             localStorage.setItem('username', response.data.username);
             localStorage.setItem('id', response.data._id);
             toast.success('Logado com sucesso!');
             router.push('/');
-          }else {
+          } else {
             toast.error('Email ainda não validado!');
           }
-        }else toast.error('Usuário inválido!');
+        } else toast.error('Usuário inválido!');
       });
   };
   const load = () => {

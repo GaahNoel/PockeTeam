@@ -7,8 +7,8 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Select from 'react-select';
 import TextField from '@material-ui/core/TextField';
 import Router, { useRouter } from 'next/router';
-import Header from '../components/header';
 import { toast } from 'react-toastify';
+import Header from '../components/header';
 import {
   Button,
   Wrapper,
@@ -72,7 +72,7 @@ export default function Register() {
     setUserName(userNameAux);
 
     axios
-      .post('http://localhost:3333/users/search', {
+      .post('https://pocketeam.herokuapp.com/users/search', {
         username: userNameAux,
       })
       .then((response) => {
@@ -89,7 +89,7 @@ export default function Register() {
     console.log(data);
     e.preventDefault();
     axios
-      .put(`http://localhost:3333/users/${id}`, {
+      .put(`https://pocketeam.herokuapp.com/users/${id}`, {
         password,
         info,
         favoritePokemon: starterPokemon,

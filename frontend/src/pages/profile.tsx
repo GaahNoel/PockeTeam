@@ -3,10 +3,10 @@ import { Helmet } from 'react-helmet';
 import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 import Header from '../components/header';
 import TeamComponent from './components/teams';
 import imageInterrogation from '../assets/interrogation.png';
-import { toast } from 'react-toastify';
 import {
   Wrapper,
   Container,
@@ -60,7 +60,7 @@ export default function Profile() {
     setUserName(userNameAux);
 
     axios
-      .post('http://localhost:3333/users/search', {
+      .post('https://pocketeam.herokuapp.com/users/search', {
         username: userNameAux,
       })
       .then((response) => {

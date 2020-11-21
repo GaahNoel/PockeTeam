@@ -15,7 +15,10 @@ const pages: React.FC = () => {
         response.data.results.forEach((data) => {
           pokemonList.push(data.name);
         });
-        axios.post('http://localhost:3333/pokemon/update-list', pokemonList);
+        axios.post(
+          'https://pocketeam.herokuapp.com/pokemon/update-list',
+          pokemonList,
+        );
       });
   };
 

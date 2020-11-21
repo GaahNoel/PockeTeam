@@ -27,13 +27,15 @@ export default function Home() {
   useEffect(() => {
     setSearchUserName('');
     if (inHome) {
-      axios.get(`http://localhost:3333/team/list`).then((response) => {
-        response.data.reverse();
-        const teamFiltered = response.data.filter((team) => {
-          if (!team.isPrivate) return team;
+      axios
+        .get(`https://pocketeam.herokuapp.com/team/list`)
+        .then((response) => {
+          response.data.reverse();
+          const teamFiltered = response.data.filter((team) => {
+            if (!team.isPrivate) return team;
+          });
+          setTeams(teamFiltered);
         });
-        setTeams(teamFiltered);
-      });
     }
   }, [inHome]);
 
@@ -41,7 +43,7 @@ export default function Home() {
     console.log('Teste');
     if (searchUserName) {
       axios
-        .get(`http://localhost:3333/team/user/${searchUserName}`)
+        .get(`https://pocketeam.herokuapp.com/team/user/${searchUserName}`)
         .then((response) => {
           response.data.reverse();
           const teamFiltered = response.data.filter((team) => {

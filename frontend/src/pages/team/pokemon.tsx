@@ -152,11 +152,11 @@ const Pokemon: React.FC = () => {
 
   useEffect(() => {
     if (!localStorage.getItem('username')) {
-      toast.warn('Para acessar esta página é necessário estar logado');      
+      toast.warn('Para acessar esta página é necessário estar logado');
       router.push('/login');
     } else {
       axios
-        .get('http://localhost:3333/pokemon/all-pokemons')
+        .get('https://pocketeam.herokuapp.com/pokemon/all-pokemons')
         .then((response) => {
           response.data.list.forEach((pokemons) => {
             setOptions((oldPokemons: any) => [
@@ -172,7 +172,7 @@ const Pokemon: React.FC = () => {
   const onSubmit = (data, e) => {
     e.preventDefault();
     axios
-      .post('http://localhost:3333/pokemon/create/', {
+      .post('https://pocketeam.herokuapp.com/pokemon/create/', {
         name: pokemonName,
         image: pokemon.sprites.front_default,
         moves: [move1, move2, move3, move4],
@@ -226,9 +226,9 @@ const Pokemon: React.FC = () => {
     setMove4Details(null);
   };
 
-  const onClickPokemonNotSelected = () =>{
+  const onClickPokemonNotSelected = () => {
     toast.warning('Nenhum pokémon selecionado!');
-  }
+  };
 
   const changePokemon = (e: Select) => {
     if (e) {
@@ -645,10 +645,13 @@ const Pokemon: React.FC = () => {
               </ItemImage>
             </Item>
             <Buttons>
-              {pokemon
-                ?<button type="submit">SELECIONAR</button>
-                :<button type="button" onClick={onClickPokemonNotSelected}>SELECIONAR</button>
-              }
+              {pokemon ? (
+                <button type="submit">SELECIONAR</button>
+              ) : (
+                <button type="button" onClick={onClickPokemonNotSelected}>
+                  SELECIONAR
+                </button>
+              )}
               <Link href="/team/create">
                 <Voltar>VOLTAR</Voltar>
               </Link>

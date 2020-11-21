@@ -17,7 +17,7 @@ const Email: React.FC = () => {
     if (token) {
       console.log(token);
       axios
-        .get(`http://localhost:3333/email/${router.query.token}`)
+        .get(`https://pocketeam.herokuapp.com/email/${router.query.token}`)
         .then(() => {
           toast.success('Usuário validado com sucesso!');
         })

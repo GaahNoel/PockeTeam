@@ -7,8 +7,8 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Select from 'react-select';
 import TextField from '@material-ui/core/TextField';
 import Router, { useRouter } from 'next/router';
-import Header from '../components/header';
 import { toast } from 'react-toastify';
+import Header from '../components/header';
 import {
   Button,
   Wrapper,
@@ -57,16 +57,16 @@ export default function Register() {
     { label: 'popplio', value: 'popplio' },
   ];
 
-  const onClickNotSelectedStarter = () =>{
+  const onClickNotSelectedStarter = () => {
     toast.warning('É necessário selecionar starter');
-  }
+  };
 
   const onSubmit = (data: RegisterTypes, e: FormEvent) => {
     e.preventDefault();
     const { login, username, email, password, confirmPassword, info } = data;
     if (confirmPassword === password) {
-        axios
-        .post('http://localhost:3333/users/create', {
+      axios
+        .post('https://pocketeam.herokuapp.com/users/create', {
           login,
           username,
           email,
@@ -77,8 +77,8 @@ export default function Register() {
         .then(() => {
           toast.success('Email enviado com sucesso');
           Router.push('/');
-        }).catch(error => {
-          
+        })
+        .catch((error) => {
           toast.error(`Erro: ${error.response.data.message}`);
         });
     } else {
@@ -183,11 +183,14 @@ export default function Register() {
                 />
               </SelectDiv>
               <div>
-              {starter
-                ?<button type="submit">CRIAR</button>
-                :<button type="button" onClick={onClickNotSelectedStarter}>CRIAR</button>
-              }
-                
+                {starter ? (
+                  <button type="submit">CRIAR</button>
+                ) : (
+                  <button type="button" onClick={onClickNotSelectedStarter}>
+                    CRIAR
+                  </button>
+                )}
+
                 <Link href="/">
                   <Button>VOLTAR</Button>
                 </Link>
