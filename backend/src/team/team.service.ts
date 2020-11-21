@@ -5,7 +5,7 @@ import { SoftDeleteModel } from 'mongoose-delete';
 import { Pokemon } from 'src/pokemon/schemas/pokemon.schema';
 import { User } from 'src/user/schema/user.schema';
 import { CreateTeamDto } from './dtos/create-team.dto';
-import { Team } from './schema/team.schema';
+import { Team, TeamSchema } from './schema/team.schema';
 @Injectable()
 export class TeamService {
   constructor(
@@ -89,6 +89,9 @@ export class TeamService {
         model: 'Pokemon',
       })
       .populate('user');
-    return selectedTeams;
+    const filteredTeams = selectedTeams.filter(team => {
+      if (!team.deleted) return team;
+    });
+    return filteredTeams;
   }
 }
