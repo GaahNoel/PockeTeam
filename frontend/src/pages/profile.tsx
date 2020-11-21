@@ -29,21 +29,22 @@ export default function Profile() {
   const [imgStarter, setImgStarter] = useState(imageInterrogation);
   const [favoriteTeam, setFavoriteTeam] = useState();
   const [isUser, setIsUser] = useState(true);
+  const username = router.query.user;
 
   useEffect(() => {
     let userNameAux;
 
-    if (router.query.user) {
+    if (username) {
       if (localStorage.getItem('username')) {
-        if (router.query.user !== localStorage.getItem('username')) {
-          userNameAux = router.query.user;
+        if (username !== localStorage.getItem('username')) {
+          userNameAux = username;
           setIsUser(false);
         } else {
           userNameAux = localStorage.getItem('username');
           setIsUser(true);
         }
       } else {
-        userNameAux = router.query.user;
+        userNameAux = username;
         setIsUser(false);
       }
     } else {
@@ -77,7 +78,7 @@ export default function Profile() {
               setImgStarter(responseFavPoke.data.sprites.front_default);
             });
       });
-  }, []);
+  }, [username]);
 
   return (
     <>

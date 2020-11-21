@@ -73,8 +73,10 @@ export class TeamService {
   }
 
   async getByUser(username: string): Promise<Team[]> {
+    const userRegex = new RegExp(username, 'i');
+
     const { _id: id } = await this.UserModel.findOne({
-      username,
+      username: userRegex,
     }).select('id');
     const selectedTeams = await this.TeamModel.find({ user: id })
       .populate({
