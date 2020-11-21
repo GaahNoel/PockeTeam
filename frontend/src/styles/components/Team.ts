@@ -52,3 +52,9 @@ export const Empty = styled.div`
   align-items: center;
   max-height: 5.5rem;
 `;
+
+export const Icon = styled.a`
+  &:hover {
+    opacity: 0.8;
+  }
+`;

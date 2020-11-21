@@ -11,10 +11,9 @@ import Link from 'next/link';
 import Select from 'react-select';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import Loader from 'react-loader-spinner';
-
-import { toast } from 'react-toastify';
 import Router, { useRouter } from 'next/router';
 import {
   Radar,
@@ -226,6 +225,10 @@ const Pokemon: React.FC = () => {
     setMove3Details(null);
     setMove4Details(null);
   };
+
+  const onClickPokemonNotSelected = () =>{
+    toast.warning('Nenhum pokémon selecionado!');
+  }
 
   const changePokemon = (e: Select) => {
     if (e) {
@@ -642,7 +645,10 @@ const Pokemon: React.FC = () => {
               </ItemImage>
             </Item>
             <Buttons>
-              <button type="submit">SELECIONAR</button>
+              {pokemon
+                ?<button type="submit">SELECIONAR</button>
+                :<button type="button" onClick={onClickPokemonNotSelected}>SELECIONAR</button>
+              }
               <Link href="/team/create">
                 <Voltar>VOLTAR</Voltar>
               </Link>

@@ -44,9 +44,15 @@ export default function Login() {
       })
       .then((response) => {
         if (response.data) {
-          localStorage.setItem('username', response.data.username);
-          toast.success('Logado com sucesso!');
-          router.push('/');
+          console.log(response.data.verified);
+          if(response.data.verified){
+            localStorage.setItem('username', response.data.username);
+            localStorage.setItem('id', response.data._id);
+            toast.success('Logado com sucesso!');
+            router.push('/');
+          }else {
+            toast.error('Email ainda não validado!');
+          }
         }else toast.error('Usuário inválido!');
       });
   };

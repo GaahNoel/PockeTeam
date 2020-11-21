@@ -5,8 +5,8 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-  height: 120vh;
+  min-height: 140vh;
+  height: 140vh;
 `;
 export const Container = styled.div`
   width: 100%;
@@ -139,23 +139,14 @@ export const Mobile = styled.div`
   }
 `;
 
-export const InputField = styled(TextField)`
-  
-`;
-
 export const InfoField = styled(TextField)`
    width: 430px;
    min-height: 200px;
-   
-
-    fieldset{
-      margin-bottom: 20px;
-    }
-
    textarea{
     min-height: 200px;
    }
-    
-   
-   
 `;
+
+export const SelectDiv = styled.div`
+  margin-top: 20px;
+`

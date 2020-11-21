@@ -129,3 +129,20 @@ export const Icon = styled.a`
     opacity: 0.8;
   }
 `;
+export const Login = styled.button`
+  margin-right: 15px;
+  color: #ffffff;
+  background-color: #414141;
+  border: 2px solid #ffffff;
+  text-decoration: none;
+  width: 10rem;
+  align-items: center;
+  font-weight: bold;
+  font-size: medium;
+  border-radius: 5px;
+  &:hover {
+    background-color: #ffffff;
+    color: #414141;
+    border: 2px solid #414141;
+  }
+`;

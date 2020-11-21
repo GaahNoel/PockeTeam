@@ -176,6 +176,10 @@ const Team: React.FC = () => {
     }
   }, [team]);
 
+  const onClickTeamIsEmpty = () =>{
+    toast.warning('Time vázio!');
+  }
+
   const onSubmit = (data, e) => {
     e.preventDefault();
     const teamDef = team.map((e) => {
@@ -379,7 +383,10 @@ const Team: React.FC = () => {
               Time Favorito
             </p>
             <Buttons>
-              <button type="submit">CONFIRMAR</button>
+            {team.length !== 0
+                ?<button type="submit">CONFIRMAR</button>
+                :<button type="button" onClick={onClickTeamIsEmpty}>CONFIRMAR</button>
+              }
               <Link href="/team">
                 <Voltar onClick={onClickVoltar}>VOLTAR</Voltar>
               </Link>

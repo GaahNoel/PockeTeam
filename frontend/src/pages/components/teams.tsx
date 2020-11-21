@@ -10,7 +10,9 @@ import {
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { WiStars } from 'react-icons/wi';
-import Axios from 'axios';
+import { AiFillCloseCircle } from "react-icons/ai";
+import { toast } from 'react-toastify';
+import axios from 'axios';
 import {
   Team,
   Names,
@@ -19,11 +21,14 @@ import {
   Graph,
   Item,
   Empty,
+  Icon,
 } from '../../styles/components/Team';
+import { apiResolver } from 'next/dist/next-server/server/api-utils';
 
 // import { Container } from './styles';
 type PropTypes = {
   team: {
+    _id: string;
     name: string;
     user: any;
     isPrivate: boolean;
@@ -34,10 +39,11 @@ type PropTypes = {
 };
 
 const TeamComponent: React.FC<PropTypes> = ({
-  team: { name, user, isPrivate, pokemon, stats, favorite },
+  team: { _id, name, user, isPrivate, pokemon, stats, favorite },
 }) => {
   const router = useRouter();
   const [empty, setEmpty] = useState([]);
+  const loggedUser = localStorage.getItem('username'); 
   const [radarData, setRadarData] = useState([
     {
       subject: 'hp',
@@ -70,6 +76,21 @@ const TeamComponent: React.FC<PropTypes> = ({
       fullMark: 1000,
     },
   ]);
+
+  const deleteTeam = () => {
+    if(localStorage.getItem('username'))
+    {
+        axios.delete(`https://pocketeam.herokuapp.com/team/${_id}`,{
+          headers:{
+            idUser:localStorage.getItem('id')
+        }
+      }).then(() => {
+        router.reload();
+      }).catch(error => {
+        toast.error(error.response.data.message);
+      })
+    }
+  };
 
   useEffect(() => {
     setEmpty([]);
@@ -116,18 +137,27 @@ const TeamComponent: React.FC<PropTypes> = ({
     <Team>
       <Info>
         <Names>
-          {user && (
-            <span>
-              <strong>Username: </strong>
-              <Link
-                href={{
-                  pathname: '/profile',
-                  query: { user: user.username },
-                }}
-              >
-                {user.username}
-              </Link>
-            </span>
+          
+          {user && user.username &&(
+            <>
+              {user.username == loggedUser&& (
+              <><Icon onClick={deleteTeam}>
+                <AiFillCloseCircle/>
+                </Icon>
+              </>)
+              }
+              <span>
+                <strong>Username: </strong>
+                <Link
+                  href={{
+                    pathname: '/profile',
+                    query: { user: user.username },
+                  }}
+                >
+                  {user.username}
+                </Link>
+              </span>
+            </>
           )}
 
           <span>

@@ -18,6 +18,7 @@ import {
   Mobile,
   InputField,
   InfoField,
+  SelectDiv,
 } from '../styles/pages/Register';
 
 interface RegisterTypes {
@@ -55,6 +56,10 @@ export default function Register() {
     { label: 'litten', value: 'litten' },
     { label: 'popplio', value: 'popplio' },
   ];
+
+  const onClickNotSelectedStarter = () =>{
+    toast.warning('É necessário selecionar starter');
+  }
 
   const onSubmit = (data: RegisterTypes, e: FormEvent) => {
     e.preventDefault();
@@ -165,18 +170,24 @@ export default function Register() {
                 helperText={errors.info && '* Campo Obrigatório !'}
                 multiline
               />
-              <Select
-                options={options}
-                onChange={changePokemon}
-                name="favoritePokemon"
-                className="pokemonSelect"
-                styles={widthChange}
-                inputRef={register({ required: true })}
-                required
-                placeholder="Starter Favorito"
-              />
+              <SelectDiv>
+                <Select
+                  options={options}
+                  onChange={changePokemon}
+                  name="favoritePokemon"
+                  className="pokemonSelect"
+                  styles={widthChange}
+                  inputRef={register({ required: true })}
+                  required
+                  placeholder="Starter Favorito"
+                />
+              </SelectDiv>
               <div>
-                <button type="submit">CRIAR</button>
+              {starter
+                ?<button type="submit">CRIAR</button>
+                :<button type="button" onClick={onClickNotSelectedStarter}>CRIAR</button>
+              }
+                
                 <Link href="/">
                   <Button>VOLTAR</Button>
                 </Link>

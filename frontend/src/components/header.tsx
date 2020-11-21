@@ -14,6 +14,7 @@ import {
   LeftHeader,
   RightHeader,
   Icon,
+  Login,
 } from '../styles/components/Header';
 
 interface PropTypes {
@@ -72,7 +73,7 @@ export const Header: React.FC<PropTypes> = ({
           </LeftHeader>
 
           <RightHeader>
-          {username && (   
+          {username?(   
             <>
               <span>Olá, @{username}</span>     
               <Link
@@ -86,7 +87,11 @@ export const Header: React.FC<PropTypes> = ({
                   </Icon>
                 </Link>
             </>
-             )}
+             ):
+              <Link href="/login">
+                <Login>Fazer login</Login>
+              </Link>
+             }
 
             {username && (
               <Icon onClick={logout}>
