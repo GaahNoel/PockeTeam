@@ -60,7 +60,8 @@ export class UserService {
   }
 
   async search(FindUserDTO: FindUserDto): Promise<User> {
-    const selectedUser = await this.UserModel.findOne(FindUserDTO).populate({
+    const userRegex = new RegExp(FindUserDTO.username, 'i');
+    const selectedUser = await this.UserModel.findOne(userRegex).populate({
       path: 'favoriteTeam',
       populate: {
         path: 'pokemon',
