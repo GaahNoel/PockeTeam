@@ -10,7 +10,7 @@ import {
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { WiStars } from 'react-icons/wi';
-import { AiFillCloseCircle } from "react-icons/ai";
+import { AiFillCloseCircle } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import {
@@ -22,8 +22,7 @@ import {
   Item,
   Empty,
   Icon,
-} from '../../styles/components/Team';
-import { apiResolver } from 'next/dist/next-server/server/api-utils';
+} from '../styles/components/Team';
 
 // import { Container } from './styles';
 type PropTypes = {
@@ -43,7 +42,7 @@ const TeamComponent: React.FC<PropTypes> = ({
 }) => {
   const router = useRouter();
   const [empty, setEmpty] = useState([]);
-  const loggedUser = localStorage.getItem('username'); 
+  const loggedUser = localStorage.getItem('username');
   const [radarData, setRadarData] = useState([
     {
       subject: 'hp',
@@ -78,17 +77,19 @@ const TeamComponent: React.FC<PropTypes> = ({
   ]);
 
   const deleteTeam = () => {
-    if(localStorage.getItem('username'))
-    {
-        axios.delete(`https://pocketeam.herokuapp.com/team/${_id}`,{
-          headers:{
-            idUser:localStorage.getItem('id')
-        }
-      }).then(() => {
-        router.reload();
-      }).catch(error => {
-        toast.error(error.response.data.message);
-      })
+    if (localStorage.getItem('username')) {
+      axios
+        .delete(`https://pocketeam.herokuapp.com/team/${_id}`, {
+          headers: {
+            idUser: localStorage.getItem('id'),
+          },
+        })
+        .then(() => {
+          router.reload();
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+        });
     }
   };
 
@@ -137,15 +138,15 @@ const TeamComponent: React.FC<PropTypes> = ({
     <Team>
       <Info>
         <Names>
-          
-          {user && user.username &&(
+          {user && user.username && (
             <>
-              {user.username == loggedUser&& (
-              <><Icon onClick={deleteTeam}>
-                <AiFillCloseCircle/>
-                </Icon>
-              </>)
-              }
+              {user.username === loggedUser && (
+                <>
+                  <Icon onClick={deleteTeam}>
+                    <AiFillCloseCircle />
+                  </Icon>
+                </>
+              )}
               <span>
                 <strong>Username: </strong>
                 <Link
@@ -188,7 +189,6 @@ const TeamComponent: React.FC<PropTypes> = ({
               <span>-</span>
             </Empty>
           ))}
-
         </Pokemon>
       </Info>
       <Graph>

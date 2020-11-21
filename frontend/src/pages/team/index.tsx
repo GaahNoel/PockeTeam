@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import Header from '../../components/header';
-import TeamComponent from '../components/teams';
+import TeamComponent from '../../components/team';
 import {
   Wrapper,
   Container,

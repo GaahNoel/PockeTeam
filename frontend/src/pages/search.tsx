@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { useRouter } from 'next/router';
 import { array } from 'yup';
-import TeamComponent from './components/teams';
+import TeamComponent from '../components/team';
 import {
   Wrapper,
   Container,
