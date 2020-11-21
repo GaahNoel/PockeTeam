@@ -190,7 +190,6 @@ const Pokemon: React.FC = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         const dataTeam = JSON.parse(localStorage.getItem('team'));
         dataTeam.push({
           id: response.data._id,

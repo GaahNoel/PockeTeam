@@ -86,7 +86,6 @@ export default function Register() {
 
   const onSubmit = (data: RegisterTypes, e: FormEvent) => {
     const { login, username, email, password, info } = data;
-    console.log(data);
     e.preventDefault();
     axios
       .put(`https://pocketeam.herokuapp.com/users/${id}`, {

@@ -15,7 +15,6 @@ const Email: React.FC = () => {
 
   useEffect(() => {
     if (token) {
-      console.log(token);
       axios
         .get(`https://pocketeam.herokuapp.com/email/${router.query.token}`)
         .then(() => {

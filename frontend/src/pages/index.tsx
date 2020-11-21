@@ -40,7 +40,6 @@ export default function Home() {
   }, [inHome]);
 
   useEffect(() => {
-    console.log('Teste');
     if (searchUserName) {
       axios
         .get(`https://pocketeam.herokuapp.com/team/user/${searchUserName}`)

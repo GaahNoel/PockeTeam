@@ -20,7 +20,6 @@ export class EmailService {
 
   async createEmailToken(email: string): Promise<VerifyEmailDto> {
     const { id } = await this.UserModel.findOne({ email });
-    console.log(id);
     const emailVerification = await new this.EmailModel({
       user: id,
     });
@@ -65,7 +64,6 @@ export class EmailService {
       })
       .sendMail(mailOptions, async err => {
         if (err) {
-          console.log(`Failed to send mail: ${err}`);
           return false;
         }
         return true;
@@ -76,7 +74,6 @@ export class EmailService {
     const emailVerification = await this.EmailModel.findById(token).populate(
       'user',
     );
-    console.log(emailVerification);
     const { user } = emailVerification;
     if (user.verified) throw new BadRequestException('Usuário já verificado');
     return this.UserModel.findByIdAndUpdate(user.id, { verified: true });

@@ -92,7 +92,6 @@ const Team: React.FC = () => {
     } else {
       setUserName(localStorage.getItem('username'));
       if (localStorage.getItem('team')) {
-        // console.log(localStorage.getItem('team'));
         setTeam(JSON.parse(localStorage.getItem('team')));
       } else {
         localStorage.setItem('team', JSON.stringify(team));
@@ -104,13 +103,11 @@ const Team: React.FC = () => {
     const arrayAux = [0, 0, 0, 0, 0, 0];
 
     if (localStorage.getItem('teamName')) {
-      // console.log(localStorage.getItem('team'));
       const nameAux = localStorage.getItem('teamName').replaceAll(`"`, '');
       setTeamName(nameAux);
     }
 
     if (localStorage.getItem('private')) {
-      // console.log(localStorage.getItem('team'));
       const privateAux = localStorage.getItem('private').replaceAll(`"`, '');
 
       privateAux ? setValue(privateAux) : setValue('public');
@@ -212,9 +209,7 @@ const Team: React.FC = () => {
   const onClick = (pokemon) => {
     axios
       .delete(`https://pocketeam.herokuapp.com/pokemon/${team[pokemon].id}`)
-      .then((response) => {
-        console.log('Pokémon escolhido anteriormente retirado');
-      });
+      .then((response) => {});
     team.splice(pokemon, 1);
     localStorage.setItem('team', JSON.stringify(team));
     onClickInfo();

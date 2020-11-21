@@ -27,7 +27,6 @@ export default function Search() {
       setSearchUserName(String(user));
     } else {
       username = localStorage.getItem('search');
-      console.log(username);
       setSearchUserName(String(username));
     }
   }, []);
