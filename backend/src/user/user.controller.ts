@@ -35,7 +35,7 @@ export class UserController {
       createUserDTO.email,
     );
     await this.emailService.sendEmailVerification(id);
-    return createdUser; 
+    return createdUser;
   }
 
   @Post('search')
