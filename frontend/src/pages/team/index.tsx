@@ -19,9 +19,12 @@ export default function Team() {
   const [myTeams, setMyTeams] = useState([]);
   const [userName, setUserName] = useState('');
   const [isUser, setIsUser] = useState(true);
+  const [isInTeamPage, setIsInTeamPage] = useState(false);
   const [teamUserName, setTeamUserName] = useState('');
+  const user = router.query.user;
 
   useEffect(() => {
+
     let userNameAux;
 
     if (!localStorage.getItem('username')) {
@@ -59,12 +62,15 @@ export default function Team() {
           setMyTeams(teamFiltered);
         });
     }
-  }, []);
+  }, [user]);
 
   return (
     <>
       <Helmet>
-        <title>PockeTeam - Meus Times</title>
+        {isUser
+          ?<title>PockeTeam - Meus Times</title>
+          :<title>PockeTeam - Times de {teamUserName}</title>
+        } 
       </Helmet>
       <Header />
       <Wrapper>
@@ -72,7 +78,10 @@ export default function Team() {
           <Grid>
             <TitlePage>
               <div>
-                <h2 id="title">Meus times</h2>
+                {isUser
+                  ?<h2 id="title">Meus times</h2>
+                  :<h2 id="title">Times de {teamUserName}</h2>
+                }     
                 <p id="text">Classificado por: mais recentes</p>
               </div>
               {isUser && (
