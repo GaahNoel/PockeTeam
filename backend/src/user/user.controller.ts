@@ -46,7 +46,9 @@ export class UserController {
   @Post('login')
   login(@Body() loginUser: LoginUserDto): Promise<User> {
     const selectedUser = this.userService.login(loginUser);
-    return selectedUser;
+    if (selectedUser) return selectedUser;
+
+    throw new BadRequestException('Usuário Inválido');
   }
 
   @Put('/:id')
