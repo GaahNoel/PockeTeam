@@ -5,10 +5,12 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 140vh;
-  height: 140vh;
+  min-height: 100vh;
 `;
 export const Container = styled.div`
+  min-height: 100vh;
+  height: 100%;
+
   width: 100%;
   display: flex;
   background-color: #ffffff;
@@ -16,11 +18,11 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
-  height: 100%;
+  //height: 100%;
   @media (min-width: 850px) {
     width: 80%;
     background-color: white;
-    height: 100%;
+    height: 160vh;
 
     display: flex;
     flex-direction: row;
