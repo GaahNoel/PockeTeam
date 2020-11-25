@@ -79,6 +79,7 @@ export default function Login() {
                   name="login"
                   className="input"
                   helperText={errors.login && '* Campo Obrigatório !'}
+                  inputProps={{ maxLength: 20 }}
                 />
                 <Input
                   error={errors.login}
@@ -89,6 +90,7 @@ export default function Login() {
                   name="password"
                   className="input"
                   helperText={errors.login && '* Campo Obrigatório !'}
+                  inputProps={{ maxLength: 20 }}
                 />
 
                 <div>
