@@ -87,7 +87,8 @@ export default function Register() {
   const onSubmit = (data: RegisterTypes, e: FormEvent) => {
     const { login, username, email, password, info } = data;
     e.preventDefault();
-    axios
+    if(password){
+      axios
       .put(`https://pocketeam.herokuapp.com/users/${id}`, {
         password,
         info,
@@ -97,6 +98,18 @@ export default function Register() {
         toast.success('Alterado com sucesso');
         Router.push('/profile');
       });
+    }else{
+      axios
+      .put(`https://pocketeam.herokuapp.com/users/${id}`, {
+        info,
+        favoritePokemon: starterPokemon,
+      })
+      .then(() => {
+        toast.success('Alterado com sucesso');
+        Router.push('/profile');
+      });
+    }
+    
   };
 
   const changePokemon = (e: Select) => {
@@ -141,7 +154,6 @@ export default function Register() {
                 name="password"
                 className="input"
                 helperText={errors.password && '* Campo Obrigatório !'}
-                value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 InputLabelProps={{
                   shrink: true,
