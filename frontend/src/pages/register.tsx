@@ -121,6 +121,8 @@ export default function Register() {
                 name="login"
                 className="input"
                 helperText={errors.login && '* Campo Obrigatório !'}
+                inputProps={{ maxLength: 20 }}
+                margin="normal"
               />
               <InputField
                 error={errors.username}
@@ -130,6 +132,8 @@ export default function Register() {
                 name="username"
                 className="input"
                 helperText={errors.username && '* Campo Obrigatório !'}
+                inputProps={{ maxLength: 20 }}
+                margin="normal"
               />
               <InputField
                 error={errors.email}
@@ -139,6 +143,8 @@ export default function Register() {
                 name="email"
                 className="input"
                 helperText={errors.email && '* Campo Obrigatório !'}
+                type="email"
+                margin="normal"
               />
               <InputField
                 error={errors.password}
@@ -149,6 +155,8 @@ export default function Register() {
                 name="password"
                 className="input"
                 helperText={errors.password && '* Campo Obrigatório !'}
+                inputProps={{ maxLength: 20 }}
+                margin="normal"
               />
               <InputField
                 error={errors.confirmPassword}
@@ -159,6 +167,8 @@ export default function Register() {
                 name="confirmPassword"
                 className="input"
                 helperText={errors.confirmPassword && '* Campo Obrigatório !'}
+                inputProps={{ maxLength: 20 }}
+                margin="normal"
               />
               <InfoField
                 error={errors.info}
@@ -169,6 +179,8 @@ export default function Register() {
                 className="input"
                 helperText={errors.info && '* Campo Obrigatório !'}
                 multiline
+                inputProps={{ maxLength: 440 }}
+                margin="normal"
               />
               <SelectDiv>
                 <Select

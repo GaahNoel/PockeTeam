@@ -149,4 +149,5 @@ export const InfoField = styled(TextField)`
 export const SelectDiv = styled.div`
   margin-top: 20px;
 `;
-export const InputField = styled(TextField)``;
+export const InputField = styled(TextField)`
+`;

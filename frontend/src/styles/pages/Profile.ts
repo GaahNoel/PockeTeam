@@ -74,11 +74,12 @@ export const BotSide = styled.div`
 
 export const Infos = styled.div`
   width: 100%;
-  height: 140px;
-  border: 2px solid black;
+  //height: 160px;
+  //border: 2px solid black;
   p{
-    margin-left: 15px;
-    margin-top: 18px;
+    width: 100%;
+    border: 2px solid black;
+    padding:20px;
   }
   `;
 

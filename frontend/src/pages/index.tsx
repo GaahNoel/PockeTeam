@@ -69,9 +69,13 @@ export default function Home() {
               </div>
             </TitlePage>
             <Teams>
-              {teams.map((team) => (
+            {teams?(
+              teams.map((team) => (
                 <TeamComponent team={team} />
-              ))}
+              )))
+              : (
+              <img src="https://media0.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" />
+            )}
             </Teams>
           </Grid>
         </Container>
