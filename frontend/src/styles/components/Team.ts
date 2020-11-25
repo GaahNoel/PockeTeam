@@ -4,6 +4,7 @@ export const Team = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  margin-top: 10px;
 `;
 
 export const Names = styled.div`
@@ -28,8 +29,11 @@ export const Info = styled.div`
   padding: 2.5rem 1.5rem 0 1.5rem;
 `;
 export const Pokemon = styled.div`
+
   display: flex;
   > div {
+    height: 150px;
+    
     & > img {
       max-width: 5.5rem;
       border: 1px dashed black;

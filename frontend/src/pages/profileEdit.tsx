@@ -150,7 +150,7 @@ export default function Register() {
                 label="Senha"
                 type="password"
                 variant="outlined"
-                inputRef={register({ required: true })}
+                inputRef={register({ required: false })}
                 name="password"
                 className="input"
                 helperText={errors.password && '* Campo Obrigatório !'}
