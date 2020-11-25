@@ -61,21 +61,37 @@ export class UserService {
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     const { password, info, favoritePokemon } = updateUserDto;
-    const hashedPassword = bcrypt.hashSync(password, 10);
+    if (password) {
+      const hashedPassword = bcrypt.hashSync(password, 10);
 
-    const updatedUser = await this.UserModel.findByIdAndUpdate(
-      id,
-      {
-        password: hashedPassword,
-        info,
-        favoritePokemon,
-      },
-      {
-        useFindAndModify: false,
-      },
-    );
-    if (!updatedUser)
-      throw new InternalServerErrorException('Usuário não encontrado');
+      const updatedUser = await this.UserModel.findByIdAndUpdate(
+        id,
+        {
+          password: hashedPassword,
+          info,
+          favoritePokemon,
+        },
+        {
+          useFindAndModify: false,
+        },
+      );
+      if (!updatedUser)
+        throw new InternalServerErrorException('Usuário não encontrado');
+    } else {
+      const updatedUser = await this.UserModel.findByIdAndUpdate(
+        id,
+        {
+          info,
+          favoritePokemon,
+        },
+        {
+          useFindAndModify: false,
+        },
+      );
+      if (!updatedUser)
+        throw new InternalServerErrorException('Usuário não encontrado');
+    }
+
     return this.UserModel.findById(id);
   }
 
@@ -95,7 +111,6 @@ export class UserService {
         model: 'Pokemon',
       },
     });
-
     return selectedUser;
   }
 
