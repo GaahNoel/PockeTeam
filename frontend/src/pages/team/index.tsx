@@ -25,42 +25,36 @@ export default function Team() {
 
   useEffect(() => {
     let userNameAux;
-
-    if (!localStorage.getItem('username')) {
-      toast.warn('Para acessar esta página é necessário estar logado');
-
-      router.push('/login');
-    } else {
-      if (router.query.user) {
-        if (router.query.user !== localStorage.getItem('username')) {
-          userNameAux = router.query.user;
-          setIsUser(false);
-        } else {
-          userNameAux = localStorage.getItem('username');
-          setIsUser(true);
-        }
+    if (router.query.user) {
+      if (router.query.user !== localStorage.getItem('username')) {
+        userNameAux = router.query.user;
+        setIsUser(false);
       } else {
         userNameAux = localStorage.getItem('username');
         setIsUser(true);
       }
-
-      setUserName(localStorage.getItem('username'));
-      setTeamUserName(userNameAux);
-
-      axios
-        .get(`https://pocketeam.herokuapp.com/team/user/${userNameAux}`)
-        .then((response) => {
-          response.data.reverse();
-          const teamFiltered = response.data.filter((team) => {
-            if (
-              !team.isPrivate ||
-              team.user.username === localStorage.getItem('username')
-            )
-              return team;
-          });
-          setMyTeams(teamFiltered);
-        });
+    } else {
+      userNameAux = localStorage.getItem('username');
+      setIsUser(true);
     }
+
+    setUserName(localStorage.getItem('username'));
+    setTeamUserName(userNameAux);
+
+    axios
+      .get(`https://pocketeam.herokuapp.com/team/user/${userNameAux}`)
+      .then((response) => {
+        response.data.reverse();
+        const teamFiltered = response.data.filter((team) => {
+          if (
+            !team.isPrivate ||
+            team.user.username === localStorage.getItem('username')
+          )
+            return team;
+        });
+        setMyTeams(teamFiltered);
+      });
+    
   }, [user]);
 
   return (
