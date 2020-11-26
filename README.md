@@ -1,4 +1,8 @@
 # PockeTeam
+### Instalar dependencias
+- com yarn -> executar o comando yarn
+- com npm -> executar o comando npm install
+
 ### Comandos para executar o projeto no local como modo de produção
 - backend -> Entrar na pasta do backend e executar yarn build e depois yarn start:prod
 - frontend -> Entrar na pasta do backend e executar yarn build e depois yarn start
